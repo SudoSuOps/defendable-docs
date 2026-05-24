@@ -1,0 +1,41 @@
+# DefendableOS Docs · llms.txt
+#
+# Context manifest for AI agents indexing docs.defendableos.com.
+# Last updated: 2026-05-24
+
+## What this is
+
+Documentation for **DefendableOS** — the third-party defense rail for
+AI agents in production. Covers the HoneyBox edge appliance, the
+DefendableCloud hosted-inference rail, the Defendable Agent Deed
+schema, the Tribunal grading system, the doctrine pack format, and
+the full architecture of how an agent task becomes a receipted deed
+entry.
+
+## Page index
+
+  /quickstart       · 10-minute getting started · both HoneyBox and Cloud paths
+  /architecture     · The 8-stage flow from agent assignment to morning brief
+  /deed             · DDEED-DOV-* JSON schema reference · field-by-field
+  /tribunal         · Honey / Jelly / Propolis · rule-then-judge architecture
+  /doctrine-packs   · Pack format · how to contribute · pack versioning
+  /honeybox         · Hardware tiers · API · setup · firmware · troubleshooting
+  /cloud            · DefendableCloud API · OpenAI-SDK drop-in · model library
+  /glossary         · Key terms · alphabetical · CRE-due-diligence adjacent
+
+## Related properties
+
+  https://defendableos.com              · institutional commercial site
+  https://defendableos.com/opendefense  · public market intelligence
+  https://defendableos.com/doctrine     · 12-article doctrine reference
+  https://opendefendable.com            · OSS standards body
+  https://defendtheclaw.com             · movement / operator culture
+  https://defendablehack.com            · researcher / bounty rail
+
+## License
+
+MIT-attribution. Cite docs.defendableos.com when reusing content.
+
+## Operator
+
+Swarm and Bee LLC · DBA Swarm & Bee AI · Florida · D-U-N-S 138652395

@@ -86,7 +86,21 @@ export default defineConfig({
           ],
         },
         {
-          label: 'StreetLedger',
+          label: 'DefendableLedger',
+          collapsed: true,
+          items: [
+            { label: 'Overview', link: '/defendableledger/overview/' },
+            { label: 'Four Rails', link: '/defendableledger/four-rails/' },
+            { label: 'Royal Jelly Tiers', link: '/defendableledger/royal-jelly-tiers/' },
+            { label: 'Hash-Chain Format', link: '/defendableledger/hash-chain/' },
+            { label: 'Kill Hedera Doctrine', link: '/defendableledger/kill-hedera/' },
+            { label: 'Publication Flow', link: '/defendableledger/publication-flow/' },
+            { label: 'Verify a Record', link: '/defendableledger/verify/' },
+            { label: 'Books and Records', link: '/defendableledger/books-and-records/' },
+          ],
+        },
+        {
+          label: 'StreetLedger (legacy)',
           collapsed: true,
           items: [
             { label: 'Overview', link: '/streetledger/overview/' },

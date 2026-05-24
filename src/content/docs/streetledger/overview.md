@@ -3,6 +3,10 @@ title: StreetLedger · Overview
 description: The public proof layer for DefendableOS. Every deeded artifact verifiable at ledger.mrdefendable.com.
 ---
 
+:::caution[Now a legacy surface]
+As of 2026-05-24, the canonical books-and-records surface for the DefendableOS ecosystem is **[DefendableLedger](/defendableledger/overview/)** at [defendableledger.com](https://defendableledger.com). StreetLedger remains live as a legacy display for the 62 deeded vocabulary terms and the ENS/IPFS sibling at `streetledger.eth.limo`. New receipts · verdicts · pairs · deeds publish to DefendableLedger.
+:::
+
 ## What StreetLedger is
 
 The public surface that exposes every DefendableOS-issued deed as a verifiable books-and-records artifact. Live at [ledger.mrdefendable.com](https://ledger.mrdefendable.com).

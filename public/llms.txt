@@ -1,41 +1,38 @@
-# DefendableOS Docs · llms.txt
-#
-# Context manifest for AI agents indexing docs.defendableos.com.
-# Last updated: 2026-05-24
+# DefendableDocs
 
-## What this is
+> The operating manual for the DefendableOS ecosystem.
+> Books and records · class A 5-cap STNL documentation.
+> To the shed.
 
-Documentation for **DefendableOS** — the third-party defense rail for
-AI agents in production. Covers the HoneyBox edge appliance, the
-DefendableCloud hosted-inference rail, the Defendable Agent Deed
-schema, the Tribunal grading system, the doctrine pack format, and
-the full architecture of how an agent task becomes a receipted deed
-entry.
+## Surfaces
+- defendabledocs.com — canonical (Cloudflare Pages · auto-deploy from git push)
+- docs.defendableos.com — original CF Pages custom domain (same source)
 
-## Page index
+## Source
+- repo: github.com/SudoSuOps/defendable-docs (Astro Starlight)
 
-  /quickstart       · 10-minute getting started · both HoneyBox and Cloud paths
-  /architecture     · The 8-stage flow from agent assignment to morning brief
-  /deed             · DDEED-DOV-* JSON schema reference · field-by-field
-  /tribunal         · Honey / Jelly / Propolis · rule-then-judge architecture
-  /doctrine-packs   · Pack format · how to contribute · pack versioning
-  /honeybox         · Hardware tiers · API · setup · firmware · troubleshooting
-  /cloud            · DefendableCloud API · OpenAI-SDK drop-in · model library
-  /glossary         · Key terms · alphabetical · CRE-due-diligence adjacent
+## Ecosystem sections
+- ecosystem/             overview · architecture · glossary · domain map · operating principles
+- defendableos/          what-it-is · what-it-is-not · buyer profile · use cases · pricing · board flight sheet
+- mr-defendable/         voice · proposal flow · ring-ring intake · boardroom language
+- defend-a-pedia/        vocabulary as infrastructure · honey/jelly/propolis · broker playbooks
+- streetledger/          deeded vocabulary · receipts · manifests · hashing · verify-a-deed · books-and-records
+- streetchat/            audio ingestion · Whisper · spaces · street pairs · communicator training
+- defendablerouter/      routing model · ENS/app/agent ID · receipt capture · edge events · APIs
+- communicator/          human meaning layer · street-talk-to-directive · alignment checks
+- tribunal/              scoring model · validator chain · classification tiers · verdict JSON
+- swarmfixer/            repair intelligence · failure-to-fix traces · repair lift · jelly pipeline
+- ddeed/                 deed schema · receipt schema · 5 Proofs (origin · quality · process · economics · trust)
+- cost-to-mint/          compute · validator · storage · energy · per-deed economics · hyperscaler vs edge
+- edge/                  HoneyBox · Defendable Box · GPU fleet · object storage sync · offline · security
+- agentbench-clawcheck/  submit agent · benchmark packs · failure flags · verdicts · reports
+- api/                   authentication · receipts · deeds · tribunal · router · streetledger · streetchat · webhooks
+- schemas/               street event · vocabulary term · receipt · deed · verdict · pair · cost-to-mint
+- operations/            deployment · CF Pages · object storage · env vars · CI/CD · monitoring · backup
+- examples/              sample receipt · sample deed · sample verdict · sample event · sample pair · sample report
+- media/                 offense-to-the-shed (blog) · pain-in-the-shed (podcast) · founder notes · content-to-corpus
+- legal-risk/            privacy · consent · data retention · 1031 disclaimer · not legal/tax advice
 
-## Related properties
-
-  https://defendableos.com              · institutional commercial site
-  https://defendableos.com/opendefense  · public market intelligence
-  https://defendableos.com/doctrine     · 12-article doctrine reference
-  https://opendefendable.com            · OSS standards body
-  https://defendtheclaw.com             · movement / operator culture
-  https://defendablehack.com            · researcher / bounty rail
-
-## License
-
-MIT-attribution. Cite docs.defendableos.com when reusing content.
-
-## Operator
-
-Swarm and Bee LLC · DBA Swarm & Bee AI · Florida · D-U-N-S 138652395
+## Voice
+Operator-grade · Mr. Defendable · CRE broker · Class A 5-cap STNL · no fluff · receipts first.
+Ring ring · to the shed.

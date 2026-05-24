@@ -1,0 +1,118 @@
+/* DefendableDocs · custom Starlight theme · ink · cream · gold · honey */
+
+:root {
+  /* Type */
+  --sl-font: 'Inter', system-ui, -apple-system, sans-serif;
+  --sl-font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+
+:root[data-theme='dark'] {
+  /* Surface */
+  --sl-color-bg: #0a0a0a;
+  --sl-color-bg-nav: #0f0f0f;
+  --sl-color-bg-sidebar: #0a0a0a;
+  --sl-color-bg-inline-code: #161616;
+  --sl-color-bg-accent: #d4a01720;
+
+  /* Text */
+  --sl-color-text: #f7f3e6;
+  --sl-color-text-accent: #d4a017;
+  --sl-color-text-invert: #0a0a0a;
+  --sl-color-white: #fafaf5;
+
+  /* Brand · gold accent */
+  --sl-color-accent-low: #5a3e00;
+  --sl-color-accent: #d4a017;
+  --sl-color-accent-high: #f0cf66;
+
+  /* Lines */
+  --sl-color-hairline: #262626;
+  --sl-color-hairline-light: #1f1f1f;
+  --sl-color-hairline-shade: #262626;
+
+  /* Headings */
+  --sl-color-heading: #fafaf5;
+
+  /* Code */
+  --sl-color-code: #f0cf66;
+}
+
+:root[data-theme='light'] {
+  /* Surface */
+  --sl-color-bg: #faf8ed;
+  --sl-color-bg-nav: #fdfcf7;
+  --sl-color-bg-sidebar: #faf8ed;
+  --sl-color-bg-inline-code: #f7f3e6;
+  --sl-color-bg-accent: #d4a01720;
+
+  /* Text */
+  --sl-color-text: #1a1a1a;
+  --sl-color-text-accent: #7a5b0d;
+  --sl-color-text-invert: #faf8ed;
+
+  /* Brand · gold accent */
+  --sl-color-accent-low: #f7e3a1;
+  --sl-color-accent: #d4a017;
+  --sl-color-accent-high: #5a3e00;
+
+  /* Lines */
+  --sl-color-hairline: #e0d5b0;
+  --sl-color-hairline-light: #ede5c8;
+  --sl-color-hairline-shade: #e0d5b0;
+
+  /* Headings */
+  --sl-color-heading: #0a0a0a;
+
+  /* Code */
+  --sl-color-code: #5a3e00;
+}
+
+/* Headings · serif feel */
+:is(h1, h2, h3, h4) {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  letter-spacing: -0.01em;
+}
+
+/* Mono blocks · operator-grade · selectable for copy */
+.expressive-code pre,
+:is(pre, code) {
+  font-family: var(--sl-font-mono);
+}
+
+/* The signature "ring ring" tag · used inline · matches brand */
+.ring-ring {
+  font-family: var(--sl-font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sl-color-accent);
+}
+
+/* Selection · gold tint */
+::selection {
+  background: rgba(212, 160, 23, 0.35);
+  color: #fafaf5;
+}
+
+/* Tighten cards · institutional grade */
+.starlight-aside {
+  border-left-width: 3px;
+}
+
+/* Footer note · "to the shed" close-out */
+.to-the-shed {
+  font-style: italic;
+  color: var(--sl-color-accent);
+}
+
+/* Deed-tag inline */
+.deed-tag {
+  display: inline-block;
+  font-family: var(--sl-font-mono);
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  background: var(--sl-color-bg-inline-code);
+  color: var(--sl-color-text-accent);
+  border: 1px solid var(--sl-color-hairline);
+}

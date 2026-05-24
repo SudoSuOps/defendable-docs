@@ -1,28 +1,20 @@
 {
-  "name": "defendable-docs",
-  "version": "0.1.0",
+  "name": "defendabledocs",
+  "version": "1.0.0",
   "private": true,
-  "description": "docs.defendableos.com — Documentation for DefendableOS, HoneyBox, DefendableCloud, the Defendable Agent Deed, and the doctrine pack ecosystem.",
+  "description": "defendabledocs.com — the operating manual for the entire DefendableOS ecosystem. Mr. Defendable · books and records · class A 5-cap STNL docs.",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check"
   },
   "dependencies": {
-    "react": "^18.3.0",
-    "react-dom": "^18.3.0",
-    "react-router-dom": "^6.30.3"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.0",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.0",
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.4.0",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5.5.0",
-    "vite": "^5.4.0"
+    "astro": "^5.0.0",
+    "@astrojs/starlight": "^0.30.0",
+    "sharp": "^0.33.5"
   }
 }

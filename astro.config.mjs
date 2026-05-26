@@ -28,6 +28,16 @@ export default defineConfig({
       ],
       sidebar: [
         {
+          label: 'Field Release v0.1 (Audited Prototype)',
+          collapsed: false,
+          items: [
+            { label: 'Field Proof Overview', link: '/field-release/overview/' },
+            { label: 'Module Records', link: '/field-release/module-records/' },
+            { label: 'Independent Audit / Receipt', link: '/field-release/audit-receipt/' },
+            { label: 'Status Label System', link: '/field-release/status-labels/' },
+          ],
+        },
+        {
           label: 'Start Here',
           items: [
             { label: 'Welcome', link: '/' },

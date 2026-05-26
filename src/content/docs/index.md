@@ -22,6 +22,15 @@ hero:
       icon: external
 ---
 
+:::tip[Field status — audited prototype]
+A controlled, **synthetic** customer-support agent-operations demo is now fielded and
+independently audited (Codex Tribunal, **VERIFIED_AS_REPAIRED_WITH_LIMITATIONS**).
+See **[Field Proof v0.1](/field-release/overview/)** and try the live demo at
+[defendablecloud.com/agent-operations-demo](https://defendablecloud.com/agent-operations-demo).
+Much of the wider ecosystem below remains **ROADMAP / NOT YET IMPLEMENTED**; it is **NOT CLEARED
+FOR PRODUCTION** or external SaaS enforcement.
+:::
+
 ## DefendableOS is the defense layer for AI agents.
 
 **Offense goes dark.** The business is offline. It can't score.
@@ -61,7 +70,10 @@ StreetLedger
 SwarmFixer → Communicator vNext
 ```
 
-Every step is deeded. Every deed has 5 Proofs. Every Proof resolves to a public hash.
+Every step is deeded. Every deed has 5 Proofs. *(Status: this 9-step chain is the design
+target. In the audited prototype today, SHA-256 establishes **content-integrity linkage only**
+— not public anchoring, authorship, or external attestation. Public-hash resolution / anchoring
+is ROADMAP. See [Field Proof v0.1](/field-release/overview/).)*
 
 ## The doctrine
 

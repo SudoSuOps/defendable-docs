@@ -3,6 +3,17 @@ title: StreetLedger · Overview
 description: The public proof layer for DefendableOS. Every deeded artifact verifiable at ledger.mrdefendable.com.
 ---
 
+:::caution[Status — audited-prototype reality]
+This page describes design intent for the DefendableOS ecosystem. In the current independently
+audited prototype this capability is **ROADMAP / NOT YET IMPLEMENTED** as a public/production
+service unless explicitly shown as fielded. The only fielded, Codex-audited surface today is the
+controlled **synthetic** agent-operations demo — see [Field Proof v0.1](/field-release/overview/).
+**NOT CLEARED FOR PRODUCTION · NOT CLEARED FOR EXTERNAL SAAS ENFORCEMENT.** SHA-256 hashes here
+provide content-integrity linkage only — not signatures, owner approval, external attestation, or
+blockchain anchoring.
+:::
+
+
 :::caution[Now a legacy surface]
 As of 2026-05-24, the canonical books-and-records surface for the DefendableOS ecosystem is **[DefendableLedger](/defendableledger/overview/)** at [defendableledger.com](https://defendableledger.com). StreetLedger remains live as a legacy display for the 62 deeded vocabulary terms and the ENS/IPFS sibling at `streetledger.eth.limo`. New receipts · verdicts · pairs · deeds publish to DefendableLedger.
 :::

@@ -3,6 +3,17 @@ title: DefendableLedger · Overview
 description: The cracked ledger of the DefendableOS ecosystem. Sovereign · in-house · hash-verifiable. The canonical books-and-records surface for receipts · verdicts · training pairs · deeds.
 ---
 
+:::caution[Status — audited-prototype reality]
+This page describes design intent for the DefendableOS ecosystem. In the current independently
+audited prototype this capability is **ROADMAP / NOT YET IMPLEMENTED** as a public/production
+service unless explicitly shown as fielded. The only fielded, Codex-audited surface today is the
+controlled **synthetic** agent-operations demo — see [Field Proof v0.1](/field-release/overview/).
+**NOT CLEARED FOR PRODUCTION · NOT CLEARED FOR EXTERNAL SAAS ENFORCEMENT.** SHA-256 hashes here
+provide content-integrity linkage only — not signatures, owner approval, external attestation, or
+blockchain anchoring.
+:::
+
+
 ## What DefendableLedger is
 
 The sovereign in-house ledger for the DefendableOS ecosystem. Every Router receipt, every Tribunal verdict, every SwarmJelly training pair, every Deed — recorded here. The canonical books-and-records surface. Live at [defendableledger.com](https://defendableledger.com).

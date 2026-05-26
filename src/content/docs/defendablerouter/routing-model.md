@@ -1,9 +1,15 @@
 ---
 title: Routing Model
-description: How DefendableRouter resolves ENS · app · agent identifiers to receipt paths.
+description: Routing-model roadmap note. Not proof of a publicly deployed Router path.
 ---
 
-The router resolves three identifier classes — ENS (per-customer subdomain), App ID, Agent ID — to canonical object-storage paths under streetledger.eth. Routing is deterministic and stateless.
+:::caution[Status — routing model]
+This routing model is architectural intent and local-source direction. Public deployed Router
+behavior based on ENS, App ID, or Agent ID resolution is **not yet independently verified**.
+:::
+
+The Router track is still field-integration pending. Do not read this page as proof that the live
+DefendableCloud demo is using Router-based path resolution.
 
 ***
 

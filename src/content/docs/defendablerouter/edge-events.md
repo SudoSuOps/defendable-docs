@@ -1,9 +1,15 @@
 ---
 title: Edge Events
-description: Event shapes the router handles · directly from agents · from sidecars · from webhook integrations.
+description: Edge-event roadmap note. Not a publicly verified live Router event surface.
 ---
 
-Three event-source patterns: SDK (direct from agent runtime), sidecar (process-level wrapper), webhook (HTTP POST from external services). All three normalize into the same receipt schema.
+:::caution[Status — edge events]
+Event-source patterns described here are not currently exposed as a publicly verified deployed
+Router intake surface.
+:::
+
+SDK, sidecar, and webhook event lanes remain design-direction material until the Router utility
+itself is publicly deployed and independently re-audited.
 
 ***
 

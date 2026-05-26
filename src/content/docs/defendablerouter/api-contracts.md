@@ -1,9 +1,15 @@
 ---
 title: API Contracts
-description: Router API contract · POST receipt · GET receipt · health check.
+description: Router API roadmap sketch. Not a publicly verified deployed API.
 ---
 
-See [API · Router](/api/router-api/) for the full surface. Synchronous POST returns the receipt_id and the canonical hash. GET returns the full receipt JSON. Health check exposes per-rail liveness.
+:::caution[Status — Router API contracts]
+The contract described here is architectural intent only. DefendableRouter does **not** currently
+have a publicly verified deployed API surface, and it is **not** proven to be in the live
+DefendableCloud demo path.
+:::
+
+See [API · Router](/api/router-api/) for the corresponding roadmap/status page.
 
 ***
 

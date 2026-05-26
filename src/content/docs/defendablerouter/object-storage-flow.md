@@ -1,9 +1,21 @@
 ---
 title: Object Storage Flow
-description: How a receipt flows from router POST to durable object storage to StreetLedger publication.
+description: Object-storage roadmap note. Not a publicly verified deployed Router flow.
 ---
 
-1. POST → router validates ENS/App/Agent · 2. Canonicalize + hash · 3. Write to S3/R2/Tigris under streetledger.eth/{class}/{path} · 4. Async Tribunal pickup · 5. DDEED issuance · 6. Hedera anchor · 7. StreetLedger publication.
+:::caution[Status — object-storage flow]
+This object-storage flow is not accepted as a publicly verified live Router pipeline. It should be
+read as intended architecture for future/public deployment work or local-source exploration only.
+:::
+
+Illustrative intended flow:
+
+1. POST → Router validates event shape
+2. Canonicalize + hash
+3. Write to object storage
+4. Downstream review/publication work
+
+The accepted live public Cloud demo does not currently prove this Router-based path.
 
 ***
 

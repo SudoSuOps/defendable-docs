@@ -1,9 +1,18 @@
 ---
 title: Router API
-description: Router POST · LIST · health check.
+description: Router API status page. Not a publicly verified deployed API.
 ---
 
-POST /v1/router/events → write an event (returns receipt). GET /v1/router/events/{id} → fetch one. GET /v1/router/health → per-rail liveness.
+:::caution[Status — Router API]
+The Router API described here is not a publicly verified deployed API. The accepted live public
+DefendableCloud demo does **not** currently depend on a proven public Router middleware path.
+:::
+
+The route shapes below are roadmap/interface intent only:
+
+- `POST /v1/router/events`
+- `GET /v1/router/events/{id}`
+- `GET /v1/router/health`
 
 ***
 

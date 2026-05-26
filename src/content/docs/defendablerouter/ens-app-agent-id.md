@@ -1,9 +1,15 @@
 ---
 title: ENS · App ID · Agent ID
-description: The three identifier classes the router resolves and what each means.
+description: Identifier roadmap note. Not proof of deployed ENS-linked Router behavior.
 ---
 
-ENS = per-customer (e.g., acme.defendable.eth). App ID = the application instance generating the event. Agent ID = the AI agent doing the work. The composite key (ENS, App, Agent) addresses every event in the system.
+:::caution[Status — Router identity]
+ENS, App ID, and Agent ID conventions are naming and architecture concepts in the Router track.
+They are not currently accepted as publicly verified deployed Router identity or signing behavior.
+:::
+
+ENS = per-customer naming convention. App ID = application instance. Agent ID = AI agent identity.
+Treat the composite key as design intent until a deployed Router path is independently proven.
 
 ***
 

@@ -1,6 +1,6 @@
 ---
 title: DefendableRouter · Overview
-description: Rail 1 · intake + receipt-write at the edge. Captures every event with ENS / app / agent identifiers.
+description: Router status overview. Public deployed utility not yet verified; local source demo and roadmap references only.
 ---
 
 :::caution[Status — DefendableRouter]
@@ -14,7 +14,9 @@ evidence are **NOT verified** at this stage.
 :::
 
 
-DefendableRouter is the intake layer of the 5-rail architecture. Cheap · fast · write-only · receipt-emitting. Lives at the edge · routes durably into the rest of the rails.
+DefendableRouter is the Router track in the broader DefendableOS architecture. In the current
+public state, treat this section as roadmap and local-source documentation, not as proof of a
+deployed public utility.
 
 ***
 

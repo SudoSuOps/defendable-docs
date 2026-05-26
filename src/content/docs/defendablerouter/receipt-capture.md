@@ -1,9 +1,16 @@
 ---
 title: Receipt Capture
-description: How the router writes receipts at <5ms POST overhead.
+description: Receipt-capture roadmap note. No publicly verified deployed Router receipt utility yet.
 ---
 
-Receipts are written as object-storage PUTs with canonical JSON encoding · SHA-256 stamping · and ENS-pathed prefix. Sub-5ms POST overhead is achievable on owned edge hardware.
+:::caution[Status — receipt capture]
+Receipt capture is currently documented as design intent and local source direction. Public
+deployed receipt writing, write-only behavior, and latency claims such as `<5ms POST overhead` are
+**not yet independently verified**.
+:::
+
+Receipts in this section should be read as intended local/source architecture, not as proof of a
+live public Router utility.
 
 ***
 

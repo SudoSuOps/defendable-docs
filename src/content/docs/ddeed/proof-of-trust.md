@@ -1,9 +1,9 @@
 ---
 title: Proof of Trust
-description: Canonical hash · object-storage path · ENS anchor · Hedera transaction.
+description: Canonical hash · object-storage path · in-house hash-chain coordinates · ENS read-mirror. The publicly verifiable proof.
 ---
 
-Documents: event_json_sha256 · object_prefix · ENS anchor (e.g., streetledger.eth/...) · hedera_topic (0.0.10291838) · hedera_tx_id (when anchored). The publicly verifiable proof.
+Documents: `event_json_sha256` · `object_prefix` · in-house hash-chain coordinates (`parent_hash` + `record_sha256` for ledger deeds, or `parent_hash` + `receipt_sha256` for Cloud receipts) · ENS read-mirror (e.g., `defendapedia.eth/...` — read-mirror only, NOT an anchor). The publicly verifiable proof. *No external chain anchor — see [Kill Hedera doctrine](/defendableledger/kill-hedera/).*
 
 ***
 

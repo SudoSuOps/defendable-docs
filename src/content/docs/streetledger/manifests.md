@@ -33,7 +33,9 @@ A plain-text file with one line per artifact in the tree · `{sha256}  {path}` �
 
 ## Ledger root
 
-The `ledger_root_sha256` is SHA-256 over the sorted concatenation of every file hash. It is the single 64-character value that anchors the entire snapshot. Cross-check it on Hedera HCS topic `0.0.10291838`.
+The `ledger_root_sha256` is SHA-256 over the sorted concatenation of every file hash. It is the single 64-character value that anchors the entire snapshot. Cross-check it against the published manifest's `ledger_root_sha256` field — same canonicalization rule, same result.
+
+*No external chain anchoring on the spine — see the [Kill Hedera doctrine](/defendableledger/kill-hedera/). Earlier docs cross-checked this root on Hedera HCS topic `0.0.10291838`; that anchor is superseded for new manifests.*
 
 ***
 

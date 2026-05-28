@@ -3,6 +3,10 @@ title: Buyer Profile
 description: The 5 buyer personas · 8 vertical targets · ~80 named target companies · clean ICP. Who buys DefendableOS and why.
 ---
 
+:::note[Engagement-model doc]
+This page documents the **buyer pipeline** for the DefendableOS + DefendableCloud engagement (the principals who sign the rep agreement). For the product surfaces themselves, read [DefendableOS · Overview](/defendableos/overview/) and [DefendableCloud · Overview](/defendablecloud/overview/).
+:::
+
 ## The 5 buyer personas
 
 | Persona | Care list | Their question |

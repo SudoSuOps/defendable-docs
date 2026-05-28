@@ -10,17 +10,16 @@ description: The doctrine that turns deeds into trust. How vocabulary becomes au
 
 Every term in DefendableOS gets the same treatment a closed real estate transaction gets at the recorder's office: source documents · hashed inputs · receipted actions · deeded outputs · permanent ledger.
 
-## The 5-layer finality stack
+## The 4-layer finality stack
 
 | Layer | Tech | Role |
 |---|---|---|
 | L1 | PostgreSQL | Live operator database |
-| L2 | Merkle root | Per-snapshot hash · published with every release |
-| L3 | NAS archive | Synology DS1525+ · long-term snapshots |
-| L4 | Hedera HCS mainnet | Topic 0.0.10291838 · immutable timestamping |
-| L5 | ENS | streetledger.eth · streetvocab.eth · defendapedia.eth · streetchat.eth |
+| L2 | Per-org hash chain | SHA-256 chain over canonical receipt payloads · in-house · client-side verifiable |
+| L3 | Merkle root + NAS archive | Synology DS1525+ · per-snapshot hash · long-term cold storage |
+| L4 | ENS publishing surface | streetledger.eth · streetvocab.eth · defendapedia.eth · streetchat.eth (read-mirror only, NOT an anchor) |
 
-5 layers · 3-of-3 redundancy at every layer · books-and-records-grade.
+4 layers · in-house end to end · books-and-records-grade. *No external chain anchoring on the spine — see the [Kill Hedera doctrine](/defendableledger/kill-hedera/).*
 
 ## Why this matters
 

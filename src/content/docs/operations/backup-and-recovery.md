@@ -1,9 +1,9 @@
 ---
 title: Backup and Recovery
-description: Multi-layer backup discipline. PostgreSQL + NAS + Tigris + Hedera + ENS = 5-layer finality.
+description: Multi-layer backup discipline. PostgreSQL + per-org hash chain + Tigris + NAS + ENS read-mirror. In-house finality — no external chain anchoring on the spine.
 ---
 
-L1 PostgreSQL (live) · L2 Merkle (per-snapshot) · L3 NAS (long-term) · L4 Hedera HCS (immutable mainnet) · L5 ENS (publicly resolvable). Any single layer can fail · all 4 others corroborate.
+L1 PostgreSQL (live) · L2 per-org hash chain (in-house · client-side verifiable) · L3 Tigris + NAS Merkle snapshots (long-term cold) · L4 ENS read-mirror (publicly resolvable, not an anchor). Any single layer can fail · the others corroborate. *No external chain anchoring on the spine — see the [Kill Hedera doctrine](/defendableledger/kill-hedera/).*
 
 ***
 

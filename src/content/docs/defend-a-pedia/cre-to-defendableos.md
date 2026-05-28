@@ -8,21 +8,21 @@ description: How 30 years of commercial real estate broker discipline translates
 | CRE concept | DefendableOS equivalent |
 |---|---|
 | Books and records | DDEED · receipts · manifests |
-| Title insurance | Hedera anchor · publicly verifiable |
+| Title insurance | Per-org hash chain · publicly client-side verifiable |
 | Survey | Validator chain · structural verification |
-| Appraisal | Tribunal verdict · validator confidence |
+| Appraisal | Verdict · score = % of declared rules satisfied |
 | Listing agreement | Rep agreement (06) · exclusive engagement |
 | Letter of Intent | LOU · operator commitment |
 | Closing statement | Engagement close · DDEED-ENG-COMPLETE |
-| Recorder of deeds | StreetLedger public surface |
-| Title chain | Hedera HCS topic 0.0.10291838 |
-| Class A 5-cap | Royal Jelly tier · top-quality artifact |
+| Recorder of deeds | DefendableLedger public surface ([defendableledger.com](https://defendableledger.com)) |
+| Title chain | In-house JSONL hash chain · `parent_hash` → `record_sha256` |
+| Class A 5-cap | Apex tier · top-quality dataset artifact (see [Royal Jelly Tiers](/defendableledger/royal-jelly-tiers/)) |
 | Pro forma | Cost-to-mint projection |
 | Books of business | Vocabulary canon (Defend-A-Pedia) |
 
 ## What this gets us
 
-A buyer doing due diligence on DefendableOS reads it like a real estate transaction. Receipts at every stage. Title chain on Hedera. Comps at StreetLedger. Survey by the validator chain. The DD package is a books-and-records package · NOT a slide deck.
+A buyer doing due diligence on DefendableOS reads it like a real estate transaction. Receipts at every stage. Title chain in-house on the per-org hash chain. Comps on DefendableLedger. Survey by the validator chain. The DD package is a books-and-records package · NOT a slide deck.
 
 Buyers trained in CRE close on this language reflexively. Buyers trained on SaaS pitch decks struggle. That difference IS the moat.
 

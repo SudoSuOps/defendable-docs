@@ -3,6 +3,10 @@ title: Board Flight Sheet
 description: The board-grade artifact a broker hands a CFO before a Class A 5-cap mandate. Comp set · vendor risk flags · acceptance criteria · math.
 ---
 
+:::note[Engagement-model doc · not the eval Flight Sheet]
+This page documents the **CRE-broker pre-market flight sheet** — the artifact handed to a CFO before a Class A 5-cap mandate. **Not** the **eval Flight Sheet** carried by [DefendableCloud](/defendablecloud/overview/) (the declared rulebook for the [referee](/defendableos/rulebook-engine/)). Same word, two domains. Read this if you are sizing the engagement; read [DefendableCloud · Eval Lane](/defendablecloud/eval-lane/) if you are sizing a Run.
+:::
+
 ## What this artifact is
 
 This is the same flight-sheet pattern Mr. Defendable used to close $8B in industrial CRE. A board reading this should be able to make an approve/reject decision in 15 minutes.

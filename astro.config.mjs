@@ -79,6 +79,9 @@ export default defineConfig({
             { label: 'Three Lanes', link: '/defendablecloud/three-lanes/' },
             { label: 'Eval Lane · the referee', link: '/defendablecloud/eval-lane/' },
             { label: 'Generate a Receipt', link: '/defendablecloud/generate-a-receipt/' },
+            { label: 'Integrate · dev quickstart', link: '/defendablecloud/integrate/' },
+            { label: 'Defendable CLI', link: '/defendablecloud/cli/' },
+            { label: 'API Reference', link: '/defendablecloud/api-reference/' },
           ],
         },
         {

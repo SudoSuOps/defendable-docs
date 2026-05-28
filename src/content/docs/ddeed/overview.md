@@ -14,7 +14,9 @@ blockchain anchoring.
 :::
 
 
-Every record DefendableOS issues is a DDEED. The DDEED structure is uniform across classes: vocabulary · chat · award · media · founder origin · repair. Always 5 Proofs · always SHA-256 hashed · always anchored on Hedera HCS topic 0.0.10291838.
+Every books-and-records record published to DefendableLedger is a DDEED. The DDEED structure is uniform across classes: vocabulary · chat · award · media · founder origin · repair. Always 5 Proofs · always SHA-256 hashed · always on the in-house DefendableLedger JSONL hash chain. *No external chain anchoring — see [Kill Hedera doctrine](/defendableledger/kill-hedera/).*
+
+Distinct from [DefendableCloud receipts](/schemas/receipt/), which ride the per-org hash chain inside the Vault. Both follow the same hashing discipline; both have the same no-external-anchor doctrine.
 
 ***
 

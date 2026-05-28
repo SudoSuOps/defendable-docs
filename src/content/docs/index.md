@@ -1,11 +1,11 @@
 ---
 title: DefendableDocs
-description: The operating manual for DefendableOS. Books and records · class A 5-cap STNL documentation for the entire DefendableOS ecosystem.
+description: The operating manual for DefendableOS and DefendableCloud. The engine that verifies agentic work. The hosted vault that proves it. Books and records.
 template: splash
 hero:
   tagline: |
-    The operating manual for DefendableOS.
-    Books and records. Class A 5-cap STNL.
+    The operating manual for DefendableOS and DefendableCloud.
+    The engine that verifies. The vault that proves.
     Ring ring · to the shed.
   image:
     file: ../../assets/logo.svg
@@ -17,79 +17,85 @@ hero:
     - text: View Architecture
       link: /ecosystem/architecture/
       icon: external
-    - text: Verify a Deed
-      link: /streetledger/verify-a-deed/
+    - text: Verify a Receipt
+      link: /defendablecloud/generate-a-receipt/
       icon: external
 ---
 
 :::tip[Field status — audited prototype]
-A controlled, **synthetic** customer-support agent-operations demo is now fielded and
-independently audited (Codex Tribunal, **VERIFIED_AS_REPAIRED_WITH_LIMITATIONS**).
-See **[Field Proof v0.1](/field-release/overview/)** and try the live demo at
-[defendablecloud.com/agent-operations-demo](https://defendablecloud.com/agent-operations-demo).
-Much of the wider ecosystem below remains **ROADMAP / NOT YET IMPLEMENTED**; it is **NOT CLEARED
-FOR PRODUCTION** or external SaaS enforcement.
+A controlled, **synthetic** customer-support agent-operations demo is fielded and
+independently audited (Codex audit, **VERIFIED_AS_REPAIRED_WITH_LIMITATIONS**).
+See **[Field Proof v0.1](/field-release/overview/)**. The DefendableCloud Vault
+(`api.defendablecloud.com` · `app.defendablecloud.com`) is live as a hosted
+proof vault. SHA-256 establishes per-org hash-chained content integrity in-house —
+no external chain anchoring on the spine.
 :::
 
-## DefendableOS is the defense layer for AI agents.
+## DefendableOS is the engine. DefendableCloud is the proof vault.
 
-**Offense goes dark.** The business is offline. It can't score.
+> **DefendableOS** runs the rulebook. **DefendableCloud** runs the receipts.
 
-DefendableOS captures the work · translates the meaning · runs the Tribunal · issues receipts · deeds the record · trains the repair layer.
-
-DefendableDocs explains the system from block zero: language · router · communicator · Tribunal · receipts · DDEED · StreetLedger · StreetChat · SwarmFixer · edge appliances · books and records.
-
-## The four layers
-
-- **The System** — [DefendableOS](/defendableos/overview/) · the operating system · [Mr. Defendable](/mr-defendable/overview/) · the principal voice
-- **The Language** — [Defend-A-Pedia](/defend-a-pedia/overview/) · the vocabulary canon · [Glossary](/ecosystem/glossary/) · operator terms in plain English
-- **The Rails** — [StreetChat](/streetchat/overview/) · the capture rail · [StreetLedger](/streetledger/overview/) · the proof rail
-- **The Trust** — [Tribunal](/tribunal/overview/) · the judge · [DDEED](/ddeed/overview/) · the receipt · [Cost to Mint](/cost-to-mint/overview/) · the economics
-
-## The 9-step ecosystem chain
-
-Every piece of AI work flows through one chain:
+Every piece of agentic work that flows through the platform follows **one primitive — the Defendable Run**:
 
 ```
-Human / Client / Board / Agent
-        ↓
-StreetChat / DefendableRouter
-        ↓
-Communicator
-        ↓
-Tribunal
-        ↓
-Honey · Royal Jelly · Jelly · Propolis
-        ↓
-Receipt
-        ↓
-DDEED
-        ↓
-StreetLedger
-        ↓
-SwarmFixer → Communicator vNext
+Inputs → Evidence → Execution → Checks → Verdict → Approval → Receipt
 ```
 
-Every step is deeded. Every deed has 5 Proofs. *(Status: this 9-step chain is the design
-target. In the audited prototype today, SHA-256 establishes **content-integrity linkage only**
-— not public anchoring, authorship, or external attestation. Public-hash resolution / anchoring
-is ROADMAP. See [Field Proof v0.1](/field-release/overview/).)*
+A client uploads work or sends an agent submission. The Cloud loads the **Flight Sheet** — the declared rulebook for that lane. The OS's referee engine runs the rules deterministically and throws **flags** when a rule is violated. A human approves. The Cloud mints a hash-chained **Receipt**.
+
+That's the whole loop. No hidden judge model. No "seems good." No quality vibes. The referee is a rulebook.
+
+## The two surfaces of this manual
+
+- **[DefendableOS](/defendableos/overview/)** — the engine · verifies work against a declared rulebook · the [referee](/tribunal/overview/) is a rulebook engine, not a judge model · throws flags, not opinions.
+- **[DefendableCloud](/defendablecloud/overview/)** — the hosted vault · runs Defendable Runs across three lanes (Agent Work · Dataset · Compute Receipts) · stores receipts on a per-org hash chain · serves the [Vault portal](https://app.defendablecloud.com).
+
+Around the two surfaces:
+
+- **The Language** — [Defend-A-Pedia](/defend-a-pedia/overview/) · the vocabulary canon · [Glossary](/ecosystem/glossary/) · operator terms in plain English.
+- **The Voice** — [Mr. Defendable](/mr-defendable/overview/) · principal voice · CRE-broker discipline · receipts before claims.
+- **The Books** — [DefendableLedger](/defendableledger/overview/) · in-house hash-chained books and records · NOT external chain anchoring.
+
+## The Defendable Run, end to end
+
+```
+Client / Operator / Agent
+        ↓
+Flight Sheet            ← the declared rulebook for the lane
+        ↓
+Assignment + Evidence   ← what the work is, what's on the table
+        ↓
+Submission              ← the agent's structured output (JSON, re-derivable)
+        ↓
+Referee (rulebook engine)
+        ↓
+Checks: pass / flag / open · per-rule severity · per-flag tier (low/mid/high)
+        ↓
+Verdict (score = % of declared rules satisfied)
+   honey = no flags + approved · jelly = noncritical flags · propolis = critical flag
+        ↓
+Human Approval          ← always · receipts only mint on approval
+        ↓
+Receipt                 ← per-org hash chain · JSON + PDF · public shareable link
+```
+
+Every receipt links to its predecessor. Verification is client-side WebCrypto, no server round-trip. *(Status: the chain is live for Eval, Cook, and Incident receipts on `api.defendablecloud.com`. SHA-256 establishes content-integrity linkage. Public external anchoring is intentionally NOT in scope — see the [Kill Hedera doctrine](/defendableledger/kill-hedera/).)*
 
 ## The doctrine
 
-> *"The docs are the operating manual."*
-> *"The operating manual becomes trust."*
-> *"Trust becomes adoption."*
-> *"Adoption becomes books and records."*
+> *"The referee is a rulebook, not a judge."*
+> *"Agents earn their lanes."*
+> *"A human holds final authority."*
+> *"The trust layer compounds inside the house."*
 
 > *"To the shed."* — Mr. Defendable
 
 ## Get oriented
 
-- **Board / Principal** → [Getting Started](/getting-started/) → [Ecosystem Overview](/ecosystem/overview/) → [Board Flight Sheet](/defendableos/board-flight-sheet/)
-- **Operator / Builder** → [Architecture](/ecosystem/architecture/) → [DDEED Schema](/ddeed/deed-schema/) → [API Overview](/api/overview/)
-- **Buyer / Customer** → [What DefendableOS Is](/defendableos/what-it-is/) → [Buyer Profile](/defendableos/buyer-profile/) → [Use Cases](/defendableos/use-cases/)
-- **Developer** → [Schemas](/schemas/overview/) → [Examples](/examples/overview/) → [Operations](/operations/overview/)
+- **Board / Principal** → [Getting Started](/getting-started/) → [DefendableOS · What It Is](/defendableos/what-it-is/) → [DefendableCloud · Overview](/defendablecloud/overview/)
+- **Operator / Builder** → [Architecture](/ecosystem/architecture/) → [The Defendable Run](/defendablecloud/the-defendable-run/) → [Rulebook Engine](/defendableos/rulebook-engine/)
+- **Buyer / Customer** → [DefendableCloud · Three Lanes](/defendablecloud/three-lanes/) → [Generate a Receipt](/defendablecloud/generate-a-receipt/) → [Buyer Profile](/defendableos/buyer-profile/)
+- **Developer** → [Schemas](/schemas/overview/) → [Examples](/examples/overview/) → [API Overview](/api/overview/)
 
 ***
 

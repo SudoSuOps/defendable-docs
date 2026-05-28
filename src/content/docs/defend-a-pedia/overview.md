@@ -5,9 +5,9 @@ description: The canonical vocabulary of DefendableOS · 62+ DDEED-VOCAB terms a
 
 ## What Defend-A-Pedia is
 
-The vocabulary canon for the entire DefendableOS ecosystem. Every operator term · every Tribunal classification · every business concept used inside the platform is deeded as a `DDEED-VOCAB-*` artifact at [defendapedia.eth](https://ledger.mrdefendable.com/defend-a-pedia).
+The vocabulary canon for the entire DefendableOS + DefendableCloud ecosystem. Every operator term · every referee severity · every business concept used inside the platform is deeded as a `DDEED-VOCAB-*` artifact, published canonically on [DefendableLedger](https://defendableledger.com) and read-mirrored at `defendapedia.eth`.
 
-62+ terms in the public canon as of v0.3.0 · all hashed · all anchored on Hedera HCS topic `0.0.10291838`.
+62+ terms in the public canon as of v0.3.0 · all hashed · all on the in-house DefendableLedger hash chain. *No external chain anchoring — see [Kill Hedera doctrine](/defendableledger/kill-hedera/).*
 
 ## Why vocabulary first
 

@@ -11,7 +11,7 @@ description: How a Defend-A-Pedia term becomes a public deed · the 7-step pipel
 4. SHA-256 hash of source markdown
 5. Mint `DDEED-VOCAB-{CATEGORY}-{SLUG}-v{N}` · publish to object storage tree
 6. Add to manifest · update SHA256SUMS · recompute ledger root
-7. Anchor on Hedera HCS topic 0.0.10291838 · publish to ENS at `defendapedia.eth/{category}/{slug}`
+7. Append to the in-house DefendableLedger JSONL hash chain · publish to ENS read-mirror at `defendapedia.eth/{category}/{slug}` *(read-mirror only · NOT an anchor · see [Kill Hedera doctrine](/defendableledger/kill-hedera/))*
 
 ## The deed schema
 

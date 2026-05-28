@@ -24,10 +24,10 @@ Every DDEED — regardless of class — carries five proofs. No exceptions:
 | Proof | What it documents |
 |---|---|
 | **Origin** | Who created it · when · where · in what context. |
-| **Quality** | Tribunal classification · validator confidence · evidence strength. |
-| **Process** | Pipeline version · which engines · what steps. |
+| **Quality** | [defendablecloud.verdict/v1](/schemas/tribunal-verdict/) · severity · score = % of declared rules satisfied · risk breakdown. |
+| **Process** | Pipeline version · which engines · what rulebook version applied. |
 | **Economics** | Cost to mint · training-pair value · per-deed economics. |
-| **Trust** | Canonical JSON hash · object-storage path · ENS anchor · Hedera transaction. |
+| **Trust** | Canonical JSON hash · object-storage path · per-org hash-chain coordinates (parent_hash + receipt_sha256). *(No external chain anchor — see [Kill Hedera doctrine](/defendableledger/kill-hedera/).)* |
 
 See [DDEED Overview](/ddeed/overview/) for the full schema.
 
@@ -120,7 +120,6 @@ Default baselines:
 | Owned RTX 6000 amortized | $0.80 / hour |
 | Validator pass | $0.0001 / pass |
 | Storage | $0.023 / GB / month |
-| Hedera HCS message | $0.0001 / msg |
 | SwarmOS baseline | $0.0052 / deed |
 | Sweet spot (12×Qwen-9B @ 77% VRAM) | $0.0006 / deed |
 

@@ -197,7 +197,6 @@ Default baselines (operator-tunable):
 | Owned RTX 6000 amortized | $0.80 / hour |
 | Validator pass (Qwen-9B equivalent) | $0.0001 / pass |
 | Storage (Tigris-equivalent) | $0.023 / GB / month |
-| Hedera HCS message | $0.0001 / msg |
 | Hyperscaler comparison (AWS p4d.24xlarge) | $32.77 / hour |
 | Human-only analyst | $200 / hour |
 
@@ -205,14 +204,14 @@ The full [Cost to Mint](/cost-to-mint/overview/) section breaks down each input,
 
 ## Cross-rail data flow (one paragraph)
 
-Audio enters via StreetChat. Transcript and street-meaning are extracted locally. Communicator maps to canonical vocabulary from Defend-A-Pedia (which lives publicly on StreetLedger). Tribunal scores the event. Receipt and DDEED-CHAT are emitted. The deed lands in StreetLedger and is anchored on Hedera HCS topic `0.0.10291838`. SwarmFixer reads any Jelly-tier artifacts for repair training. The cycle compounds.
+Audio enters via StreetChat. Transcript and street-meaning are extracted locally. Communicator maps to canonical vocabulary from Defend-A-Pedia (which lives publicly on DefendableLedger). The [rulebook engine](/defendableos/rulebook-engine/) evaluates the event against the declared Flight Sheet. Receipt and DDEED-CHAT are emitted; the deed joins the in-house per-org hash chain. SwarmFixer reads any propolis-tier flags for repair-corpus training. The cycle compounds — *no external chain anchor on the spine, see [Kill Hedera doctrine](/defendableledger/kill-hedera/)*.
 
 ## Next reads
 
 - [Glossary](/ecosystem/glossary/) — every term in the diagrams in one line.
 - [Domain Map](/ecosystem/domain-map/) — every brand surface.
 - [DDEED Schema](/ddeed/deed-schema/) — the canonical JSON for every deed.
-- [Tribunal Scoring Model](/tribunal/scoring-model/) — how the classification math actually works.
+- [Rulebook Engine](/defendableos/rulebook-engine/) — how the referee actually works.
 
 ***
 

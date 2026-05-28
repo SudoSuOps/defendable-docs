@@ -1,110 +1,124 @@
 ---
 title: Ecosystem Overview
-description: The complete DefendableOS ecosystem in one read. The four brand surfaces · the five operational rails · the trust infrastructure layer that sits above the AI agent ecosystem.
+description: DefendableOS + DefendableCloud in one read. The engine that verifies agentic work, the hosted vault that proves it, and the books-and-records surfaces around them.
 ---
 
-DefendableOS is not one thing. It is a **stack of trust infrastructure** that sits above the AI agent ecosystem and turns AI work into defendable business records.
+DefendableOS is not one thing. It is the trust infrastructure layer that sits above the AI-agent ecosystem and turns AI work into defendable business records. **DefendableOS is the engine.** **DefendableCloud is the hosted proof vault.** Everything else in this docs site is either a language surface (Defend-A-Pedia, the voice), an adjacent product surface (DefendableLedger), or an internal component (Router, Communicator, Referee, Storage).
 
-## The four publicly facing brand surfaces
+## The two product surfaces this manual covers
 
-Each surface has one role. Each role is non-overlapping.
+| Surface | Role | What it does | Lives at |
+|---|---|---|---|
+| **[DefendableOS](/defendableos/overview/)** | The ENGINE — *verify it* | Runs the [referee](/defendableos/rulebook-engine/) — a deterministic rulebook engine that applies declared rules and throws flags. Never a judge model. | defendableos.com |
+| **[DefendableCloud](/defendablecloud/overview/)** | The VAULT — *prove it* | Hosted proof vault. Runs Defendable Runs across three lanes (Agent Work · Dataset · Compute Receipts). Mints hash-chained receipts. | defendablecloud.com · api.defendablecloud.com · app.defendablecloud.com |
 
-| Surface | Role | What it does |
-|---|---|---|
-| **[mrdefendable.com](https://mrdefendable.com)** | The FACE | The principal voice. Founder memos, proposal intake, board-facing materials. |
-| **[defendableos.com](https://defendableos.com)** | The SYSTEM | The trust operating system. Product surface for principals and operators. |
-| **[ledger.mrdefendable.com](https://ledger.mrdefendable.com)** | The LEDGER | Public deeded-vocabulary proof layer. Every term hashed and verifiable. |
-| **[chat.mrdefendable.com](https://chat.mrdefendable.com)** | The CHAT | Live language capture rail. Audio → transcript → meaning → deed. |
+The shape of this docs site mirrors that split: a section per surface, with the supporting language and books-and-records surfaces around them.
 
-Two more publicly owned surfaces are forthcoming:
+## The language and voice surfaces around them
 
 | Surface | Role |
 |---|---|
-| **offensetotheshed.com** | The CULTURE — operator doctrine + written 5-pillar blog |
-| **painintheshed.com** | The MEDIA — the cost-of-intelligence podcast |
+| **[Mr. Defendable](/mr-defendable/overview/)** | The FACE — principal voice · CRE-broker discipline · founder memos · proposal intake. Lives at `mrdefendable.com`. |
+| **[Defend-A-Pedia](/defend-a-pedia/overview/)** | The VOCABULARY — the term canon · the rulebook for the rulebook · every operator term in plain English. |
+| **[DefendableLedger](/defendableledger/overview/)** | The BOOKS — sovereign in-house hash-chained ledger · the canonical books-and-records surface · NOT external chain anchoring. Lives at `defendableledger.com`. |
+| **offensetotheshed.com** | The CULTURE — operator doctrine + written 5-pillar blog (forthcoming surface). |
+| **painintheshed.com** | The MEDIA — the cost-of-intelligence podcast (forthcoming surface). |
 
-All six are positioned as DEFENSE — even when the URL contains "offense" or "pain." That is the brand-doctrine move: we take offense and we put it in the shed.
+All surfaces are positioned as DEFENSE — even when the URL contains "offense" or "pain." That is the brand-doctrine move: we take offense and we put it in the shed.
 
-## The five operational rails
+## The one primitive — the Defendable Run
 
-Underneath the surfaces, the platform runs as a five-rail architecture.
-
-| Rail | Component | What it does |
-|---|---|---|
-| **Rail 1** | [DefendableRouter](/defendablerouter/overview/) | Intake — captures every event with ENS · app · agent identifiers and writes the receipt at the edge. |
-| **Rail 2** | [Communicator](/communicator/overview/) | Meaning — translates human street talk into structured directives both ways. |
-| **Rail 3** | [Tribunal](/tribunal/overview/) | Judgment — runs the validator chain and emits Honey · Royal Jelly · Jelly · Propolis verdicts. |
-| **Rail 4** | Object Storage | Memory — durable storage of receipts · transcripts · deeds with cross-ENS pathing. |
-| **Rail 5** | [DDEED](/ddeed/overview/) | Trust — every artifact gets a 5-Proof deed anchored on Hedera. |
-
-Around the rails sit the **vocabulary** (Defend-A-Pedia · the canon), the **repair layer** (SwarmFixer · turns Jelly into Royal Jelly), and the **classification taxonomy** (Honey · Royal Jelly · Jelly · Propolis).
-
-## The trust pipeline · end to end
-
-Every piece of AI work in the system flows through the same nine steps:
+Every piece of agentic work that flows through DefendableOS + DefendableCloud follows one primitive:
 
 ```
-Human / Client / Board / Agent
-        ↓
-StreetChat / DefendableRouter      ← capture
-        ↓
-Communicator                        ← meaning
-        ↓
-Tribunal                            ← judgment
-        ↓
-Honey · Royal Jelly · Jelly · Propolis  ← classification
-        ↓
-Receipt                             ← record
-        ↓
-DDEED                               ← deed
-        ↓
-StreetLedger                        ← publication
-        ↓
-SwarmFixer → Communicator vNext     ← repair + retrain
+Inputs → Evidence → Execution → Checks → Verdict → Approval → Receipt
 ```
 
-No step skips. Every step writes its own deed. The platform is **deeded end to end**.
+A client uploads work or sends an agent submission to the Cloud. The Cloud loads the **Flight Sheet** (the declared rulebook for that lane). The OS's **referee** runs the rules deterministically and throws **flags** when a rule is violated. A human approves. The Cloud mints a hash-chained **Receipt** — JSON + PDF + public share link.
+
+No hidden judge model. No 1-100 quality grade. Score = % of declared rules satisfied.
+
+## The internal components (inside DefendableOS)
+
+| Component | What it does |
+|---|---|
+| **[DefendableRouter](/defendablerouter/overview/)** | Intake — captures every event with org · app · agent identifiers and writes the structured submission at the edge. |
+| **[Communicator](/communicator/overview/)** | Meaning — translates human street talk into structured directives both ways. Optional advisory layer; never on the receipt path. |
+| **[Referee](/tribunal/overview/)** *(historically: Tribunal)* | Rulebook engine — applies declared rules · throws flags · emits honey / jelly / propolis severity. **Not a judge model.** |
+| **Object Storage** | Memory — durable storage of receipts · transcripts · evidence (Tigris / R2 / S3). |
+| **DefendableLedger** | Trust — every receipt joins the per-org hash chain · in-house · NOT external chain anchoring. |
+
+Around the components sit the **vocabulary** ([Defend-A-Pedia](/defend-a-pedia/overview/)) and the **repair layer** ([SwarmFixer](/swarmfixer/overview/) · the propolis corpus is what trains the repair model).
+
+## The Defendable Run, end to end
+
+```
+Client / Operator / Agent
+        ↓
+DefendableCloud loads the Flight Sheet (declared rulebook)
+        ↓
+Assignment + Evidence            ← what the work is, what's on the table
+        ↓
+Submission (structured JSON)     ← agent's output, re-derivable math
+        ↓
+Referee (DefendableOS · rulebook engine)
+        ↓
+Checks: pass / flag / open · per-flag tier (low/mid/high) · severity (honey/jelly/propolis)
+        ↓
+Verdict (score = % of declared rules satisfied)
+        ↓
+Human Approval                   ← receipts only mint on approval
+        ↓
+Receipt                          ← per-org hash chain · JSON + PDF + share link
+        ↓
+Failure modes → repair lift      ← propolis flags route to SwarmFixer corpus
+```
+
+No step skips. Every step writes its own record. The platform is **receipt-chained end to end**.
 
 ## What sits where
 
 A simple way to remember the geography:
 
-- **Above the rails** — the brand surfaces (mrdefendable · defendableos · ledger · chat · etc).
-- **Inside the rails** — the operational components (Router · Communicator · Tribunal · Storage · DDEED).
-- **Around the rails** — the vocabulary canon · the repair layer · the classification taxonomy.
-- **Underneath the rails** — Hedera HCS topic `0.0.10291838` (immutable anchor) · IPFS pinning (mirror) · object storage (Tigris / R2 / S3) · 4-ENS quartet (`defendapedia.eth` · `streetvocab.eth` · `streetledger.eth` · `streetchat.eth`).
+- **The vault** — `app.defendablecloud.com` (the portal) + `api.defendablecloud.com` (the API).
+- **The engine** — the OS's referee + rulebook + receipt mint, served from the API.
+- **The books** — `defendableledger.com` (the canonical public surface for published records).
+- **The voice** — `mrdefendable.com` (the face) + Defend-A-Pedia (the vocabulary canon).
+- **Underneath** — per-org hash-chained receipts in Postgres + Tigris object storage. *No external chain anchoring on the spine — see the [Kill Hedera doctrine](/defendableledger/kill-hedera/).*
 
-## How the rails compose into a real-world flow
+## How the surfaces compose into a real-world flow
 
 Pick any common operator scenario:
 
 | Scenario | Path through the stack |
 |---|---|
-| **Client calls Mr. Defendable** | StreetChat captures audio → Whisper transcribes → Communicator extracts directives → DDEED-CHAT issued → StreetLedger anchored. |
-| **AI agent completes an assignment** | DefendableRouter writes receipt → Tribunal scores it → Honey/Jelly/Propolis classification → DDEED issued → StreetLedger published. |
-| **Vocabulary expansion** | StreetChat surfaces unknown term → Communicator proposes canonical mapping → Defend-A-Pedia review → DDEED-VOCAB minted → StreetLedger updated. |
-| **Failed AI output** | Tribunal classifies as Jelly → SwarmFixer repair pipeline runs → repaired output re-judged → DDEED-REPAIR issued → training pair captured. |
-| **Board diligence** | Board paste any DDEED hash → Verify rail computes SHA-256 client-side → match or no-match · zero round-trip. |
+| **Client uploads an agent submission for eval** | DefendableCloud loads the Flight Sheet → DefendableOS referee runs structured executor + math re-derivation + DSL gates → flags raised → human approves → eval receipt minted. |
+| **Lender underwrites a CRE deal via agent** | Agent submission carries calculations + evidence → referee re-derives DSCR / LTV from the agent's own inputs → declared lending gates (DSCR ≥ 1.20) checked → verdict honey or propolis → receipt. |
+| **Dataset gets a quality receipt** | Dataset submission → schema/balance/dedup rules applied → flags by tier → dataset receipt. |
+| **Compute benchmark gets a receipt** | Benchmark output → declared performance thresholds → compute receipt. |
+| **Client diligence on any receipt** | Open the public share URL → SHA-256 chain verification client-side → match or no-match · zero server trust. |
 
-Same five rails. Different entry points. **One audit trail.**
+Same vault. Different lanes. **One audit trail per org.**
 
 ## What this lets the business actually do
 
-- **Prove what the AI did** — every assignment has a receipt and a deed.
-- **Defend the decision later** — every Proof of Quality cites the validator chain.
-- **Repair instead of re-run** — SwarmFixer extracts repair lift from failure traces.
-- **Train the next model on real operator speech** — StreetChat pairs feed the Communicator vNext.
-- **Hand a buyer institutional-grade books-and-records on day one** — StreetLedger is publicly verifiable from the moment a term is deeded.
+- **Prove what the AI did** — every Run has a deterministic verdict and a receipt.
+- **Defend the decision later** — every flag cites the declared rule it violated.
+- **Repair instead of re-run** — propolis flags route to the repair-corpus for SwarmFixer.
+- **Sort the failure** — every flag falls into one of three buckets: **work-defect** (the agent missed) · **deal-finding** (the math is right, the policy says no) · **stack-fit** (the model/compute is below the lane).
+- **Hand a buyer institutional-grade books-and-records on day one** — receipts are publicly verifiable from the moment they mint.
 
 That last bullet is the moat. AI companies typically can't show buyers their books and records. We can. Because we **are** the books and records.
 
 ## Next reads
 
-- [Architecture](/ecosystem/architecture/) — the five core diagrams.
+- [Architecture](/ecosystem/architecture/) — the core diagrams.
+- [DefendableOS · What It Is](/defendableos/what-it-is/) — the engine in plain English.
+- [DefendableCloud · Overview](/defendablecloud/overview/) — the vault in plain English.
+- [The Defendable Run](/defendablecloud/the-defendable-run/) — the one primitive, in detail.
+- [Rulebook Engine](/defendableos/rulebook-engine/) — how the referee works.
 - [Glossary](/ecosystem/glossary/) — every operator term with one-liner definitions.
-- [Domain Map](/ecosystem/domain-map/) — every brand surface and how they cross-link.
-- [Operating Principles](/ecosystem/operating-principles/) — the doctrine that runs every decision.
 
 ***
 
-🐝 *One ecosystem · four surfaces · five rails · one audit trail · to the shed.*
+🐝 *Two product surfaces · one audit trail per org · the referee is a rulebook · to the shed.*

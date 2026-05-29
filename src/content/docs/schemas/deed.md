@@ -3,16 +3,27 @@ title: Deed Schema
 description: DDEED-{CLASS} — books-and-records artifacts published to DefendableLedger. 5 Proofs · in-house hash-chained · NOT externally anchored.
 ---
 
+:::note[Canonical-shape / roadmap]
+The DDEED schema and DefendableLedger are a **canonical declaration**. The
+in-house hashing discipline is locked and the shape below is the books-and-records
+target — but there is **no deployed mint endpoint** for deeds today. Deeds are
+roadmap. The thing that is **deployed and minting** is the DefendableCloud
+receipt (hash-chained, `api.defendablecloud.com`); see
+[Receipt Schema](/schemas/receipt/).
+:::
+
 ## What a deed is
 
-A **DDEED** is a books-and-records artifact published to [DefendableLedger](/defendableledger/overview/). Deeds are distinct from [DefendableCloud receipts](/schemas/receipt/):
+A **DDEED** is the books-and-records artifact class for
+[DefendableLedger](/defendableledger/overview/). Deeds are distinct from
+[DefendableCloud receipts](/schemas/receipt/):
 
-| | Receipt | Deed |
+| | Receipt (deployed) | Deed (roadmap) |
 |---|---|---|
-| Surface | DefendableCloud Vault | DefendableLedger (books-and-records surface) |
+| Surface | DefendableCloud Vault — LIVE | DefendableLedger (books-and-records surface) — roadmap |
 | Chain | per-org hash chain (Cloud) | append-only JSONL ledger (DefendableLedger) |
-| Lane | Agent / Dataset / Compute / Cook / Incident Runs | Vocabulary terms (DDEED-VOCAB) · Media artifacts (DDEED-MEDIA-*) · Founder origin (DDEED-FOUNDER-ORIGIN) · etc. |
-| Required? | Yes — every Run mints one on approval. | Selectively — books-and-records artifacts only. |
+| Lane | Run, Eval, Cook, Incident, Dataset-download, Model-pin | Vocabulary terms (DDEED-VOCAB) · Media artifacts (DDEED-MEDIA-*) · Founder origin (DDEED-FOUNDER-ORIGIN) · etc. |
+| Status | Cloud Runs mint a `defendablecloud.receipt/v1`-family receipt on approval. | The deed is the books-and-records artifact class for DefendableLedger — declared, not yet wired to a mint endpoint. |
 
 Receipts and deeds **share the same in-house hashing discipline** and the same **no-external-anchoring** doctrine ([Kill Hedera](/defendableledger/kill-hedera/)).
 

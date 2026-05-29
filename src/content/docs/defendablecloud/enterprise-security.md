@@ -38,7 +38,7 @@ Recommended launch limits:
 | `POST /auth/request` | 5 requests per email/IP per 10 minutes |
 | `POST /auth/verify` | 20 requests per IP per 10 minutes |
 | `POST /auth/accept-invite` | 20 requests per IP per 10 minutes |
-| `POST /library/*/download` | 60 requests per org/IP per hour, plus API daily quota |
+| `POST /datasets/catalog/*/download` | 60 requests per org/IP per hour, plus API daily quota |
 | `GET /share/*/download` | 120 requests per token/IP per hour |
 | `/internal/*` | allow only private/operator egress IPs, plus API internal key |
 

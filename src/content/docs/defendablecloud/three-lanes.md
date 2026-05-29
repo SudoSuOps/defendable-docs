@@ -98,8 +98,12 @@ The Incident Run carries: trigger (e.g. `recurring_flag` · `dark` · `rogue` ·
 |---|---|---|---|---|---|
 | Primitive | Defendable Run | Defendable Run | Defendable Run | Defendable Run | Defendable Run |
 | Rulebook | Flight Sheet | Flight Sheet | Flight Sheet | declared Flight Sheet + lift threshold | declared governance policy |
-| Receipt schema | `defendablecloud.eval-receipt/v1` | `defendablecloud.dataset-receipt/v1` | `defendablecloud.compute-receipt/v1` | `defendablecloud.cook-receipt/v1` | `defendablecloud.incident-receipt/v1` |
+| Receipt schema | `defendablecloud.eval-receipt/v1` | `eval-receipt/v1` (flight-sheet) · else `receipt/v1` | `eval-receipt/v1` (flight-sheet) · else `receipt/v1` | `defendablecloud.cook-receipt/v1` | `defendablecloud.incident-receipt/v1` |
 | Hash chain | per-org | per-org | per-org | per-org | per-org |
+
+:::note[Receipt schemas — current truth]
+The codebase mints these receipt schemas today: `defendablecloud.receipt/v1` (generic Run), `defendablecloud.eval-receipt/v1` (flight-sheet eval lane), `defendablecloud.cook-receipt/v1`, `defendablecloud.incident-receipt/v1`, plus `defendablecloud.dataset-download-receipt/v1` and `defendablecloud.model-pin-receipt/v1` for the asset routes. There are **no** dedicated `dataset-receipt/v1` or `compute-receipt/v1` schemas. A Dataset or Compute Run driven by a Flight Sheet mints the **eval-receipt/v1** schema (it runs the same referee); a generic Run mints **receipt/v1**. Dedicated per-lane Dataset/Compute receipt schemas are roadmap.
+:::
 
 ***
 

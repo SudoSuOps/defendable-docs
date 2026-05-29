@@ -1,6 +1,6 @@
 ---
 title: StreetChat · Overview
-description: Live street-language capture rail. Audio → transcript → meaning → tribunal → deed → StreetLedger.
+description: Roadmap — street-language capture rail. Audio → transcript → meaning → tribunal → deed → StreetLedger.
 ---
 
 :::caution[Status — audited-prototype reality]
@@ -16,9 +16,9 @@ blockchain anchoring.
 
 ## What StreetChat is
 
-The capture rail for DefendableOS. Live at [chat.mrdefendable.com](https://chat.mrdefendable.com). Runs at the edge (operator-local Python CLI) and surfaces in the browser.
+The capture rail for DefendableOS. Designed to run at the edge (operator-local Python CLI) and surface in the browser at the planned [chat.mrdefendable.com](https://chat.mrdefendable.com) endpoint (not yet deployed).
 
-## The pipeline (8 stages)
+## The pipeline (8 stages · designed)
 
 1. **Ingest** — audio file OR transcript paste · session registered
 2. **Transcribe** — faster-whisper OR pre-built segments
@@ -51,6 +51,3 @@ The media becomes the dataset. Marketing becomes corpus.
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

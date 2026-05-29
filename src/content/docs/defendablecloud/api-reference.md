@@ -228,9 +228,9 @@ curl -X POST https://api.defendablecloud.com/runs/$RUN_ID/receipt \
   "org_seq": 4,
   "parent_hash": "9c2f...e1a4",
   "receipt_sha256": "a83e...77f1",
-  "share_token": "shr_3f7c...8d21",
-  "share_url": "https://api.defendablecloud.com/share/shr_3f7c...8d21",
-  "pdf_url": "https://api.defendablecloud.com/share/shr_3f7c...8d21/pdf"
+  "share_token": "kQ8vN2xJ7pR4tW1mZ9bL3cF6",
+  "share_url": "https://api.defendablecloud.com/share/kQ8vN2xJ7pR4tW1mZ9bL3cF6",
+  "pdf_url": "https://api.defendablecloud.com/share/kQ8vN2xJ7pR4tW1mZ9bL3cF6/pdf"
 }
 ```
 
@@ -261,10 +261,10 @@ CLI: `defendable runs submission` · `runs checks` · `runs flags` · `runs verd
 Public receipt view. Returns a `PublicReceipt` with `verified` boolean (server-side hash recompute).
 
 ```bash
-curl https://api.defendablecloud.com/share/shr_3f7c...8d21
+curl https://api.defendablecloud.com/share/kQ8vN2xJ7pR4tW1mZ9bL3cF6
 ```
 
-Anyone can recompute the verification themselves — every receipt carries `payload_hash` and `receipt_sha256`; the chain is per-org and walkable.
+The public view carries the full canonical `payload`, the stored `receipt_sha256`, and a server-recomputed `verified` boolean. `verified` is the SHA-256 of the canonical payload compared to the stored `receipt_sha256` — anyone can recompute it client-side from the payload and confirm the match themselves. The chain is per-org and walkable via [`GET /ledger`](#ledger--the-per-org-hash-chain).
 
 CLI: `defendable verify <token-or-url>`.
 

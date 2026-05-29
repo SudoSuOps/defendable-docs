@@ -28,6 +28,10 @@ Start with [DefendableCloud Overview](/defendablecloud/overview/), [The Defendab
 Older ecosystem pages remain useful context, but the cloud docs now describe the production-facing platform.
 :::
 
+:::note[What is deployed today]
+DefendableCloud is the only publicly deployed surface, live at `api.defendablecloud.com`. DefendableRouter is a real backend (v0.1 spine, CI-verified) but runs locally and is not a public endpoint yet. Everything else on the map is roadmap.
+:::
+
 ## DefendableOS is the engine. DefendableCloud is the vault.
 
 DefendableOS runs the rulebook. DefendableCloud stores and shares the proof.
@@ -38,7 +42,7 @@ Every piece of agentic work that flows through the platform follows one primitiv
 Inputs -> Evidence -> Execution -> Checks -> Verdict -> Approval -> Receipt
 ```
 
-A client uploads work or sends an agent submission. The Cloud loads the Flight Sheet, the declared rulebook for the lane. The referee engine runs deterministic checks and throws flags when a rule is violated. A human approves. The Cloud mints a hash-chained receipt.
+A client uploads work or sends an agent submission. The Cloud loads the Flight Sheet, the declared rulebook for the lane. The referee engine runs deterministic checks and throws flags when a rule is violated. A human approves. The Cloud mints a receipt on a per-org hash chain, and `/ledger/verify` recomputes every hash, sequence number, and parent link so anyone can prove the chain has not been tampered with.
 
 No hidden judge model. No "seems good." No quality vibes. The referee is a rulebook.
 
@@ -61,20 +65,20 @@ No hidden judge model. No "seems good." No quality vibes. The referee is a ruleb
 
 ## The Platform Map
 
-| Product | Job |
-|---|---|
-| DefendableCloud | Hosted proof vault for Runs, receipts, datasets, models, incidents, and enterprise audit trails. |
-| DefendableOS | Verification doctrine and rulebook layer. |
-| DefendableDatasets | Dataset graph, registry, manifests, hashes, and fine-tuning pack exports. |
-| DefendableApps | Small edge agents for Jetson-class devices. |
-| DefendableRouter | Routing layer for agents, models, compute lanes, and receipts. |
-| DefendableLedger / DDEED | Longer-term public proof and deed language. |
+| Product | Job | Status |
+|---|---|---|
+| DefendableCloud | Hosted proof vault for Runs, receipts, datasets, models, incidents, and enterprise audit trails. | Live (`api.defendablecloud.com`) |
+| DefendableOS | Verification doctrine and rulebook layer. | Live (embodied in the Cloud) |
+| DefendableRouter | Routing layer for members, datasets, compute lanes, and jobs. Mints local checksummed receipts (a SHA-256 over canonical JSON per receipt), distinct from the Cloud's per-org hash chain. | v0.1 spine, local + CI-verified, not publicly deployed yet |
+| DefendableDatasets | Dataset graph, registry, manifests, hashes, and fine-tuning pack exports. | Roadmap / vision |
+| DefendableApps | Small edge agents for Jetson-class devices. | Roadmap / vision |
+| DefendableLedger / DDEED | Longer-term public proof and deed language. | Roadmap / vision |
 
 ## Enterprise Position
 
 DefendableCloud is an enterprise-grade launch foundation. It has real controls for auth, RBAC, API keys, receipt chains, public redaction, dataset quotas, WAF guidance, backups, incidents, secrets rotation, and CI gates.
 
-It is not yet a full best-in-class hyperscale cloud provider. SSO/SAML/OIDC, SCIM, external penetration testing, formal SOC2 audit, and public SLA/status workflows remain roadmap until implemented and tested.
+It is not yet a full hyperscale cloud provider. SSO/SAML/OIDC, SCIM, external penetration testing, formal SOC2 audit, and public SLA/status workflows remain roadmap until implemented and tested.
 
 ## Doctrine
 

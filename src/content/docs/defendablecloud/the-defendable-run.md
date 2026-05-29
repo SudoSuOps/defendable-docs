@@ -84,7 +84,7 @@ The receipt is **minted** via `POST /runs/{id}/receipt`:
 - The payload is canonicalized (sorted keys, no whitespace, UTF-8) and hashed (SHA-256).
 - The receipt's `parent_hash` points at the prior receipt for the same org (per-org hash chain).
 - The receipt is rendered to **PDF** via `fpdf2` (regenerable from the JSON payload — no separate PDF storage).
-- A **public share token** is issued (`/r/<token>`) — anyone can view the receipt and check the chain.
+- A **public share token** is issued; the receipt is served by the API at `GET /share/{token}` — anyone can view it and check the chain, no auth. (The Vault SPA may render a friendlier human-facing `/r/<token>` page on top of that endpoint; `/r/<token>` is the app route, `/share/{token}` is the API path.)
 
 ## Verification
 

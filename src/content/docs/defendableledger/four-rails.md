@@ -1,98 +1,99 @@
 ---
 title: DefendableLedger · Four Rails
-description: Every receipt mints four artifacts. Receipt · Verdict · Training Pair · Deed. One pass. Sovereign compute. Books and records.
+description: The doctrine — work should mint defendable artifacts. The four-rail pipeline is roadmap; the real receipt rails (cloud hash chain + router checksummed receipts) are documented honestly.
 ---
 
-## The four rails per intake
+## The doctrine
+
+Work should mint **defendable artifacts**, not just outputs. Every meaningful step ought to leave behind a receipt that can be recomputed, checked, and stood behind. That doctrine is canonical.
+
+The full four-rail pipeline that expresses it end to end is **roadmap**.
+
+:::note[Roadmap / vision — not built]
+The four-rail flow below (Receipt → Tribunal Verdict → SwarmJelly Training Pair → DefendableLedger Deed) is **design intent**. Tribunal-as-API grading, SwarmJelly tier routing, and hash-chained DefendableLedger Deeds are **not built**. What *is* built today: (1) the DefendableCloud per-org hash chain (LIVE), and (2) DefendableRouter v0.1 checksummed receipts (local). Those two are documented as real below.
+:::
 
 ```
-Client / StreetChat / API / Edge
+intake
   │
   ▼
-┌─────────────────────────────────────────────────────┐
-│ Rail 1 · Receipt                                    │
-│ DefendableRouter                                    │
-│ canonical receipt object · hashed · provenance      │
-└─────────────────────────────────────────────────────┘
+Rail 1 · Receipt          REAL  (cloud hash chain / router checksummed receipt)
   │
   ▼
-┌─────────────────────────────────────────────────────┐
-│ Rail 2 · Verdict                                    │
-│ Tribunal · SwarmCurator-9B (Qwen 3.5 · in-house)    │
-│ 4-dim rubric: accuracy · cre_judgment · format · score │
-└─────────────────────────────────────────────────────┘
+Rail 2 · Verdict          ROADMAP  (Tribunal · SwarmCurator-9B)
   │
   ▼
-┌─────────────────────────────────────────────────────┐
-│ Rail 3 · Training Pair                              │
-│ SwarmJelly                                          │
-│ pair extracted · Royal Jelly tier assigned          │
-│ in-house corpus grows                               │
-└─────────────────────────────────────────────────────┘
+Rail 3 · Training Pair    ROADMAP  (SwarmJelly · Royal Jelly tier)
   │
   ▼
-┌─────────────────────────────────────────────────────┐
-│ Rail 4 · Deed                                       │
-│ DefendableLedger                                    │
-│ append-only · hash-chained · sealed record          │
-│ → defendableledger.com publication                  │
-└─────────────────────────────────────────────────────┘
+Rail 4 · Deed             ROADMAP  (hash-chained ledger record)
 ```
 
-## Rail 1 · Receipt
+## Rail 1 · Receipt — REAL
 
-**Issued by:** DefendableRouter
-**Schema:** `router_receipt.json`
-**Hashes:** `canonical_receipt_sha256` + `receipt_sha256`
-**Provenance:** host · GPU · CUDA · issued_by
+Two real receipt rails exist today.
 
-Captures: client meaning · assignment · route · object-storage prefix · Tribunal stub · DDEED stub.
+### Cloud receipt (LIVE · hash-chained)
 
-[Receipt schema →](/schemas/router-receipt/)
+DefendableCloud mints a per-org hash-chained receipt at **api.defendablecloud.com**:
 
-## Rail 2 · Verdict
+- `receipt_id` = `DCR-{org_seq:06d}-{hex8}`
+- `org_seq` (sequential from 0), `parent_hash` (prior `receipt_sha256`; genesis = 64 zeros)
+- `receipt_sha256` = `sha256_hex(orjson.dumps(payload, OPT_SORT_KEYS))`
+- persisted in Postgres; JSON+PDF copy uploaded to Tigris best-effort
 
-**Issued by:** Tribunal · SwarmCurator-9B
-**Model:** in-house Qwen 3.5 base · sovereign GPU · no external API tax
-**Rubric (4 dimensions, 0.0–5.0):**
+[Hash-Chain Format →](/defendableledger/hash-chain/) · [Verify →](/defendableledger/verify/)
 
-- **accuracy** — how factually grounded and verifiable the assignment is
-- **cre_judgment** — how operator-grade and CRE-broker-like the assignment is
-- **format** — how cleanly structured the parsed assignment is
-- **score** — overall holistic score
+### Router receipt (local · checksummed-not-chained)
 
-**Outputs:** `verdict_id` · per-dim scores · `assignment_success` · `tier` · operator notes.
+DefendableRouter v0.1 (local, not publicly deployed) writes flat receipts to `data/receipts/YYYY-MM-DD.receipts.jsonl`:
 
-## Rail 3 · Training Pair
+```json
+{
+  "receipt_id": "rcpt_<hex>",
+  "receipt_type": "membership | dataset_access | compute_quote | compute_job | ...",
+  "member_id": "...",
+  "job_id": null,
+  "dataset_ids": [],
+  "amount_usd": "10.00",
+  "metadata": {},
+  "created_at": "2026-05-29T...",
+  "checksum_sha256": "<sha256 over canonical JSON excluding this field>"
+}
+```
 
-**Issued by:** SwarmJelly
-**Format:** `{pair_id, receipt_id, verdict_id, tier, input, output, rubric_scores, pair_sha256}`
-**Routes to:** `data/swarmjelly/<tier>/<pair_id>.json` + appends to `corpus_index.jsonl`
+Flat, per-line `checksum_sha256`, **not hash-chained** (no `parent_hash`). Tamper-evident per line only.
 
-Five Royal Jelly tiers: **Apex · Honey · Jelly · Pollen · Propolis**.
-[Royal Jelly Tiers →](/defendableledger/royal-jelly-tiers/)
+## Rail 2 · Verdict — ROADMAP
 
-## Rail 4 · Deed
+:::note[Not built]
+Tribunal grading via SwarmCurator-9B (Qwen 3.5 base, in-house) on a 4-dimension rubric (`accuracy · cre_judgment · format · score`) is design intent. No `verdict_id` is emitted by either codebase today.
+:::
 
-**Issued by:** DefendableLedger
-**Schema:** append-only hash-chained JSONL
-**Chain link:** each record's `parent_hash` = prior record's `record_sha256`
+## Rail 3 · Training Pair — ROADMAP
 
-Sealed record carries: `ledger_seq` · `record_id` · `record_type` · `parent_hash` · `payload_ref` · `payload_hash` · `issued_by` · `record_sha256`.
+:::note[Not built]
+SwarmJelly pair extraction and Royal Jelly tier routing (`data/swarmjelly/<tier>/`) are design intent. See [Royal Jelly Tiers](/defendableledger/royal-jelly-tiers/) for the taxonomy (canonical) versus the unbuilt tooling.
+:::
 
-[Hash-Chain Format →](/defendableledger/hash-chain/)
+## Rail 4 · Deed — ROADMAP
 
-## End-to-end ROI
+:::note[Not built]
+A separate hash-chained DefendableLedger "Deed" record (with `DLR-`/`ledger_seq` fields and a public defendableledger.com render) is design intent. The real hash chain that exists is the cloud's per-org chain described in Rail 1.
+:::
 
-| rail | cost | latency | mints asset |
+## What is built vs roadmap — ROI
+
+| rail | status | what exists | mints defendable asset |
 |---|---|---|---|
-| Receipt | sovereign GPU only | ms | ✅ |
-| Verdict | SwarmCurator-9B inference (sovereign) | 1–3s | ✅ |
-| Training Pair | extraction + tier assignment | ms | ✅ corpus compounds |
-| Deed | hash + write | ms | ✅ |
+| Receipt (cloud) | **REAL · LIVE** | per-org hash chain, Postgres, `/ledger` + `/ledger/verify` | ✅ recomputable, chained |
+| Receipt (router) | **REAL · LOCAL** | flat `checksum_sha256` receipts in JSONL | ✅ tamper-evident per line |
+| Verdict | roadmap | — | planned |
+| Training Pair | roadmap | — | planned |
+| Deed | roadmap | — | planned |
 
-**Every intake = 4 defendable assets minted · cost stays in cost-to-mint band.**
+The doctrine — every step mints a defendable artifact — holds. Today it is honored by two real receipt rails; the verdict/pair/deed rails are the build ahead.
 
 ***
 
-🐝 *Four rails · one receipt · every call · to the shed.*
+🐝 *Work mints artifacts · receipts you can stand behind · to the shed.*

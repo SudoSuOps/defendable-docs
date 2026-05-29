@@ -3,6 +3,10 @@ title: Unknown Term Review
 description: What happens when StreetChat detects a phrase not in Defend-A-Pedia.
 ---
 
+:::note[Roadmap — not yet built]
+The unknown-term review loop, DDEED-VOCAB minting, and the Defend-A-Pedia canon are **designed**, not built in the audited codebase. This page documents the intended flow. (See the [overview](/streetchat/overview/) for full status.)
+:::
+
 ## The flow
 
 1. StreetChat extractor detects a "strong phrase" not in the canon
@@ -20,6 +24,3 @@ The vocabulary canon expands organically from real conversations · NOT from syn
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

@@ -87,7 +87,7 @@ Click **Generate Receipt**. The Cloud mints the receipt:
 
 - **JSON** payload (canonical, sorted keys).
 - **PDF** rendered via `fpdf2` — regenerable from the payload.
-- **Public share URL** (`/r/<token>`) — anyone can view, no auth required.
+- **Public share URL** — the API serves the receipt at `GET /share/{token}`, no auth required. (The Vault SPA may render a friendlier human-facing `/r/<token>` page on top of that endpoint; `/r/<token>` is the app route, `/share/{token}` is the API route.)
 
 The receipt is **hash-chained** to the org's prior receipt (the per-org chain). The chain is verifiable client-side via `GET /ledger/verify`.
 

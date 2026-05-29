@@ -3,7 +3,11 @@ title: Object Storage Export
 description: The StreetLedger-compatible bundle. Per-session tree structure · manifests · SHA256SUMS.
 ---
 
-## The export tree
+:::note[Roadmap — not yet implemented]
+The export bundle and its StreetLedger mapping are **designed**, not implemented in the audited codebase. The tree below is the *proposed* bundle layout. (See the [overview](/streetchat/overview/) for full status.)
+:::
+
+## The proposed export tree
 
 ```
 data/exports/<event_id>/
@@ -22,11 +26,8 @@ data/exports/<event_id>/
 
 ## Cross-rail flow
 
-This tree maps 1:1 to the StreetLedger object-storage layout under `streetchat/sessions/<event_id>/`. Operators can `aws s3 sync` or `ipfs add -r` the tree directly.
+This tree will map 1:1 to the planned StreetLedger object-storage layout under `streetchat/sessions/<event_id>/`. Once the export is built, operators would be able to `aws s3 sync` or `ipfs add -r` the tree directly. DDEED anchoring of the bundle (the `deeds/` directory above) is also roadmap — not yet wired.
 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

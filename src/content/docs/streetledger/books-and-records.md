@@ -10,6 +10,10 @@ description: The doctrine that turns deeds into trust. How vocabulary becomes au
 
 Every term in DefendableOS gets the same treatment a closed real estate transaction gets at the recorder's office: source documents · hashed inputs · receipted actions · deeded outputs · permanent ledger.
 
+:::note[Roadmap — what ships today vs what is planned]
+Today the **DefendableCloud** stack delivers **L1** (PostgreSQL) and **L2** (the per-org SHA-256 hash chain, verifiable via `/ledger` + `/ledger/verify`). **L3** (Merkle root + NAS cold archive) and **L4** (ENS read-mirror) are **roadmap** — design intent for the StreetLedger vision layer, not yet built. ENS, where it appears, is a **read-mirror only · NOT an anchor**.
+:::
+
 ## The 4-layer finality stack
 
 | Layer | Tech | Role |
@@ -28,6 +32,3 @@ Buyers can DD it. Regulators can audit it. Boards can review it. Operators can e
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

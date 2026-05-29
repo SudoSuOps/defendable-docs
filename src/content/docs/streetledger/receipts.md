@@ -3,6 +3,15 @@ title: Receipts
 description: The per-event record structure. RCPT-* schema · what gets recorded · why every event has a receipt.
 ---
 
+:::note[Roadmap — vision layer]
+The `RCPT-*` class taxonomy below is the **planned StreetLedger event-record model** (vision layer). It is distinct from the two receipt systems that ship today:
+
+- **DefendableCloud** — per-org **hash-chained** `DCR-*` receipts, verifiable via `/ledger` and `/ledger/verify`. See [Generate a Receipt](/defendablecloud/generate-a-receipt/).
+- **DefendableRouter** — **checksummed (not chained)** JSONL receipts written locally per day.
+
+Treat the schema below as design intent, not a built endpoint.
+:::
+
 ## What a receipt is
 
 A receipt is the per-event record that captures WHAT happened · WHEN · in WHAT context · with WHAT hashes. Every receipt is the input to one or more deeds.
@@ -31,6 +40,3 @@ Pattern: `RCPT-{CLASS}-{YYYYMMDD}-{ULID}`
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

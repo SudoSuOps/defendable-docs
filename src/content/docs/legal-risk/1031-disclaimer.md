@@ -8,6 +8,3 @@ IRC §1031 (as amended by the Tax Cuts and Jobs Act of 2017) applies to REAL PRO
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

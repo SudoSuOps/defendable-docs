@@ -62,18 +62,20 @@ Production should run behind HTTPS with explicit CORS and non-default secrets. T
 
 | Variable | Purpose |
 |---|---|
-| `DATABASE_URL` | Postgres connection. |
+| `DATABASE_URL` | Postgres connection (asyncpg). |
 | `JWT_SECRET` | JWT signing secret; must be non-default in production. |
+| `JWT_TTL_HOURS` | JWT lifetime (default `720` = 30 days). |
 | `CORS_ORIGINS` | Explicit app/site origins. |
-| `PUBLIC_BASE_URL` | Public API/base link generation. |
+| `API_BASE_URL` | Public API base for share/receipt link generation (used to build `/share/{token}` URLs). |
+| `APP_BASE_URL` | Vault SPA origin (magic-link landing, Stripe redirect allowlist). |
 | `RESEND_API_KEY` | Magic-link and notification email. |
 | `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` | Object storage credentials. |
-| `AWS_ENDPOINT_URL` | Tigris/S3-compatible endpoint. |
-| `AWS_BUCKET` | Object storage bucket. |
+| `AWS_ENDPOINT_URL_S3` | Tigris/S3-compatible endpoint (default `https://fly.storage.tigris.dev`). |
+| `TIGRIS_BUCKET` | Object storage bucket (default `defendable-cloud`). |
 | `INTERNAL_API_KEY` | Internal staging surfaces. |
 | `RUNNER_TOKEN` | Cook runner claim/status surfaces. |
-| `STRIPE_WEBHOOK_SECRET` | Stripe webhook verification. |
-| `DATASET_DOWNLOAD_DAILY_LIMIT` | Application-level dataset anti-abuse limit. |
+| `STRIPE_API_KEY` / `STRIPE_WEBHOOK_SECRET` / `STRIPE_PRICE_ID` | Stripe membership checkout + webhook verification. |
+| `DATASET_DOWNLOAD_DAILY_LIMIT` | Application-level dataset anti-abuse limit (default `500`). |
 
 ## CI Gates
 

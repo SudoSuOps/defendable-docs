@@ -7,7 +7,7 @@ DefendableCloud treats datasets and model choices as assets that need receipts.
 
 ## Dataset Library
 
-The dataset library exposes catalog packages through `/library`.
+The dataset library exposes catalog packages through `/datasets/catalog`. A plain members-only list (entitlement-aware) is at `GET /datasets`.
 
 Flow:
 
@@ -22,10 +22,13 @@ Relevant routes:
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/library` | Catalog view. |
-| `GET` | `/library/{slug}` | Package detail. |
-| `POST` | `/library/{slug}/download` | Download grant and receipt. |
-| `GET` | `/library/{slug}/samples` | Public/sample rows. |
+| `GET` | `/datasets` | Members-only dataset list (entitlement-aware). |
+| `GET` | `/datasets/catalog` | Catalog view. |
+| `GET` | `/datasets/catalog/{slug}` | Package detail. |
+| `POST` | `/datasets/catalog/{slug}/download` | Download grant and receipt. |
+| `GET` | `/datasets/catalog/{slug}/samples` | Public/sample rows. |
+
+The download grant mints a receipt with schema `defendablecloud.dataset-download-receipt/v1`.
 
 ## Dataset Anti-Abuse
 
@@ -47,9 +50,11 @@ Relevant routes:
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/models` | Model catalog. |
-| `GET` | `/models/{slug}` | Model card. |
-| `POST` | `/models/{slug}/pin` | Pin model into receipt. |
+| `GET` | `/models/catalog` | Model catalog. |
+| `GET` | `/models/catalog/{slug}` | Model card. |
+| `POST` | `/models/catalog/{slug}/pin` | Pin model into receipt. |
+
+The pin mints a receipt with schema `defendablecloud.model-pin-receipt/v1`.
 
 Model pin receipts are useful when the buyer needs a record that a workflow used a specific model family, tier, or hardware recommendation at a point in time.
 
@@ -64,10 +69,10 @@ Relevant routes:
 | `POST` | `/runs/{run_id}/cook` | Create cook request. |
 | `GET` | `/cooks` | List cook jobs. |
 | `GET` | `/cooks/{cook_id}` | Cook detail. |
-| `POST` | `/cooks/next` | Runner claims next cook. |
-| `POST` | `/cooks/{cook_id}/status` | Runner status update. |
-| `POST` | `/cooks/{cook_id}/complete` | Runner completion. |
-| `POST` | `/cooks/{cook_id}/fail` | Runner failure. |
+| `POST` | `/runner/cooks/next` | Runner claims next cook (internal-key gated). |
+| `POST` | `/runner/cooks/{cook_id}/status` | Runner status update. |
+| `POST` | `/runner/cooks/{cook_id}/complete` | Runner completion. |
+| `POST` | `/runner/cooks/{cook_id}/fail` | Runner failure. |
 
 Runners should never be public unauthenticated services. They use runner credentials and should be deployed on controlled compute.
 

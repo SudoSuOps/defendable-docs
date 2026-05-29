@@ -3,7 +3,13 @@ title: Audio Ingestion
 description: Bringing audio into StreetChat. CLI · paste mode · ffmpeg normalization · spaces recording (future).
 ---
 
+:::note[Roadmap — not yet implemented]
+StreetChat is a **designed/roadmap** capability. The ingest CLI described below is design intent and is **not present in the audited codebase**. No production StreetChat service is deployed today. (See the [overview](/streetchat/overview/) for full status.)
+:::
+
 ## Two modes
+
+The `streetchat` CLI will provide two ingest modes.
 
 ### Mode 1 · audio file ingest
 
@@ -28,6 +34,3 @@ X Spaces · podcast feeds · meeting recordings · all forthcoming. Backend serv
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

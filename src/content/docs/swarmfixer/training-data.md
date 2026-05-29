@@ -1,13 +1,22 @@
 ---
 title: Training Data
-description: How repaired pairs feed model training.
+description: How repaired pairs would feed model training.
 ---
 
-Every successful repair generates two training examples: (1) for the repair model (failure → repair directive) · (2) for the agent (original input + repair directive → correct output). Both feed downstream training corpora.
+:::note[Roadmap]
+This training-data design is **intent** for the planned SwarmFixer pipeline. No
+SwarmFixer corpus exists today.
+:::
+
+Every successful repair would generate two training examples:
+
+1. **Repair-model pair** — failure → repair directive.
+2. **Agent pair** — original input + repair directive → correct output.
+
+Both would feed downstream training corpora. This is the honest extension of the real
+flywheel doctrine — eval verdicts feeding training corpora — but a SwarmFixer corpus
+of these pairs does not exist yet; only the upstream eval verdicts are real and live.
 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

@@ -29,7 +29,7 @@ DefendableCloud is built around an append-only proof workflow.
 
 6. **Run the Rulebook**
 
-   DefendableCloud applies deterministic checks from the selected flight sheet. Checks create pass/warn/fail findings.
+   DefendableCloud applies deterministic checks from the selected flight sheet. Each check resolves to a `CheckStatus` of `pass` · `flag` · `open` · `skip`. (`open` = a checklist rule awaiting an operator grade; `skip` = a rule whose operand was absent, so it never false-flags.)
 
 7. **Mint Verdict**
 
@@ -49,15 +49,17 @@ DefendableCloud is built around an append-only proof workflow.
 
 ## Receipt Chain
 
-Each organization has a hash-chained ledger. A receipt records:
+Each organization has a hash-chained ledger. The `Receipt` / `LedgerEntry` schema records:
 
-- run or asset id
-- payload hash
-- receipt hash
-- parent receipt hash
-- public share token
-- created timestamp
-- receipt kind
+- `receipt_id` — the `DCR-{org_seq:06d}-{hex8}` identifier
+- `org_seq` — sequential position in the org's chain (genesis = 0)
+- `receipt_sha256` — SHA-256 over the canonical payload (orjson, sorted keys); this *is* the payload hash
+- `parent_hash` — the prior receipt's `receipt_sha256` (genesis parent = sixty-four zeros)
+- `share_token` — the public share token
+- `created_at` — the timestamp
+- the receipt `schema` (kind) — e.g. `defendablecloud.eval-receipt/v1`
+
+There is no separate `payload_hash` field: `receipt_sha256` is the hash of the canonical payload.
 
 The public ledger verification endpoint walks the chain and reports broken parent linkage or hash mismatches.
 

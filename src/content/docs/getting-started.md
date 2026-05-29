@@ -17,6 +17,10 @@ Inputs -> Evidence -> Execution -> Checks -> Verdict -> Approval -> Receipt
 
 A Run is not "the model said it is good." A Run is evidence plus a rulebook plus a verdict plus an approval plus a hash-chained receipt.
 
+:::note[Which doc set you want]
+DefendableCloud is the live public surface at `api.defendablecloud.com`. These docs describe it end to end. DefendableRouter is a real but local v0.1 spine (CI-verified, not yet publicly deployed); it is documented separately. If you came here for the live proof vault, the CLI and API docs below are your path.
+:::
+
 ## Pick Your Path
 
 ### Builder
@@ -24,6 +28,7 @@ A Run is not "the model said it is good." A Run is evidence plus a rulebook plus
 Start here:
 
 - [The Defendable Run](/defendablecloud/the-defendable-run/)
+- [Three Lanes](/defendablecloud/three-lanes/) (including the eval flight-sheet lane and its deterministic executor)
 - [Defendable CLI](/defendablecloud/cli/)
 - [Current API Surface](/defendablecloud/api/)
 - [Integrate](/defendablecloud/integrate/)
@@ -43,7 +48,7 @@ Start here:
 - [DefendableCloud Overview](/defendablecloud/overview/)
 - [Three Lanes](/defendablecloud/three-lanes/)
 - [Generate a Receipt](/defendablecloud/generate-a-receipt/)
-- [Docs Audit and Alignment](/defendablecloud/audit/)
+- [The Defendable Run](/defendablecloud/the-defendable-run/)
 
 ## Run Lifecycle With The CLI
 
@@ -77,6 +82,10 @@ Current live/foundation surfaces:
 - incidents and stack assessment
 - enterprise runbooks and WAF guidance
 
+:::note
+DefendableRouter is real backend code (v0.1 spine, CI-verified) but runs locally and is not part of the live public surface above. It is documented separately and mints its own local checksummed receipts, distinct from the Cloud's per-org hash chain.
+:::
+
 Roadmap surfaces:
 
 - enterprise SSO/SAML/OIDC
@@ -85,7 +94,7 @@ Roadmap surfaces:
 - formal SOC2 audit
 - public SLA/status program
 - generated OpenAPI reference
-- public anchoring beyond current receipt-chain verification where applicable
+- DDEED public anchoring beyond the current per-org receipt-chain verification
 
 ## Read Next
 

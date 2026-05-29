@@ -1,26 +1,62 @@
 ---
 title: DefendableRouter · Overview
-description: Router status overview. Public deployed utility not yet verified; local source demo and roadmap references only.
+description: DefendableRouter v0.1 — member-only dataset and GPU-compute router. Real, CI-verified local backend (FastAPI + SQLite + Typer CLI + JSONL receipt ledger). Not yet publicly deployed.
 ---
 
-:::caution[Status — DefendableRouter]
-DefendableRouter is currently a **public positioning surface with local source-level
-receipt-spine work**. A public deployed router middleware utility and any DefendableCloud demo
-integration are **NOT YET VERIFIED** and remain **ROADMAP / FIELD INTEGRATION PENDING** until a
-public endpoint or Cloud path is deployed and independently audited. It is **not** part of the
-live Cloud demo path. Claims such as drop-in middleware today, a receipt for every routed call,
-sub-5ms overhead, ENS-signed receipts, daily reconciliation deeds, or carrier/insurance-ready
-evidence are **NOT verified** at this stage.
+:::note[Status — DefendableRouter v0.1]
+The DefendableRouter spine is **real and CI-verified** (PR #1 green) but it **runs locally** —
+there is **no public endpoint yet**. It is not on the live DefendableCloud demo path
+(`api.defendablecloud.com` is the deployed, live surface; the router is not).
+
+Security posture for v0.1: **only `/workers/*` is authenticated** (bearer token). The
+member, admin, dataset, compute, and job routes are **unauthenticated in v0.1 and must not be
+exposed publicly**. Treat this as a backend behind a trusted boundary until the public
+auth surface lands.
 :::
 
+DefendableRouter is the **Router track** of the DefendableOS architecture — the member-only
+broker that sits between the people who pay annual membership and the sovereign GPU fleet +
+curated datasets they get access to. Every billable and lifecycle event mints a checksummed
+receipt to a local JSONL ledger.
 
-DefendableRouter is the Router track in the broader DefendableOS architecture. In the current
-public state, treat this section as roadmap and local-source documentation, not as proof of a
-deployed public utility.
+The v0.1 backend is **FastAPI + SQLite + a Typer CLI + a local JSONL receipt ledger**. Postgres,
+Alembic, Stripe, and object-storage are **roadmap, not built**.
+
+## The five real subsystems
+
+1. **Member gate.** Annual membership is **$100.00**. Access to datasets and compute is gated by
+   `require_active_member` (in `core/security.py`), which checks the member exists and the
+   membership is active before any broker action proceeds.
+
+2. **Dataset broker.** `GET /datasets` lists member-access datasets; `GET /datasets/{id}` returns
+   one; `POST /datasets/{id}/access` records member access and mints a `dataset_access` receipt,
+   returning the `object_uri` to the active member. See [API Contracts](/defendablerouter/api-contracts/).
+
+3. **Server-side compute pricing.** Pricing constants live in `core/pricing.py` and are applied
+   **server-side** — the router **never trusts a caller-supplied rate**. Two SKUs are priced:
+   `rtx6000_blackwell_96gb` at **$5/hr** and `rog_astral_5090_32gb` at **$2/hr**. A quote of
+   2h on the RTX 6000 = **$10**; 3h on the 5090 = **$6**.
+
+4. **Job router.** Six job types (`inference`, `fine_tune`, `eval`, `dataset_build`, `embedding`,
+   `batch`) and six statuses (`queued`, `leased`, `running`, `completed`, `failed`, `canceled`)
+   move a job through its lifecycle, including the v0.2 worker lease flow. See
+   [Routing Model](/defendablerouter/routing-model/).
+
+5. **Local JSONL checksummed receipts.** Every billable/lifecycle event writes a receipt line to
+   `data/receipts/YYYY-MM-DD.receipts.jsonl` with a `checksum_sha256` over canonical JSON. These
+   receipts are **checksummed but NOT hash-chained** — unlike the DefendableCloud per-org hash
+   chain, router receipt lines are independently verifiable but are not linked parent→child. See
+   [Receipt Capture](/defendablerouter/receipt-capture/).
+
+## Where to go next
+
+- [Routing Model](/defendablerouter/routing-model/) — job types, statuses, and the v0.2 lease lifecycle.
+- [API Contracts](/defendablerouter/api-contracts/) — the eight real route groups, with request/response shapes.
+- [Receipt Capture](/defendablerouter/receipt-capture/) — the local JSONL ledger and checksum algorithm.
+- [Worker Contract (v0.2)](/defendablerouter/edge-events/) — the only authenticated integration surface.
+- [Identity & Auth](/defendablerouter/ens-app-agent-id/) — member gating, worker bearer tokens, lease ownership.
+- [Storage (v0.1)](/defendablerouter/object-storage-flow/) — local SQLite + JSONL persistence.
 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

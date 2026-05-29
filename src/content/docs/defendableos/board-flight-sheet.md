@@ -42,7 +42,7 @@ The board should WALK from any vendor that exhibits any of these.
 2. The site does not sound like generic AI SaaS.
 3. The app shows trust · NOT vanity metrics.
 4. Every dashboard dial maps to vocabulary AND receipts.
-5. A sample assignment can be routed · scored · receipted · AND deeded.
+5. A sample assignment can be run · checked · receipted (hash-chained) — with routing + deeding on the roadmap.
 6. The build preserves founder language.
 
 ## The close
@@ -52,6 +52,3 @@ The board should WALK from any vendor that exhibits any of these.
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

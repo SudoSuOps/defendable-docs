@@ -6,7 +6,7 @@ description: The status labels applied across fielded DefendableOS surfaces and 
 To keep public claims honest, the following labels are applied across newly fielded areas.
 
 - **IMPLEMENTED + AUDITED WITH LIMITATIONS** — public modules behaviorally audited by the independent Codex Tribunal (Swarm-Doctor, Conditioning Coach, Owner Roster Registry, Permission Broker).
-- **CONTROLLED SYNTHETIC DEMO** — the public DefendableCloud field utilization scenario at `/agent-operations-demo` (synthetic data, broker-routed demo actions only).
+- **CONTROLLED SYNTHETIC DEMO** — the DefendableCloud field utilization scenario (synthetic data, broker-routed demo actions only; demo surface roadmap — see Overview).
 - **READY_WITH_LIMITATIONS** — usable now for demonstration/record purposes within the stated limits.
 - **ROADMAP / NOT YET IMPLEMENTED** — future architecture: external SaaS control, DDEED operational anchoring, blockchain/ENS operations, insurance, production permission systems, hosted client environments not yet proven.
 - **NOT CLEARED FOR PRODUCTION** — no client production workflow clearance.

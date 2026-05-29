@@ -3,11 +3,12 @@ title: Spaces Recording
 description: Recording X Spaces · podcasts · live meetings. Forthcoming Phase 2 capability.
 ---
 
-Phase 2 capability · operator extension point. Will wire to standard streaming-audio sources (X Spaces · YouTube Live · meeting platforms) once the backend service is hosted.
+:::note[Roadmap — Phase 2, not yet built]
+Spaces recording is a **Phase 2 / roadmap** capability. It is not implemented in the audited codebase and no StreetChat backend service is deployed today. (See the [overview](/streetchat/overview/) for full status.)
+:::
+
+Phase 2 capability · operator extension point. The design targets standard streaming-audio sources — **X Spaces**, **YouTube Live**, **podcast feeds**, and **meeting recordings** — feeding each captured stream into the same ingest → transcribe → extract pipeline used for file ingest. This requires the backend service mode (FastAPI) to be hosted first, so it will wire in once that server lands.
 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

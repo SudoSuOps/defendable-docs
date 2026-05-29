@@ -10,7 +10,7 @@ DefendableOS is not one thing. It is the trust infrastructure layer that sits ab
 | Surface | Role | What it does | Lives at |
 |---|---|---|---|
 | **[DefendableOS](/defendableos/overview/)** | The ENGINE — *verify it* | Runs the [referee](/defendableos/rulebook-engine/) — a deterministic rulebook engine that applies declared rules and throws flags. Never a judge model. | defendableos.com |
-| **[DefendableCloud](/defendablecloud/overview/)** | The VAULT — *prove it* | Hosted proof vault. Runs Defendable Runs across three lanes (Agent Work · Dataset · Compute Receipts). Mints hash-chained receipts. | defendablecloud.com · api.defendablecloud.com · app.defendablecloud.com |
+| **[DefendableCloud](/defendablecloud/overview/)** | The VAULT — *prove it* | Hosted proof vault. Runs the Defendable Run across **two real engine lanes** — a generic-run heuristic-checks lane and an eval flight-sheet lane backed by a deterministic executor. Mints per-org hash-chained receipts. | api.defendablecloud.com (verified live) · app.defendablecloud.com (portal) · defendablecloud.com |
 
 The shape of this docs site mirrors that split: a section per surface, with the supporting language and books-and-records surfaces around them.
 
@@ -38,17 +38,25 @@ A client uploads work or sends an agent submission to the Cloud. The Cloud loads
 
 No hidden judge model. No 1-100 quality grade. Score = % of declared rules satisfied.
 
+There are **two real engine lanes** today: (1) the **generic run** lane (a heuristic checks engine in `app/routes/runs.py`), and (2) the **eval flight-sheet** lane, which runs a **deterministic executor** (`app/executor.py`) — JSON-schema field checks, type checks, math re-derivation of each calculation from its own inputs and formula, and a structured rule DSL. Dataset and Compute "lanes" are **receipt types / flight-sheet variants** of these, not separate engines.
+
+:::note[What is built vs roadmap]
+- **Built and live** — the DefendableCloud API at [api.defendablecloud.com](https://api.defendablecloud.com) (healthz: db + storage + email all true): the Defendable Run, the deterministic referee, and **per-org hash-chained receipts** (receipt_id `DCR-{org_seq:06d}-{hex8}`, parent-hash links, `/ledger/verify` recomputes and pinpoints any tamper).
+- **Built but local** — the **DefendableRouter v0.1** spine (FastAPI + SQLite + Typer CLI + local JSONL receipt ledger), committed to main and CI-verified, but **not publicly deployed**. Its receipts are checksummed (`checksum_sha256`) but **not** hash-chained.
+- **Roadmap** — Communicator, SwarmFixer, DefendableLedger as a standalone product, and StreetChat. Documented as vision, not claimed as deployed.
+:::
+
 ## The internal components (inside DefendableOS)
 
 | Component | What it does |
 |---|---|
-| **[DefendableRouter](/defendablerouter/overview/)** | Intake — captures every event with org · app · agent identifiers and writes the structured submission at the edge. |
-| **[Communicator](/communicator/overview/)** | Meaning — translates human street talk into structured directives both ways. Optional advisory layer; never on the receipt path. |
+| **[DefendableRouter](/defendablerouter/overview/)** | Intake — captures events with org · member · agent identifiers and writes structured submissions. A **separate v0.1 spine** (FastAPI + SQLite + Typer CLI + local JSONL receipts), CI-verified but **not publicly deployed** — it is **not** the Cloud's live intake path. |
+| **[Communicator](/communicator/overview/)** *(roadmap)* | Meaning — translates human street talk into structured directives both ways. Optional advisory layer; never on the receipt path. Not yet built. |
 | **[Referee](/tribunal/overview/)** *(historically: Tribunal)* | Rulebook engine — applies declared rules · throws flags · emits honey / jelly / propolis severity. **Not a judge model.** |
 | **Object Storage** | Memory — durable storage of receipts · transcripts · evidence (Tigris / R2 / S3). |
-| **DefendableLedger** | Trust — every receipt joins the per-org hash chain · in-house · NOT external chain anchoring. |
+| **DefendableLedger** | Trust — every Cloud receipt joins the **per-org hash chain** · in-house · NOT external chain anchoring. *(The live mechanism is in the Cloud; DefendableLedger as a standalone product is roadmap.)* |
 
-Around the components sit the **vocabulary** ([Defend-A-Pedia](/defend-a-pedia/overview/)) and the **repair layer** ([SwarmFixer](/swarmfixer/overview/) · the propolis corpus is what trains the repair model).
+Around the components sit the **vocabulary** ([Defend-A-Pedia](/defend-a-pedia/overview/)) and the **repair layer** ([SwarmFixer](/swarmfixer/overview/) · the propolis corpus is what would train the repair model — roadmap, not yet built).
 
 ## The Defendable Run, end to end
 

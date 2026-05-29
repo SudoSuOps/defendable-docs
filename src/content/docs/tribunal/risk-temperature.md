@@ -18,7 +18,7 @@ Each rule on a Flight Sheet declares a **tier** — its pre-weighted risk weight
 | Tier | Weight | When to declare it | Example flags |
 |---|---|---|---|
 | **high** | 5× | Game-changing miss — *catastrophic if undetected*. | Math off ≥ 10% on a monetary value · core lending gate (DSCR < 1.20) · structure / schema breakage · missing required input · fabricated evidence |
-| **mid** | 2× | Material but recoverable — *should not pass review*. | Math miss in the 2–10% band · evidence missing for one claim · secondary policy gate violated · assumption unlabeled |
+| **mid** | 2× | Material but recoverable — *should not pass review*. | Math miss in the 5–10% band · evidence missing for one claim · secondary policy gate violated · assumption unlabeled |
 | **low** | 1× | Nit — *quality polish, not a decision*. | Citation typo · format nit · cosmetic value out of canonical case |
 
 ## How tier drives severity
@@ -36,23 +36,34 @@ A single high-tier flag is enough for propolis — *that's the point of the tier
 For **math** and **approx** checks, the engine maps the **size** of the miss to a tier (the football "spot of the foul"):
 
 ```
-within 1%    → pass    (rounding / immaterial)
-2 – 10%      → mid     (jelly · "minor variance")
-≥ 10% rel    → high    (propolis · "high-dollar impact")
-material $   → high
+within 1%        → pass    (rounding / immaterial)
+1 – 5%           → low      (honey · "minor variance")
+5 – 10%          → mid      (jelly)
+≥ 10% rel        → high     (propolis · "material miss")
+material $ miss  → high     (propolis · "high-dollar impact")
 ```
 
-Magnitude bands are declarable per Flight Sheet via `eval_spec.penalty`. Default monetary thresholds: `monetary_critical_pct: 0.10`, `monetary_noncritical_pct: 0.02`.
+Magnitude bands are declarable per Flight Sheet via `eval_spec.penalty`. The real keys (from `app/executor.py` `_penalty()`) with their defaults:
 
-## Risk breakdown — the count
+| Key | Default | Meaning |
+|---|---|---|
+| `tol_rel` | `0.01` | At/under this relative miss → **pass** (rounding/immaterial). |
+| `low_rel` | `0.05` | At/over this → at least a **low** flag (below it but over `tol_rel` is low). |
+| `critical_rel` | `0.10` | At/over this relative miss → **high** flag. |
+| `critical_abs` | `1000.0` | Absolute-dollar floor for the high-dollar escalation. |
+| `abs_floor_rel` | `0.02` | Relative floor that must also be met for the high-dollar escalation to fire. |
 
-Every verdict carries a `risk_breakdown`:
+A miss escalates to **high** when `rel ≥ critical_rel`, *or* when the value is monetary and `abs_miss ≥ critical_abs` **and** `rel ≥ abs_floor_rel` (the high-dollar rule). Between `low_rel` and `critical_rel` the flag is **mid**; between `tol_rel` and `low_rel` it is **low**.
+
+## Risk breakdown — the grouped flags
+
+Every verdict carries a `risk_breakdown` — the raised flags grouped by tier, each tier a **list of flag labels** (not a count):
 
 ```json
-"risk_breakdown": { "high": 1, "mid": 2, "low": 0 }
+"risk_breakdown": { "high": ["DSCR gate"], "mid": ["Comp set staleness"], "low": [] }
 ```
 
-That count is the read for the owner: *"one game-changer, two material issues, zero nits."* Combined with the ranked findings, the owner can decide the next move in seconds.
+The grouped flags are the read for the owner: *"one game-changer (the DSCR gate), one material issue, zero nits — and here is exactly which rule each one is."* Combined with the ranked findings, the owner can decide the next move in seconds.
 
 ***
 

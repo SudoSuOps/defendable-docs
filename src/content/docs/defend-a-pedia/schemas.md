@@ -8,6 +8,3 @@ All schemas are versioned · published · and cross-referenced from the [Schemas
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

@@ -9,9 +9,19 @@ Earlier docs described a 0-1 evidence-strength dial computed as *color × source
 
 ## How the referee evaluates evidence today
 
-Evidence is checked by a small set of **declared rules** on each Flight Sheet. Each rule passes or raises a flag:
+Evidence is checked by **declared rules** on each Flight Sheet. Each rule passes or raises a flag. There are two real machine-evaluable shapes the live engine ships today:
 
-| Rule key | What it checks | Default tier |
+**1 · The evidence-non-empty pattern (`app/executor.py`, step 3).** An `evidence_check` names an array (`match_field`) and an evidence field. The executor confirms every item in that array carries a non-empty value for one of `evidence_reference` · `source_location` · `source`. If any item is blank, it raises a flag; if the condition isn't one of those machine-evaluable patterns, the check is honestly marked `skip` (not faked).
+
+**2 · The `citations_present` auto rule (`app/eval.py`).** A free-text submission passes if it contains a citation marker (`source`, `per the`, `according to`, `exhibit`, `rent roll`, `t12`, `page`, `[`, `cited`, `provided`); otherwise it flags *"No evidence citations detected."*
+
+:::note[Rule keys are author-declared, not a fixed vocabulary]
+Beyond `citations_present` and `evidence_attached`, **specific evidence rule keys are declared per Flight Sheet** — there is no fixed engine vocabulary of evidence-rule names. The keys below are **illustrative examples a Flight Sheet author MAY declare**, not built-in engine keys. This page is a *how-you-could-model-it* guide; what actually runs is the two patterns above plus whatever structured rules the sheet declares.
+:::
+
+A Flight Sheet author might, for example, declare evidence rules like:
+
+| Illustrative rule (author-declared) | What it would check | Suggested tier |
 |---|---|---|
 | `evidence_references_present` | Every `claims[]` entry carries an `evidence_reference`. | mid |
 | `all_claims_cited` | No claim made without a source pointer. | mid |
@@ -29,13 +39,13 @@ The new model preserves what the dial *tried* to capture (depth of supporting co
 
 ## Where the dimensions live now
 
-| Old dial axis | New rule shape |
+| Old dial axis | New rule shape (illustrative — a Flight Sheet *could* declare it) |
 |---|---|
-| Color (operator-rich context) | Flight Sheets in domains like CRE require named operator context — they declare it as a structure rule (e.g. `comp_set_present`, `tenant_credit_disclosed`). |
-| Source weight (operator-verified > deeded > scraped) | Declared via the source `confidence` enum on each claim: `provided` · `inferred` · `missing`. Rules can require `confidence: provided` for high-tier claims. |
-| Freshness | Lanes that care about staleness declare a `data_as_of` rule and a freshness window. |
+| Color (operator-rich context) | A sheet could require named operator context as a structure rule (e.g. an author-declared `comp_set_present` / `tenant_credit_disclosed` check). |
+| Source weight (operator-verified > deeded > scraped) | A sheet could declare a per-claim source field and require, say, `confidence: provided` for high-tier claims. (`confidence: provided/inferred/missing` is an *example enum a sheet could declare* — not a built-in engine field.) |
+| Freshness | Lanes that care about staleness could declare a `data_as_of` rule and a freshness window. |
 
-The Flight Sheet is the rulebook. If the dimension matters in your lane, declare it.
+These are modeling examples, not fixed engine fields. The Flight Sheet is the rulebook: if the dimension matters in your lane, declare a rule for it — the engine runs whatever structured rules you declare, plus the two evidence patterns above.
 
 ## What "strong evidence" means now
 

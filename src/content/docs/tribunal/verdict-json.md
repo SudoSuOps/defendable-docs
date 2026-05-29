@@ -9,35 +9,21 @@ Earlier docs described a verdict with `classification: HONEY/ROYAL_JELLY/JELLY/P
 
 ## The live verdict shape
 
+This is the exact object emitted by `_verdict_out()` in `api/app/routes/runs.py` (built by `compute_verdict()` in `app/eval.py`). The verdict carries **no `schema` field** and **no embedded `checks[]`** — checks ride a separate endpoint (see below).
+
 ```json
 {
-  "schema": "defendablecloud.verdict/v1",
+  "outcome": "pass",
+  "summary": "8/8 rules passed · 0 high-risk, 0 mid, 0 low flag(s) · 100/100 weighted.",
+  "score": 1.0,
+  "score_100": 100,
   "severity": "honey",
-  "score_100": 100.0,
-  "client_ready": true,
-  "recommended_action": "approve",
-  "risk_breakdown": { "high": 0, "mid": 0, "low": 0 },
-  "findings": [],
-  "checks": [
-    {
-      "key": "sections_present",
-      "label": "Required sections present",
-      "category": "structure",
-      "kind": "auto",
-      "tier": "high",
-      "status": "pass",
-      "detail": null
-    },
-    {
-      "key": "dscr_gate",
-      "label": "DSCR ≥ 1.20",
-      "category": "policy",
-      "kind": "auto",
-      "tier": "high",
-      "status": "pass",
-      "detail": "dscr=1.303"
-    }
-  ]
+  "client_ready": "Yes",
+  "recommended_action": "No flags raised. Approve and issue the receipt.",
+  "checks_passed": 8,
+  "checks_failed": 0,
+  "risk_breakdown": { "high": [], "mid": [], "low": [] },
+  "created_at": "2026-05-29T14:02:11Z"
 }
 ```
 
@@ -45,14 +31,42 @@ Earlier docs described a verdict with `classification: HONEY/ROYAL_JELLY/JELLY/P
 
 | Field | What it is |
 |---|---|
-| `schema` | `defendablecloud.verdict/v1` — the verdict schema version. |
+| `outcome` | `pass` · `risk` · `fail`. The headline result. (`pass`↔honey, `risk`↔jelly, `fail`↔propolis.) |
+| `summary` | Free-text one-liner — `N/M rules passed · h high, m mid, l low flag(s) · S/100 weighted.` |
+| `score` | Float `0.0 – 1.0` — `score_100 / 100`. |
+| `score_100` | Integer `0 – 100`. `(passed_weight / total_weight) × 100`, tier-weighted (high=5, mid=2, low=1). The **% of declared rules satisfied**, not a quality grade. |
 | `severity` | `honey` · `jelly` · `propolis`. Driven by the highest-tier flag present. |
-| `score_100` | `(rules_satisfied / rules_declared) × 100`. % of declared rules satisfied. Not a quality grade. |
-| `client_ready` | Boolean — derived from `severity` (`honey` → true) and any declared `human_approval_required` policy. |
-| `recommended_action` | `approve` · `review` · `resubmit` · `reject`. What the rulebook implies for the next move. |
-| `risk_breakdown` | Count of flags by tier. Used to rank the findings in the report. |
-| `findings` | Ranked list of flags (high → low). Each flag carries the rule key, label, tier, severity, the spot of the foul (`detail`), and the three-bucket sort (`bucket`: `work_defect` · `deal_finding` · `stack_fit`). |
-| `checks` | Full per-check result list. `status` ∈ `pass` · `flag` · `open`. `tier` and `severity` follow the Flight Sheet's declaration. |
+| `client_ready` | **A string, not a boolean.** Examples: `"Yes"` · `"Yes — minor notes only"` · `"With limitations / after repair"` · `"No — high-risk flag"`. |
+| `recommended_action` | **Advisory free-text sentence**, not an enum. E.g. `"HIGH-RISK — resolve before release: DSCR gate."` or `"No flags raised. Approve and issue the receipt."` |
+| `checks_passed` / `checks_failed` | Integer counts of applied checks that passed / flagged. |
+| `risk_breakdown` | `{ high: [labels], mid: [labels], low: [labels] }` — raised-flag **labels** grouped by tier. Used to rank the report. |
+| `created_at` | ISO timestamp the verdict was computed. |
+
+## Where the checks live: `/runs/{id}/checks`
+
+The per-check results are **not** embedded in the verdict — they are fetched from `GET /runs/{id}/checks` (serialized by `_check_out_full`). Each check is:
+
+```json
+{
+  "check_key": "dscr_gate",
+  "label": "DSCR ≥ 1.20",
+  "category": "policy",
+  "status": "flag",
+  "severity": "high",
+  "source": "auto",
+  "detail": "DSCR recomputed 1.022 — gate 1.20 — MISMATCH"
+}
+```
+
+| Field | What it is |
+|---|---|
+| `check_key` | The rule's stable key. |
+| `label` | Human-readable rule name. |
+| `category` | `structure` · `schema` · `math` · `evidence` · `policy`. |
+| `status` | `pass` · `flag` · `open` (operator checklist rule awaiting a human) · `skip` (not machine-evaluable in v1). |
+| `severity` | The rule's declared/escalated tier — `high` · `mid` · `low`. |
+| `source` | `auto` (engine) or `operator` (human applies the binary rule). |
+| `detail` | The spot of the foul — what was checked and what was found. |
 
 ## Severity rollup
 
@@ -62,30 +76,41 @@ Earlier docs described a verdict with `classification: HONEY/ROYAL_JELLY/JELLY/P
 | **jelly** | One or more mid- or low-tier flags; no high-tier flags. |
 | **propolis** | Any high-tier flag present. |
 
-## Finding shape (within `findings[]`)
+## Findings on the receipt
+
+The eval **receipt** (`build_eval_receipt`, schema `defendablecloud.eval-receipt/v1`) embeds the verdict object alongside a **separate flattened `findings[]`** array. Each finding is the real shape below — there is **no `tier`, no `key`, and no `bucket`** field emitted on the wire:
 
 ```json
 {
-  "key": "dscr_gate",
   "label": "DSCR ≥ 1.20",
-  "tier": "high",
-  "severity": "critical",
-  "detail": "DSCR recomputed 1.022 — gate 1.20 — MISMATCH",
-  "bucket": "deal_finding"
+  "category": "policy",
+  "status": "flag",
+  "severity": "high",
+  "detail": "DSCR recomputed 1.022 — gate 1.20 — MISMATCH"
 }
 ```
 
-`bucket` is the three-bucket sort:
+| Field | What it is |
+|---|---|
+| `label` | Human-readable rule name. |
+| `category` | `structure` · `schema` · `math` · `evidence` · `policy`. |
+| `status` | `flag` (findings on the receipt are the flagged checks). |
+| `severity` | The flag's tier — `high` · `mid` · `low`. |
+| `detail` | The spot of the foul. |
 
-- **`work_defect`** — math / schema / structure / evidence. Fixable; resubmit.
-- **`deal_finding`** — policy gate failed (math is right, rule says no). Not a rework.
-- **`stack_fit`** — model/compute below the lane. Bigger brain, bigger compute, different lane.
+### `bucket` is doctrine, not a field
+
+The three-bucket sort is a **doctrine attribution derived from `category`** at read time — it is **not an emitted field**. The mapping:
+
+- **`work_defect`** — `category` ∈ `math` · `schema` · `structure` · `evidence`. Fixable; resubmit.
+- **`deal_finding`** — `category` = `policy` (the math is right; the rule says no). Not a rework.
+- **`stack_fit`** — attributed from the run's `agent_profile` capability tier (model/compute below the lane). Bigger brain, bigger compute, different lane.
 
 See [Rulebook Engine · The three-bucket flag taxonomy](/defendableos/rulebook-engine/#the-three-bucket-flag-taxonomy) for the operational doctrine.
 
 ## Schema source of truth
 
-See [Schemas · Tribunal Verdict](/schemas/tribunal-verdict/) for the canonical field-by-field schema. The live verdict on a receipt is produced by `api/app/eval.py` in `defendable-cloud-v2` and rides the per-org hash chain along with the submission hash, evidence hashes, agent profile, and approver identity.
+The live verdict is produced by `compute_verdict()` in `api/app/eval.py` (`defendable-cloud-v2`) and serialized by `_verdict_out()` in `app/routes/runs.py`; the receipt envelope is built by `build_eval_receipt()` in `app/receipts.py`. The eval receipt rides the **per-org hash chain** along with the submission hash, evidence hashes, agent profile, and approver identity.
 
 ***
 

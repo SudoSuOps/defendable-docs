@@ -15,7 +15,7 @@ description: How 30 years of commercial real estate broker discipline translates
 | Letter of Intent | LOU · operator commitment |
 | Closing statement | Engagement close · DDEED-ENG-COMPLETE |
 | Recorder of deeds | DefendableLedger public surface ([defendableledger.com](https://defendableledger.com)) |
-| Title chain | In-house JSONL hash chain · `parent_hash` → `record_sha256` |
+| Title chain | Per-org hash chain · `parent_hash` → `receipt_sha256` |
 | Class A 5-cap | Apex tier · top-quality dataset artifact (see [Royal Jelly Tiers](/defendableledger/royal-jelly-tiers/)) |
 | Pro forma | Cost-to-mint projection |
 | Books of business | Vocabulary canon (Defend-A-Pedia) |
@@ -29,6 +29,3 @@ Buyers trained in CRE close on this language reflexively. Buyers trained on SaaS
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

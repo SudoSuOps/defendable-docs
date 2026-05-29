@@ -41,7 +41,7 @@ Cost-to-mint math per receipt:
 | layer | external chain | in-house DefendableLedger |
 |---|---|---|
 | anchoring fee | network gas + service tax | sovereign disk · ~$0 |
-| latency | network round-trip · seconds–minutes | sub-millisecond append |
+| latency | network round-trip · seconds–minutes | local append · no network round-trip |
 | dependency surface | external chain + bridge service | the house |
 | compounding | none · adversary chain doesn't grow our corpus | every record compounds the trust layer |
 

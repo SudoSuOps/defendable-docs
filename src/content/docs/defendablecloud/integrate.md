@@ -161,8 +161,8 @@ Output:
   org_seq         4
   parent_hash     9c2f4e5d…e1a4
   receipt_sha256  a83e1b2c…77f1
-  share_url       https://api.defendablecloud.com/share/shr_3f7c…8d21
-  pdf_url         https://api.defendablecloud.com/share/shr_3f7c…8d21/pdf
+  share_url       https://api.defendablecloud.com/share/kQ8vN2xJ7pR4tW1mZ9bL3cF6
+  pdf_url         https://api.defendablecloud.com/share/kQ8vN2xJ7pR4tW1mZ9bL3cF6/pdf
 ```
 
 The receipt is now on the per-org hash chain. JSON + PDF are stored; the share URL works for anyone, no auth required.
@@ -172,16 +172,16 @@ The receipt is now on the per-org hash chain. JSON + PDF are stored; the share U
 Anyone holding the share URL can confirm the receipt's hash matches what was sealed at mint time:
 
 ```bash
-defendable verify shr_3f7c…8d21
+defendable verify kQ8vN2xJ7pR4tW1mZ9bL3cF6
 # ✓ hash verified · receipt_id DCR-000004-3a7c9f2b
 ```
 
 ```bash
-curl https://api.defendablecloud.com/share/shr_3f7c…8d21
+curl https://api.defendablecloud.com/share/kQ8vN2xJ7pR4tW1mZ9bL3cF6
 # {"verified": true, "receipt_id": "...", "receipt_sha256": "...", "payload": {...}}
 ```
 
-Or open the share URL in any browser → public proof page at `app.defendablecloud.com/r/<token>`.
+The API serves the receipt at `GET /share/{token}`. The Vault SPA may render a friendlier human-facing proof page at `app.defendablecloud.com/r/<token>` on top of that endpoint — `/r/<token>` is the app's client-side route, `/share/{token}` is the API path.
 
 ## Walking the chain
 

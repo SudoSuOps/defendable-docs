@@ -90,7 +90,6 @@ export default defineConfig({
             { label: 'Datasets and Models', link: '/defendablecloud/datasets-models/' },
             { label: 'Enterprise Security', link: '/defendablecloud/enterprise-security/' },
             { label: 'Operations Runbook', link: '/defendablecloud/operations/' },
-            { label: 'Docs Audit', link: '/defendablecloud/audit/' },
           ],
         },
         {
@@ -167,11 +166,11 @@ export default defineConfig({
           items: [
             { label: 'Overview', link: '/defendablerouter/overview/' },
             { label: 'Routing Model', link: '/defendablerouter/routing-model/' },
-            { label: 'ENS · App ID · Agent ID', link: '/defendablerouter/ens-app-agent-id/' },
-            { label: 'Receipt Capture', link: '/defendablerouter/receipt-capture/' },
-            { label: 'Edge Events', link: '/defendablerouter/edge-events/' },
             { label: 'API Contracts', link: '/defendablerouter/api-contracts/' },
-            { label: 'Object Storage Flow', link: '/defendablerouter/object-storage-flow/' },
+            { label: 'Worker Contract (v0.2)', link: '/defendablerouter/edge-events/' },
+            { label: 'Receipt Capture', link: '/defendablerouter/receipt-capture/' },
+            { label: 'Identity & Auth', link: '/defendablerouter/ens-app-agent-id/' },
+            { label: 'Storage (v0.1)', link: '/defendablerouter/object-storage-flow/' },
           ],
         },
         {

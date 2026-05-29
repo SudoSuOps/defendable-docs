@@ -1,56 +1,35 @@
 ---
 title: Use Cases
-description: What DefendableOS actually does in production. Concrete operator scenarios mapped to the rails.
+description: The one real production flow today — the Defendable Run / eval flight-sheet lane ending in a hash-chained receipt — plus the roadmap rails it grows into.
 ---
 
-## Scenario · client calls Mr. Defendable about a deal
+## Scenario · an AI agent completes an eval assignment (shipped today)
 
-| Step | What happens |
-|---|---|
-| 1 | StreetChat captures the call · Whisper transcribes · 11 segments. |
-| 2 | Communicator extracts 17 canonical terms · 11 directives · 7 claims · 2 risk flags. |
-| 3 | Tribunal classifies the session as HONEY · validator_confidence 0.73. |
-| 4 | Receipt issued · 11 Communicator pairs + 2 SwarmFixer pairs generated. |
-| 5 | DDEED-CHAT minted · event_json_sha256 stamped · 5 Proofs filled. |
-| 6 | Object-storage export · 13 files · manifest + SHA256SUMS. |
-| 7 | StreetLedger publishes the deed · anchored on Hedera. |
-| 8 | Buyer DD can verify any claim in 10 minutes. |
+This is the lane that is **live in production** at `api.defendablecloud.com` — the [Defendable Run](/defendablecloud/eval-lane/), executed by the [rulebook engine](/defendableos/rulebook-engine/). The primitive is: **Inputs → Evidence → Execution → Checks → Verdict → Approval → Receipt.**
 
-## Scenario · AI agent completes an assignment
+| Step | What happens | Where |
+|---|---|---|
+| 1 | A **Flight Sheet** declares the rulebook for the lane (required output schema, math checks, evidence checks, policy DSL rules, penalty bands). 50 sheets loaded. | `GET /flight-sheets` |
+| 2 | The agent's work is filed against a Run as a structured **submission** plus **evidence** (uploads are best-effort to Tigris). | `POST /runs`, `/runs/{id}/submission`, `/runs/{id}/evidence` |
+| 3 | The **deterministic executor** runs: structure check, schema/type checks, **math re-derivation** of every calculation from its own inputs + formula via a safe AST evaluator, evidence presence, and the policy DSL gates. No model is called on the receipt path. | `app/executor.py`, `app/eval.py` |
+| 4 | Every check **passes** or raises a **flag** with a tier (low/mid/high). Score = % of declared rules satisfied — not a quality opinion. | `/runs/{id}/checks`, `/runs/{id}/flags` |
+| 5 | Flags roll up to a **verdict tier**: `honey` (pass · no/low flags), `jelly` (risk · mid flag), `propolis` (fail · high flag). | `/runs/{id}/verdict` |
+| 6 | A human **approves**. The engine refuses to issue a receipt without approval. | `/runs/{id}/approve` |
+| 7 | A **receipt** is minted into the per-org **hash chain**: `DCR-{org_seq}-{hex8}`, with `parent_hash` linking to the prior receipt and `receipt_sha256` over canonical JSON. The chain lives in Postgres; JSON+PDF artifact upload to Tigris is best-effort and never blocks the receipt. | `/runs/{id}/receipt`, `app/ledger.py` |
+| 8 | Anyone can **verify** the chain: `/ledger/verify` recomputes each hash, checks sequential `org_seq`, and checks parent links. Tamper a stored payload and it flips `ok:false` and pinpoints the receipt. A share link (`/share/{token}` + `/pdf` + `/download`) lets a buyer's DD confirm it independently. | `/ledger/verify`, `/share/{token}` |
 
-| Step | What happens |
-|---|---|
-| 1 | DefendableRouter captures the event · writes receipt. |
-| 2 | Tribunal scores the output · 12-check validator chain runs. |
-| 3 | Honey / Royal Jelly / Jelly / Propolis classification emitted. |
-| 4 | Jelly routes to SwarmFixer for repair · Royal Jelly feeds training corpus. |
-| 5 | DDEED issued · publicly anchored. |
+That is the real moat today: **math you can recompute, gates you can read aloud, a hash chain you can verify yourself.** *"We are math and code."*
 
-## Scenario · vocabulary expansion
+:::note[Roadmap — where this is going · not yet built]
+The scenarios below are the **vision** for the rest of the rails. They are positioning, not shipped behavior — none of these are deployed today. The [DefendableRouter](/defendablerouter/overview/) spine is real and CI-verified but runs locally (not a public endpoint); StreetChat, Tribunal-as-API, DDEED anchoring, SwarmFixer, and the Defend-A-Pedia vocabulary loop are roadmap.
 
-| Step | What happens |
-|---|---|
-| 1 | StreetChat surfaces an unknown phrase (e.g., *"hunt his seat"*). |
-| 2 | Communicator proposes canonical mapping. |
-| 3 | Founder reviews · V03 voice validator passes. |
-| 4 | DDEED-VOCAB minted · published to Defend-A-Pedia. |
-| 5 | StreetLedger updates the public vocabulary index. |
-| 6 | Communicator vNext trains on the new term. |
+**Client calls Mr. Defendable about a deal** — StreetChat captures and transcribes the call · a Communicator extracts canonical terms, directives, claims, and risk flags · the session is graded and receipted · pairs route to the training corpus.
 
-## Scenario · false honey incident
+**Vocabulary expansion** — StreetChat surfaces an unknown phrase · a Communicator proposes a canonical mapping · the founder reviews against the V03 voice validator · the term publishes to Defend-A-Pedia and the public vocabulary index.
 
-| Step | What happens |
-|---|---|
-| 1 | Agent produces output that sounds correct. |
-| 2 | Tribunal validator chain catches the failure (one of 7 critical checks fails). |
-| 3 | Classification downgraded to Propolis. |
-| 4 | DDEED-FALSE-HONEY-* issued · published transparently. |
-| 5 | Failure trace fed to SwarmFixer for repair pattern training. |
-| 6 | Pain in the Shed podcast episode covers the lesson.
+**False-honey incident** — an agent produces output that sounds correct · the ruleset audit catches the failure · the verdict downgrades to propolis · the failure trace feeds SwarmFixer repair-pattern training · the lesson surfaces in a *Pain in the Shed* episode.
+:::
 
 ***
 
-🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.
+🐝 *Inputs · checks · verdict · receipt. To the shed.*

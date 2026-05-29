@@ -3,6 +3,10 @@ title: Object Storage Layout
 description: The directory structure for any DDEED class. ENS-keyed paths · S3-compatible · IPFS-pinnable.
 ---
 
+:::note[Roadmap — vision layer]
+The object-storage layout and ENS pathing below describe the **planned StreetLedger layout** (vision layer). ENS surfaces are **read-mirrors only · NOT anchors** (consistent with the rest of this section). The live object storage shipping today is the DefendableCloud best-effort Tigris S3 artifact upload (JSON + PDF) that sits behind the per-org `DCR-*` hash chain — see [DefendableCloud](/defendablecloud/overview/).
+:::
+
 ## The layout
 
 ```
@@ -39,7 +43,7 @@ s3://streetledger/
 
 ## ENS pathing
 
-Every object-storage path mirrors an ENS-resolvable path:
+In the planned layout, every object-storage path mirrors an ENS-resolvable read-mirror path (ENS is a display mirror · NOT an anchor):
 
 | ENS | Maps to |
 |---|---|
@@ -52,6 +56,3 @@ S3-compatible storage (Tigris · R2 · AWS S3) plus IPFS pinning provides 3-of-3
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

@@ -3,6 +3,10 @@ title: Street Pairs
 description: The training-data unit. Communicator · SwarmFixer · Vocabulary pair types.
 ---
 
+:::note[Roadmap — proposed format, not yet emitted]
+The street-pair schema below is the **designed** training-data unit. It is the *proposed* format and is **not yet emitted by built code** in the audited codebase. (See the [overview](/streetchat/overview/) for full status.)
+:::
+
 ## What a street pair is
 
 The unit of operator-language training data. Each pair is `input → output`:
@@ -29,11 +33,10 @@ The unit of operator-language training data. Each pair is `input → output`:
 
 ## Output format
 
-Pairs are written as `.jsonl` files (one JSON object per line) for direct ingestion by training pipelines. See [Examples · Sample Street Pair](/examples/sample-street-pair/) for a complete example.
+Pairs are designed to be written as `.jsonl` files (one JSON object per line) for direct ingestion by training pipelines. See [Examples · Sample Street Pair](/examples/sample-street-pair/) for a complete example.
+
+The `tribunal_grade.classification` field carries the same verdict tiers that ARE real in DefendableCloud (`defendable-cloud-v2`): **honey** (pass), **jelly** (risk), **propolis** (fail). The street-pair grade speaks the Cloud referee's rulebook vocabulary.
 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

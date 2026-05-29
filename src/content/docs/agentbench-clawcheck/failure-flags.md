@@ -3,11 +3,25 @@ title: Failure Flags
 description: How failures get classified and routed.
 ---
 
-Each failure flagged with: category · signal type · severity · recommended remediation. Critical failures (security · safety) route to immediate operator review. Non-critical failures aggregate into the SwarmFixer repair queue.
+:::note[Roadmap]
+The failure-flag routing and the SwarmFixer repair queue described here are planned, not
+built. SwarmFixer is a roadmap component, not a live service. This page records the
+intended classification model.
+:::
+
+Each failure is intended to be flagged with four attributes:
+
+- **Category** — which task family the failure occurred in.
+- **Signal type** — the specific failure mode (the declared *what went wrong*).
+- **Severity** — how serious the flag is, on the same flag-driven scale used across the
+  ecosystem (critical vs non-critical).
+- **Recommended remediation** — the suggested next step to repair the gap.
+
+Under the planned design, critical failures (security · safety) would route to immediate
+operator review, while non-critical failures would aggregate into the SwarmFixer repair
+queue once that component exists. As with the live DefendableCloud referee, a flag is a
+rulebook outcome — never a quality opinion or a judge-model verdict.
 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

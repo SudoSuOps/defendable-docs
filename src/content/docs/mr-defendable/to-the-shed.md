@@ -16,7 +16,7 @@ Every Mr. Defendable artifact ends with **to the shed.** Not with a question. No
 
 ## CRE origin
 
-In CRE broker culture · "to the shed" is the call after a deal closes — broker walks the deal to the recorder's office · drops the closed file in the shed · moves to the next listing. It is the operator 's signal that the cycle completes.
+In CRE broker culture · "to the shed" is the call after a deal closes — broker walks the deal to the recorder's office · drops the closed file in the shed · moves to the next listing. It is the operator's signal that the cycle completes.
 
 ## In DefendableOS
 
@@ -29,6 +29,3 @@ The discipline is not aesthetic. It is operational. **An artifact that does not 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

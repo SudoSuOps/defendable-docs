@@ -1,6 +1,6 @@
 ---
 title: StreetLedger · Overview
-description: The public proof layer for DefendableOS. Every deeded artifact verifiable at ledger.mrdefendable.com.
+description: The planned public proof layer for DefendableOS. Design intent for a verifiable books-and-records surface; the shipped chain today is DefendableCloud's per-org DCR-* receipts.
 ---
 
 :::caution[Status — audited-prototype reality]
@@ -20,20 +20,22 @@ As of 2026-05-24, the canonical books-and-records surface for the DefendableOS e
 
 ## What StreetLedger is
 
-The public surface that exposes every DefendableOS-issued deed as a verifiable books-and-records artifact. Live at [ledger.mrdefendable.com](https://ledger.mrdefendable.com).
+StreetLedger is the planned public proof surface designed to expose every DefendableOS-issued deed as a verifiable books-and-records artifact. The legacy display at [ledger.mrdefendable.com](https://ledger.mrdefendable.com) and the ENS/IPFS sibling at `streetledger.eth.limo` carry the 62 deeded vocabulary terms today; new receipts, verdicts, pairs, and deeds publish to [DefendableLedger](/defendableledger/overview/).
 
-## What it shows
+The live, hash-chained receipt system shipping today is the DefendableCloud per-org chain (`DCR-*` receipts, `/ledger` + `/ledger/verify`). StreetLedger is the public-facing presentation layer that the vision composes on top of that integrity surface.
 
-- 62+ deeded vocabulary terms (DDEED-VOCAB) from Defend-A-Pedia v0.3.0
-- Per-term deed JSON · canonical hash · markdown hash · ENS anchor
+## What it is designed to show
+
+- The deeded vocabulary canon (DDEED-VOCAB) from Defend-A-Pedia
+- Per-term deed JSON · canonical hash · markdown hash · ENS read-mirror reference
 - Manifest with ledger root hash · SHA256SUMS for every file
-- Client-side `/verify` rail · paste any JSON · compute SHA-256 in your browser · match against the public canon
+- Client-side verify rail · paste any JSON · compute SHA-256 in your browser · match against the public canon
 
 ## Why it matters for buyers
 
-A buyer doing pre-market DD on DefendableOS hits StreetLedger first. They see:
+The design intent is that a buyer doing pre-market DD on DefendableOS hits StreetLedger first and sees:
 
-- The vocabulary canon is real (62+ terms · publicly browsable).
+- The vocabulary canon is real (publicly browsable).
 - Every claim has a hash (operator-grade discipline).
 - The verify rail works (zero round-trip · zero trust required).
 - The chain-of-title is auditable end-to-end.
@@ -53,6 +55,3 @@ That converts a "trust us" claim into a "verify it yourself" experience. Closing
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

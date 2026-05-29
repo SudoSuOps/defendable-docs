@@ -32,7 +32,7 @@ A **Flight Sheet** is a versioned, declared eval template. It carries:
   - `evidence_checks` — evidence-non-empty / assumptions-labeled rules.
   - `rules` — declared yes/no policy gates in the DSL.
   - `penalty` — variable-penalty bands for magnitude-driven flags.
-- `audit_checks` — the rule list each check belongs to, with `kind` (auto/checklist), `category`, `tier`, `severity`.
+- `audit_checks` — the rule list each check belongs to, with `kind` (auto/checklist), `category`, and `severity`.
 
 Flight Sheets are content, not migrations. The library is upserted by slug at boot from `api/flight_sheets/*.json`.
 
@@ -110,7 +110,7 @@ The eval receipt is minted via `POST /runs/{id}/receipt`:
 - **Payload:** Flight Sheet version, agent profile, assignment text, evidence hashes, submission hash, findings (ranked), verdict, approver, timestamp.
 - **Chain:** `parent_hash` points at the org's prior receipt. SHA-256 over the canonical payload.
 - **Render:** PDF via `fpdf2`, regenerable from the payload.
-- **Share:** public `/r/<token>` URL — anyone can verify client-side, no auth.
+- **Share:** the public API share endpoint `GET /share/{token}` returns the `PublicReceipt` (full payload + `receipt_sha256` + a server-recomputed `verified` boolean) — anyone can recompute and verify client-side, no auth. The Vault SPA may render a friendlier `/r/<token>` page on top of this endpoint; `/r/<token>` is the app's client-side view, distinct from the API path `/share/{token}`.
 
 ## The Flight Sheet library
 

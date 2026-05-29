@@ -56,31 +56,37 @@ uvicorn app.main:app --reload --port 8080
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/library` | Dataset catalog. |
-| `GET` | `/library/{slug}` | Dataset package detail. |
-| `POST` | `/library/{slug}/download` | Members-only dataset download grant and receipt. |
-| `GET` | `/library/{slug}/samples` | Dataset samples. |
-| `GET` | `/models` | Model catalog. |
-| `GET` | `/models/{slug}` | Model card. |
-| `POST` | `/models/{slug}/pin` | Pin a model choice into a receipt. |
+| `GET` | `/datasets` | Members-only dataset list (entitlement-aware). |
+| `GET` | `/datasets/catalog` | Public dataset catalog. |
+| `GET` | `/datasets/catalog/{slug}` | Dataset package detail. |
+| `POST` | `/datasets/catalog/{slug}/download` | Members-only dataset download grant and receipt. |
+| `GET` | `/datasets/catalog/{slug}/samples` | Dataset samples. |
+| `GET` | `/models/catalog` | Model catalog. |
+| `GET` | `/models/catalog/{slug}` | Model card. |
+| `POST` | `/models/catalog/{slug}/pin` | Pin a model choice into a receipt. |
 | `POST` | `/runs/{run_id}/cook` | Create cook request. |
 | `GET` | `/cooks` | List cook jobs. |
 | `GET` | `/cooks/{cook_id}` | Cook detail. |
-| `POST` | `/cooks/next` | Runner claims next cook. |
-| `POST` | `/cooks/{cook_id}/status` | Runner status update. |
-| `POST` | `/cooks/{cook_id}/complete` | Runner completion. |
-| `POST` | `/cooks/{cook_id}/fail` | Runner failure. |
+| `POST` | `/runner/cooks/next` | Runner claims next cook (internal-key gated). |
+| `POST` | `/runner/cooks/{cook_id}/status` | Runner status update. |
+| `POST` | `/runner/cooks/{cook_id}/complete` | Runner completion. |
+| `POST` | `/runner/cooks/{cook_id}/fail` | Runner failure. |
 | `GET/POST/PATCH` | `/incidents` | Incident records and updates. |
 | `POST` | `/incidents/{incident_id}/receipt` | Incident receipt. |
 | `GET/POST` | `/agent-profiles` | Agent profile registry. |
 | `POST` | `/agent-profiles/{profile_id}/watchdog` | Agent health incident hook. |
 | `GET` | `/stack-planner/options` | Compute/model planning choices. |
 | `POST` | `/stack-assessment` | Compute/model fit report. |
-| `GET/POST` | `/membership` | Member application and checkout flow. |
+| `GET` | `/membership` | Current membership state. |
+| `POST` | `/membership/apply` | Submit a membership application. |
+| `POST` | `/membership/approve` | Approve an application (internal-key gated). |
+| `POST` | `/membership/checkout` | Create a Stripe Checkout session ($100/yr). |
 | `GET` | `/policy/training-data` | Training-data policy. |
 | `POST` | `/stripe/webhook` | Stripe webhook activation. |
 | `GET/POST` | `/internal/*` | Internal staging surfaces gated by internal key. |
-| `GET/POST` | `/admin/*` | Admin applications and health. |
+| `GET` | `/admin/applications` | Admin: list membership applications. |
+| `POST` | `/admin/applications/{slug}/approve` | Admin: approve an application. |
+| `GET` | `/admin/health` | Admin: gated health/diagnostics. |
 
 ## Authentication
 

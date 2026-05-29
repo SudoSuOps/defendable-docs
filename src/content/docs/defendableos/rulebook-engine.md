@@ -102,8 +102,8 @@ Every Flight Sheet carries an `eval_spec`:
   "math_checks": [{"formula_id": "dscr", "formula": "noi / annual_debt_service", "tolerance": 0.01}],
   "evidence_checks": ["all_claims_cited"],
   "rules": [
-    {"id": "dscr_gate", "tier": "high", "expr": ["if", [">=", {"calc": "dscr"}, 1.20], "pass", "flag"]},
-    {"id": "ltv_gate",  "tier": "mid",  "expr": ["if", ["<=", {"calc": "ltv"}, 0.80], "pass", "flag"]}
+    {"id": "dscr_gate", "category": "policy", "risk": "high", "expr": {"op": ">=", "left": {"calc": "dscr"}, "right": 1.20}},
+    {"id": "ltv_gate",  "category": "policy", "risk": "mid",  "expr": {"op": "<=", "left": {"calc": "ltv"},  "right": 0.80}}
   ],
   "penalty": { "monetary_critical_pct": 0.10, "monetary_noncritical_pct": 0.02 }
 }

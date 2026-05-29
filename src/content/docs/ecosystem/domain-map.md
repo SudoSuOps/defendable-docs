@@ -3,21 +3,30 @@ title: Domain Map
 description: Every brand surface in the DefendableOS + DefendableCloud ecosystem · their roles · their relationships · the in-house hash-chain that underlies them all.
 ---
 
+:::note[What is live today vs forthcoming]
+Two anchors are **verified live right now**:
+
+- **[api.defendablecloud.com](https://api.defendablecloud.com)** — the DefendableCloud API (healthz reports db + storage + email all true).
+- **This docs site** — [defendabledocs.com](https://defendabledocs.com) / `docs.defendableos.com`.
+
+`app.defendablecloud.com` (the portal) and `defendablecloud.com` (the marketing surface) sit in front of the live API. **Forthcoming / roadmap** surfaces below — listed for completeness, not yet deployed: StreetChat (`chat.mrdefendable.com`), DefendableLedger as a standalone product, and the four ENS read-mirrors (which are **read-mirrors, explicitly NOT anchors** — the trust layer is the in-house per-org hash chain). The DefendableRouter is **not public** anywhere and is not in this map.
+:::
+
 ## The two product surfaces
 
-| Surface | Role | URL |
-|---|---|---|
-| **DefendableOS** | The ENGINE — *verify it* (rulebook + referee) | [defendableos.com](https://defendableos.com) |
-| **DefendableCloud** | The VAULT — *prove it* (hosted proof vault) | [defendablecloud.com](https://defendablecloud.com) · [api.defendablecloud.com](https://api.defendablecloud.com) · [app.defendablecloud.com](https://app.defendablecloud.com) |
+| Surface | Role | URL | Status |
+|---|---|---|---|
+| **DefendableOS** | The ENGINE — *verify it* (rulebook + referee) | [defendableos.com](https://defendableos.com) | Referee engine ships inside the live Cloud API |
+| **DefendableCloud** | The VAULT — *prove it* (hosted proof vault) | [defendablecloud.com](https://defendablecloud.com) · [api.defendablecloud.com](https://api.defendablecloud.com) · [app.defendablecloud.com](https://app.defendablecloud.com) | **LIVE** — `api.` verified (db+storage+email) |
 
 ## The voice + books surfaces
 
-| Surface | Role | URL |
-|---|---|---|
-| **Mr. Defendable** | FACE · principal voice | [mrdefendable.com](https://mrdefendable.com) |
-| **DefendableLedger** | LEDGER · canonical books-and-records surface | [defendableledger.com](https://defendableledger.com) |
-| StreetChat | CHAT · live capture rail (subdomain) | [chat.mrdefendable.com](https://chat.mrdefendable.com) |
-| StreetLedger (legacy) | LEDGER subdomain · superseded by defendableledger.com | [ledger.mrdefendable.com](https://ledger.mrdefendable.com) |
+| Surface | Role | URL | Status |
+|---|---|---|---|
+| **Mr. Defendable** | FACE · principal voice | [mrdefendable.com](https://mrdefendable.com) | Voice/brand surface |
+| **DefendableLedger** | LEDGER · canonical books-and-records surface | [defendableledger.com](https://defendableledger.com) | Domain held · standalone product is roadmap |
+| StreetChat | CHAT · live capture rail (subdomain) | [chat.mrdefendable.com](https://chat.mrdefendable.com) | **Roadmap** — not yet deployed |
+| StreetLedger (legacy) | LEDGER subdomain · superseded by defendableledger.com | [ledger.mrdefendable.com](https://ledger.mrdefendable.com) | Legacy / secondary |
 
 ## The forthcoming surfaces
 

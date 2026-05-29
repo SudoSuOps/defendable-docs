@@ -23,11 +23,12 @@ That phrase IS the intake. Every conversation starts there.
 
 ## The cadence captured by StreetChat
 
-Every ring-ring intake → captured by StreetChat → transcribed by Whisper → mapped to canonical vocabulary in Defend-A-Pedia → tribunal-graded → deeded · published · cross-referenced with the prior call history.
+:::note[Roadmap / vision — not yet wired]
+The StreetChat → Whisper → Defend-A-Pedia → Tribunal → DDEED capture chain below is the **intended** intake pipeline, not a live one. DefendableCloud receipts are live today (api.defendablecloud.com); this intake-capture flow is roadmap.
+:::
+
+The intended flow: every ring-ring intake → captured by StreetChat → transcribed by Whisper → mapped to canonical vocabulary in Defend-A-Pedia → tribunal-graded → deeded · published · cross-referenced with the prior call history.
 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

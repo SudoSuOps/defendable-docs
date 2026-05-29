@@ -14,11 +14,26 @@ blockchain anchoring.
 :::
 
 
-AgentBench: submit an agent · runs the standard benchmark pack · returns a Tribunal-grade verdict. ClawCheck: adversarial security testing · 6 CVE-sourced agent-security attack templates · 4-step defense pattern.
+AgentBench and ClawCheck are the planned agent-testing surface of the DefendableOS
+ecosystem. They are design intent, not a fielded service.
+
+:::note[Roadmap]
+The capability described below is not built or deployed. It is the intended shape of
+the surface, documented honestly so the books and records show the plan, not a claim.
+The live, hash-chained proof surface today is **DefendableCloud** — the Defendable Run
+and its eval flight-sheet lane at `api.defendablecloud.com`.
+:::
+
+**AgentBench** is designed to let you submit an agent, run it against a standard
+benchmark pack, and return a structured verdict. The verdict is planned to integrate
+with the Tribunal roadmap (a declared rulebook applying flags, not a judge model) — it
+will be a ruleset-audit outcome, never a quality opinion. **ClawCheck** is designed as
+the adversarial-security companion: a set of CVE-sourced agent-security attack templates
+and a structured defense pattern for exercising an agent under hostile inputs.
+
+Until these land, the built analogue is the DefendableCloud verdict tiers
+(honey = pass · jelly = risk · propolis = fail) and per-org hash-chained receipts.
 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

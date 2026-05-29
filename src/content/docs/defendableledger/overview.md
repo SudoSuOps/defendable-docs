@@ -16,18 +16,48 @@ blockchain anchoring.
 
 ## What DefendableLedger is
 
-The sovereign in-house ledger for the DefendableOS ecosystem. Every Router receipt, every Tribunal verdict, every SwarmJelly training pair, every Deed — recorded here. The canonical books-and-records surface. Live at [defendableledger.com](https://defendableledger.com).
+DefendableLedger is the doctrine and the destination: **the house owns its own trust layer end to end.** No external chain anchoring. No hosted-LLM tax. Receipts compound *inside* the books, not on someone else's chain.
 
-DefendableLedger is **the house's own rail**. No external chain anchoring. No hosted-LLM tax. The eco system owns its own trust layer end to end.
+Today that doctrine is real in two concrete, honest layers:
 
-## The four rails per receipt
+### Layer 1 — REAL · LIVE: the cloud per-org hash chain
 
-Every intake mints four artifacts:
+DefendableCloud ships a **per-organization append-only hash chain**, persisted in Postgres and served at **api.defendablecloud.com**. Every receipt carries:
 
-1. **Receipt** · issued by DefendableRouter · the canonical event record · hashed + provenance-stamped
-2. **Verdict** · issued by Tribunal · SwarmCurator-9B grades the receipt on the 4-dimension rubric
-3. **Training Pair** · issued by SwarmJelly · extracts the (input → output) pair · routes to a Royal Jelly tier
-4. **Deed** · issued by DefendableLedger · seals the verdict + pair + receipt into an append-only hash-chained record
+- `org_seq` — sequential index from `0`, per org
+- `parent_hash` — links to the prior receipt's `receipt_sha256` (genesis parent = sixty-four zeros)
+- `receipt_sha256` — `sha256_hex(orjson.dumps(payload, OPT_SORT_KEYS))`
+- `receipt_id` — `DCR-{org_seq:06d}-{hex8}`
+
+Two endpoints expose it:
+
+- `GET /ledger` — the org's chain in `org_seq` order
+- `GET /ledger/verify` — server-side recompute of every `receipt_sha256`, sequential-`org_seq` check, and parent-link check; returns `{ok, receipts_checked, errors[]}`
+
+:::note
+`/ledger/verify` is **authenticated and server-side** (scoped to the caller's org). It is *not* an anonymous client-side WebCrypto verifier — verification runs in the API and recomputes the hashes from the stored Postgres payloads. The Tigris JSON+PDF artifact upload alongside each receipt is **best-effort** (wrapped in try/except); the chain itself lives in Postgres, so a storage outage degrades gracefully and never blocks a receipt.
+:::
+
+[Hash-Chain Format →](/defendableledger/hash-chain/) · [Verify a Receipt →](/defendableledger/verify/)
+
+### Layer 2 — REAL · LOCAL: router checksummed receipts
+
+DefendableRouter (v0.1, local / not publicly deployed) writes flat **checksummed-not-chained** receipts to `data/receipts/YYYY-MM-DD.receipts.jsonl`. Each line carries a `checksum_sha256` over the canonical JSON of the receipt (excluding the checksum field). These are tamper-evident per line but are **not** linked into a hash chain like the cloud's. Say so honestly.
+
+[Verify a Receipt →](/defendableledger/verify/)
+
+## The four rails — roadmap
+
+:::note[Roadmap / design intent — not built]
+The four-rail pipeline (Receipt → Tribunal Verdict → SwarmJelly Training Pair → DefendableLedger Deed), the public **defendableledger.com** `/records` and `/verify` pages, Tribunal-as-API grading, SwarmJelly tier routing, and DDEED anchoring are **design intent**, not shipped code. The doctrine below is canonical; the pipeline is not yet implemented.
+:::
+
+The intended shape, once built:
+
+1. **Receipt** · the canonical event record · hashed + provenance-stamped
+2. **Verdict** · Tribunal · SwarmCurator-9B grades on the 4-dimension rubric
+3. **Training Pair** · SwarmJelly · extracts the (input → output) pair · routes to a Royal Jelly tier
+4. **Deed** · seals verdict + pair + receipt into an append-only hash-chained record
 
 [Four Rails →](/defendableledger/four-rails/)
 
@@ -54,43 +84,48 @@ External chain anchoring (Hedera, IPFS pin, BTC OP_RETURN, etc.) is a *form* of 
 
 ## Where the records flow
 
+:::note[Roadmap / design intent — not built]
+The end-to-end media-to-ledger flow below (Tribunal grading, SwarmJelly tiering, hash-chained Deeds, the batch publisher, and a public defendableledger.com render) is **design intent**, not shipped code. Today the real, live hash chain is the cloud's per-org chain at api.defendablecloud.com.
+:::
+
 ```
-DefendableRouter receipt
+Receipt
   ↓
-SwarmCurator-9B grades · 4-dim rubric · Verdict minted
+SwarmCurator-9B grades · 4-dim rubric · Verdict minted        (roadmap)
   ↓
-SwarmJelly extracts pair · Royal Jelly tier assigned
+SwarmJelly extracts pair · Royal Jelly tier assigned          (roadmap)
   ↓
-DefendableLedger record appended · hash-chained
+DefendableLedger record appended · hash-chained               (roadmap)
   ↓
-Batch publisher commits to defendable-ledger repo
+Batch publisher commits to defendable-ledger repo             (roadmap)
   ↓
-CF Pages rebuilds → defendableledger.com renders the new records publicly
+CF Pages rebuilds → defendableledger.com renders publicly     (roadmap)
 ```
 
 [Publication Flow →](/defendableledger/publication-flow/)
 
-## Verify any record
+## Verify a receipt
 
-Every record carries its own SHA-256. Every chain link references the prior `record_sha256`. Verification is client-side WebCrypto · no server round-trip · no trust required.
+The live cloud chain verifies server-side: `GET /ledger/verify` recomputes each `receipt_sha256` over the canonical (orjson sorted-keys) payload, checks the sequential `org_seq`, and checks each `parent_hash` link. Tamper a stored payload and `ok` flips to `false`, pinpointing the offending `org_seq`. It is authenticated and scoped to the caller's org — not an anonymous client-side check.
 
-[Verify a Record →](/defendableledger/verify/)
+[Verify a Receipt →](/defendableledger/verify/)
 
 ## Related surfaces
 
-- **defendableledger.com** — canonical public surface (this docs section's primary target)
+- **defendableledger.com** — intended public surface for the four-rails pipeline (roadmap · `/records` + `/verify` not built)
 - **ledger.mrdefendable.com** — legacy subdomain · pre-doctrine display
 - **streetledger.eth.limo** — ENS-resolved IPFS gateway · 62 deeded vocabulary terms · legacy/secondary
-- **DefendableRouter spine** — where the receipts originate · [/defendablerouter/overview/](/defendablerouter/overview/)
+- **DefendableRouter spine** — v0.1 local backend (not publicly deployed) · writes checksummed receipts · [/defendablerouter/overview/](/defendablerouter/overview/)
+- **api.defendablecloud.com** — the LIVE surface for the per-org hash chain (`/ledger`, `/ledger/verify`)
 
 ## What you read next
 
 - [Four Rails](/defendableledger/four-rails/) — Receipt · Verdict · Pair · Deed
 - [Royal Jelly Tiers](/defendableledger/royal-jelly-tiers/) — Apex · Honey · Jelly · Pollen · Propolis
-- [Hash-Chain Format](/defendableledger/hash-chain/) — the append-only ledger record schema
+- [Hash-Chain Format](/defendableledger/hash-chain/) — the real per-org chain (org_seq · parent_hash · receipt_sha256)
 - [Kill Hedera](/defendableledger/kill-hedera/) — the in-house anchoring doctrine
-- [Publication Flow](/defendableledger/publication-flow/) — Router → local → batched commit → public
-- [Verify a Record](/defendableledger/verify/) — step-by-step verification walkthrough
+- [Publication Flow](/defendableledger/publication-flow/) — the intended batched-public design (roadmap)
+- [Verify a Receipt](/defendableledger/verify/) — the real `/ledger/verify` and router checksum paths
 - [Books and Records](/defendableledger/books-and-records/) — the doctrine that turns deeds into trust
 
 ***

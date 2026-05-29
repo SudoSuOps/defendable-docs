@@ -3,6 +3,10 @@ title: Manifests
 description: The per-snapshot books-and-records bundle. Manifest schema · SHA256SUMS · ledger root computation.
 ---
 
+:::note[Roadmap — vision layer]
+The manifest / ledger-root bundle described here is the **planned StreetLedger snapshot format** (vision layer), not a currently produced artifact. The live integrity surface shipping today is the DefendableCloud `/ledger` + `/ledger/verify` per-org hash chain over `DCR-*` receipts — see [DefendableCloud](/defendablecloud/overview/).
+:::
+
 ## What a manifest is
 
 A manifest is the per-snapshot bundle that records EVERY file in a deed export tree · with its hash · its bytes · its type. The manifest IS the books-and-records of the ledger itself.
@@ -40,6 +44,3 @@ The `ledger_root_sha256` is SHA-256 over the sorted concatenation of every file 
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

@@ -3,6 +3,10 @@ title: Deeded Vocabulary
 description: How a Defend-A-Pedia term becomes a public deed · the 7-step pipeline · the schemas · the ENS pathing.
 ---
 
+:::note[Roadmap — vision layer]
+The vocabulary-deeding pipeline below is **design intent** for the StreetLedger / Defend-A-Pedia vision layer. It is **not a built endpoint**. The live, shipped receipt chain today is the DefendableCloud per-org `DCR-*` hash chain (`/ledger` + `/ledger/verify`) — see [DefendableCloud](/defendablecloud/overview/).
+:::
+
 ## The 7-step pipeline (vocabulary deeding)
 
 1. Term drafted in markdown (operator discipline · 13-section format)
@@ -22,6 +26,3 @@ See [DDEED Schema](/ddeed/deed-schema/) for the full canonical structure.
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

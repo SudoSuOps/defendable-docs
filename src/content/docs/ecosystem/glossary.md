@@ -41,26 +41,27 @@ Plain-English definitions for every operator term used across DefendableDocs. Ea
 
 | Term | Meaning |
 |---|---|
-| **Honey** | Tribunal classification · approved with confidence · ships. |
-| **Royal Jelly** | Apex tier · ≥ 0.85 quality score · feeds the training corpus. |
-| **Jelly** | Repair-candidate tier · routes to SwarmFixer for repair. |
-| **Propolis** | Walk tier · do not ship · root-cause and PASS. |
-| **Validator chain** | The 12-check verification pipeline · 7 critical + 5 advisory. |
-| **Assignment success** | Did the assignment actually succeed? Boolean + 5-grade breakdown. |
-| **Assignment failure** | Documented failure modes per assignment. Fuel for SwarmFixer training. |
-| **Evidence strength** | 0–1 dial · color × source weight × freshness. |
+| **Honey** | Verdict tier · pass — no flags (or only low-severity flags) and approved · ships. |
+| **Jelly** | Verdict tier · risk — a mid-severity flag was raised · repair-candidate · routes to SwarmFixer (roadmap) for repair. |
+| **Propolis** | Verdict tier · fail — a high-severity flag was raised · do not ship · root-cause and PASS. |
+| **Score** | **% of declared rules satisfied** — NOT a quality score and NOT a judge model's opinion. The referee applies the declared rulebook and throws flags; the tier follows from flag severity. |
+| **Royal Jelly** | The training-corpus tiering scheme (apex / honey / jelly / pollen / propolis) used to route extracted pairs. Tier follows from rules-satisfied + flag severity, not from a quality grade. |
+| **Validator chain** *(referee / rulebook engine)* | The real deterministic rulebook engine the referee runs (`app/executor.py`): JSON-schema field checks · type checks · **math re-derivation of each calculation from its own inputs + formula** · a structured rule DSL. It applies a declared Flight Sheet and **throws flags** — it is not a judge model. *(A formalized critical-vs-advisory check taxonomy is roadmap; today severity is flag-driven.)* |
+| **Assignment success** | Did the assignment satisfy its declared rules? Reported as flags-satisfied against the Flight Sheet. |
+| **Assignment failure** | Documented failure modes per assignment. Fuel for SwarmFixer training (roadmap). |
+| **Evidence strength** | A declared-rule input · color × source weight × freshness, where a Flight Sheet uses it. |
 | **Risk temperature** | LOW / MEDIUM / HIGH · the deal-flow risk read. |
-| **Validator confidence** | 0–1 · 12-check chain pass rate × source weight. |
-| **False Honey** | The classic adjudication failure mode · agent sounded smart but failed the assignment. |
+| **Validator confidence** | The share of declared rules satisfied for a run · derived from the rulebook engine's flags, not a model's confidence. |
+| **False Honey** | The classic failure mode · output sounded smart but failed a declared rule · the referee flags it regardless of how confident it reads. |
 
 ## Repair and training vocabulary
 
 | Term | Meaning |
 |---|---|
-| **SwarmFixer** | The repair-intelligence layer · turns Jelly into Royal Jelly via repair training pairs. |
-| **Repair lift** | The delta between pre-repair and post-repair quality scores. |
+| **SwarmFixer** | *(Roadmap)* The repair-intelligence layer · turns Jelly into Royal Jelly via repair training pairs. Not yet deployed. |
+| **Repair lift** | The delta between pre-repair and post-repair rules-satisfied. |
 | **Street pair** | The unit of operator-language training data · raw input → structured output. |
-| **Communicator** | The bidirectional human-meaning model · NOT a chatbot. Bookend translator. |
+| **Communicator** | *(Roadmap)* The bidirectional human-meaning model · NOT a chatbot. Bookend translator. Vision surface, not yet built. |
 | **Cost to mint** | What one trusted AI artifact actually costs end-to-end. |
 | **Energy is the receipt** | The doctrine that power-draw IS proof of compute spent. |
 
@@ -81,16 +82,20 @@ Plain-English definitions for every operator term used across DefendableDocs. Ea
 
 ## Rails and surfaces
 
+:::note[What's built vs roadmap in this section]
+Only two of these are real today: **DefendableCloud** (live at api.defendablecloud.com — the referee, the Defendable Run, and per-org hash-chained receipts) and the **DefendableRouter v0.1** spine (local, CI-verified, **not publicly deployed**, with **local JSONL checksummed receipts — not hash-chained**). The Communicator, Tribunal-as-a-separate-rail, StreetChat, StreetLedger, and Defend-A-Pedia surfaces below are **vision surfaces, not yet deployed**. The `.eth` names are read-mirrors, not anchors.
+:::
+
 | Term | Meaning |
 |---|---|
-| **DefendableRouter** | Rail 1 · intake + receipt-write at the edge. |
-| **Communicator LLM** | Rail 2 · the meaning layer. |
-| **Tribunal** | Rail 3 · the judgment layer. |
-| **Object Storage** | Rail 4 · durable storage of receipts/deeds/transcripts. |
-| **DDEED** | Rail 5 · the trust deed. |
-| **StreetLedger** | Public proof surface at ledger.mrdefendable.com. |
-| **StreetChat** | Live capture surface at chat.mrdefendable.com. |
-| **Defend-A-Pedia** | Vocabulary canon at defendapedia.eth. |
+| **DefendableRouter** | Intake + receipt-write spine · v0.1, local + CI-verified, **not publicly deployed**. Receipts are local JSONL with `checksum_sha256` (checksummed, not hash-chained). |
+| **Communicator LLM** | *(Roadmap)* The meaning layer. Not yet built. |
+| **Tribunal / Referee** | The rulebook engine that applies declared rules and throws flags. Live **inside DefendableCloud**; as a standalone routed rail it is roadmap. **Not a judge model.** |
+| **Object Storage** | Durable storage of receipts/deeds/transcripts (Tigris on the live Cloud). |
+| **DDEED** | *(Roadmap)* The trust-deed format for published records. |
+| **StreetLedger** | *(Roadmap / legacy)* Public proof surface · `ledger.mrdefendable.com`. Not a live anchor. |
+| **StreetChat** | *(Roadmap)* Live capture surface · `chat.mrdefendable.com`. Not yet deployed. |
+| **Defend-A-Pedia** | *(Roadmap)* Vocabulary canon · read-mirrored at `defendapedia.eth`. The `.eth` name is a read-mirror, not an anchor. |
 | **Mr. Defendable** | The FACE layer at mrdefendable.com. |
 
 ## CRE-broker engagement vocabulary

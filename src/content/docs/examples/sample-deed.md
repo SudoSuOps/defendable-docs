@@ -3,6 +3,10 @@ title: Sample Deed
 description: A DDEED-VOCABULARY-TERM with all 5 Proofs filled out. In-house hash-chained · no external anchor.
 ---
 
+:::note[Roadmap shape — not a live API artifact]
+This is the **proposed shape** for a DDEED vocabulary deed (Defend-A-Pedia · [DefendableLedger](/defendableledger/kill-hedera/)). There is **no deployed deed-minting endpoint** today. The live, hash-chained artifact right now is the per-org **eval / cook / incident / dataset-download / model-pin receipt** minted by `api.defendablecloud.com` — see [Sample Receipt](/examples/sample-receipt/). The deed below illustrates the books-and-records direction, not running output.
+:::
+
 A `DDEED_VOCABULARY_TERM` from Defend-A-Pedia v0.3.0 — the vocabulary term *Probability of Close*, deeded into the DefendableLedger books-and-records:
 
 ```json
@@ -21,12 +25,14 @@ A `DDEED_VOCABULARY_TERM` from Defend-A-Pedia v0.3.0 — the vocabulary term *Pr
     },
     "quality": {
       "verdict": {
-        "schema": "defendablecloud.verdict/v1",
+        "outcome": "pass",
         "severity": "honey",
-        "score_100": 100.0,
-        "client_ready": true,
+        "score_100": 100,
+        "client_ready": "Client-ready: no flags, approved.",
         "recommended_action": "approve",
-        "risk_breakdown": { "high": 0, "mid": 0, "low": 0 }
+        "checks_passed": 6,
+        "checks_failed": 0,
+        "risk_breakdown": { "high": [], "mid": [], "low": [] }
       }
     },
     "process": {
@@ -58,7 +64,7 @@ A `DDEED_VOCABULARY_TERM` from Defend-A-Pedia v0.3.0 — the vocabulary term *Pr
 
 The 2026-05-24 doctrine lock removed external chain anchoring from the spine. **Trust proofs no longer carry a `hedera_topic` field** (or any external chain transaction id). Trust is established by the in-house per-org hash chain (for receipts) and the append-only JSONL hash chain (for ledger deeds).
 
-The `quality` proof previously carried a fixed `tribunal_classification` enum + `validator_confidence` dial. It now embeds a [defendablecloud.verdict/v1](/schemas/tribunal-verdict/) — 3 severities (honey · jelly · propolis), score = % of declared rules satisfied, risk breakdown by tier.
+The `quality` proof previously carried a fixed `tribunal_classification` enum + `validator_confidence` dial. It now mirrors the real verdict rollup — the same shape DefendableCloud emits at `GET /runs/{id}/verdict`: `outcome` (pass · risk · fail), `severity` (honey · jelly · propolis), `score_100` = % of declared rules satisfied, `checks_passed`/`checks_failed`, `client_ready` as a string, and `risk_breakdown` as **lists of `check_key`s** by tier. See [Sample Verdict](/examples/sample-tribunal-verdict/) for the live shape.
 
 See [Kill Hedera doctrine](/defendableledger/kill-hedera/) for the rationale.
 

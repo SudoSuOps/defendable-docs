@@ -16,10 +16,10 @@ For the current production-facing cloud product, use:
 
 | Area | Required Practice |
 |---|---|
-| Deployment | Cloudflare Pages for static site/app, container host for API. |
+| Deployment | Fly.io for the DefendableCloud API (app `defendable-cloud-api`, region `iad`); Cloudflare Pages for site/app/docs; DefendableRouter runs local (SQLite) and is CI-verified, not publicly deployed. |
 | API runtime | Production boot checks for CORS, HTTPS, JWT secret, email, and quotas. |
 | WAF | Cloudflare managed rules, OWASP, bot posture, and route limits. |
-| CI | API tests, CLI tests, app build, site build, OpenAPI contract tests. |
+| CI | cloud — pytest (api) + npm build & npm audit (app, site); router — pytest + boot-smoke (init-db, seed, /health, $10/$6 quote assertions, 403 access gate). |
 | Logs | Auth, API keys, org roles, dataset grants, receipts, storage, webhooks. |
 | Backups | Postgres daily backups, monthly restore drill, object storage hash samples. |
 | Incidents | SEV classification, containment checklist, incident receipt. |

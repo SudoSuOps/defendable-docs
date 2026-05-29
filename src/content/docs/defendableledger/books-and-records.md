@@ -34,14 +34,18 @@ DefendableLedger applies this discipline to AI work. Every assignment minted by 
 
 ## What this looks like operationally
 
-| traditional AI workflow | DefendableLedger workflow |
+| traditional AI workflow | the DefendableOS workflow |
 |---|---|
-| "the agent said X" | DRR-20260524-...XYZ : full receipt · client_id · assignment · canonical_receipt_sha256 · object_storage_uri |
-| "we evaluated quality" | TRIB-20260524-...ABC : verdict_id · 4-dim rubric scores · tier · assignment_success · graded by SwarmCurator-9B |
-| "we collected training data" | SJP-20260524-...DEF : pair_id · tier (apex/honey/jelly/pollen/propolis) · in-house corpus index |
-| "logs prove it happened" | DLR-20260524-...GHI : ledger_seq · parent_hash · record_sha256 · append-only chain · verifiable in any browser |
+| "the agent said X" | **REAL today** — `DCR-{org_seq:06d}-{hex8}` (cloud) : full receipt · `org_seq` · `parent_hash` · `receipt_sha256` · hash-chained in Postgres · *or* `rcpt_<hex>` (router) : flat `checksum_sha256` receipt |
+| "we evaluated quality" | *roadmap* — Tribunal verdict : `verdict_id` · 4-dim rubric scores · tier · graded by SwarmCurator-9B (not built) |
+| "we collected training data" | *roadmap* — SwarmJelly pair : `pair_id` · tier (apex/honey/jelly/pollen/propolis) · in-house corpus index (not built) |
+| "logs prove it happened" | **REAL today** — cloud chain : `parent_hash` links each `receipt_sha256` · `GET /ledger/verify` recomputes server-side and pinpoints any tampered `org_seq` |
 
-"Logs" don't pencil. **Deeds pencil.**
+"Logs" don't pencil. **Receipts pencil.**
+
+:::note
+The cloud receipt chain (`DCR-` ids · `org_seq` · `parent_hash` · `receipt_sha256`) is **real and live** at api.defendablecloud.com, verified server-side via `GET /ledger/verify`. The router's `rcpt_` receipts are **real but local**, checksummed-not-chained. The Tribunal-verdict and SwarmJelly-pair rows are **roadmap**. Earlier `DLR-`/`ledger_seq`/`record_sha256`/`TRIB-`/`SJP-` id forms were design sketches, not emitted ids.
+:::
 
 ## The five proofs every deed carries
 
@@ -67,11 +71,12 @@ The current industry asks buyers to trust:
 
 DefendableLedger turns all four into receipts. The buyer doesn't need to trust the operator's narrative — the buyer can verify the books.
 
-A buyer doing pre-market DD hits the ledger first. They see:
-- Receipts are real (hashes reproduce)
-- Verdicts are graded (rubric is transparent)
-- Pairs are tiered (corpus discipline is visible)
-- Records are chained (tampering is detectable)
+A buyer doing pre-market DD hits the receipts first. Today they can verify:
+- Receipts are real — `GET /ledger/verify` recomputes each `receipt_sha256` and the hashes reproduce
+- Records are chained — `parent_hash` links are checked and tampering surfaces the offending `org_seq`
+
+And as the roadmap rails land:
+- Verdicts graded (rubric transparent) · Pairs tiered (corpus discipline visible)
 
 That converts a "trust us" claim into a "verify it yourself" experience. Buyers close.
 

@@ -3,22 +3,24 @@ title: Defendable CLI
 description: End-to-end DefendableCloud terminal workflow for projects, runs, evidence, audits, approvals, receipts, ledger verification, and e2e tests.
 ---
 
-`defendable` is the official CLI for DefendableCloud.
+`defendable` is the CLI for DefendableCloud, shipped in the monorepo at `defendable-cloud-v2/cli`.
 
-Every command maps to an API endpoint locked by Pydantic schemas. The CLI surface should not drift away from the API contract.
+Every command maps to an API endpoint locked by Pydantic schemas. The CLI surface tracks the API contract; the canonical client surface remains the [OpenAPI doc](https://api.defendablecloud.com/openapi.json).
 
 ## Install
 
-```bash
-pip install defendablecloud-cli
-```
-
-Install from the monorepo:
+Install editable from the monorepo (current canonical path):
 
 ```bash
 git clone git@github.com:SudoSuOps/defendable-cloud-v2.git
 pip install -e ./defendable-cloud-v2/cli
 ```
+
+This installs the `defendable` console script (package name `defendablecloud-cli`).
+
+:::note[Planned]
+A published `pip install defendablecloud-cli` from PyPI is planned — the package is not on PyPI yet. Until then, use the monorepo editable install above.
+:::
 
 ## Configuration
 

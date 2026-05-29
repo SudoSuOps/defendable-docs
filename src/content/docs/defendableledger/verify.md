@@ -1,96 +1,89 @@
 ---
-title: DefendableLedger · Verify a Record
-description: Every record carries its own SHA-256. Verification is client-side WebCrypto. Zero round-trip. Zero trust required.
+title: DefendableLedger · Verify a Receipt
+description: The real verification path. Cloud /ledger/verify recomputes the per-org chain server-side. Router receipts are per-line checksummed. Honest books and records.
 ---
 
-## What you can verify
+## The real verification path
 
-- A **DefendableRouter receipt** (full `router_receipt.json`)
-- A **Tribunal verdict** (full `verdict.json`)
-- A **SwarmJelly training pair** (full `<pair_id>.json`)
-- A **DefendableLedger record** (single JSONL line)
-- The **entire ledger chain** (every record's `parent_hash` matches the prior `record_sha256`)
+There are two real things to verify today, and they verify differently. Be precise about which one you have.
 
-## Verify a single record (web)
+| surface | what it is | how it verifies |
+|---|---|---|
+| **DefendableCloud** (LIVE, api.defendablecloud.com) | per-org hash chain in Postgres | `GET /ledger/verify` — server-side recompute, authenticated |
+| **DefendableRouter** (v0.1, local, not deployed) | flat checksummed receipts in JSONL | recompute `checksum_sha256` per line |
 
-1. Go to [defendableledger.com/verify](https://defendableledger.com/verify).
-2. Paste the record's JSON into the input box.
-3. Paste the claimed `record_sha256` (or `receipt_sha256` etc.) into the claimed-hash box.
-4. Click **Compute SHA-256**.
-5. The page computes both:
-   - **Raw SHA-256** — over the bytes as-pasted.
-   - **Canonical SHA-256** — over the JSON with keys sorted and no whitespace.
-6. Result shows ✓ MATCH if either matches the claimed hash.
+## Verify the cloud chain · `GET /ledger/verify`
 
-WebCrypto runs in your browser. **Nothing is sent to a server.** Verification is client-side and offline-capable after first page load.
-
-## Verify a single record (CLI)
+The live, authoritative verifier is the cloud endpoint. It is **authenticated and server-side** — scoped to the caller's org, recomputed inside the API. It is *not* an anonymous client-side WebCrypto verifier.
 
 ```bash
-defendablerouter receipt hash --file path/to/router_receipt.json
-# prints: <sha256>  path/to/router_receipt.json
+curl -H "Authorization: Bearer $DC_API_KEY" \
+  https://api.defendablecloud.com/ledger/verify
 ```
 
-Compare the printed hash against the claimed `receipt_sha256` or `record_sha256`.
+What it does (`app/routes/public.py · verify_ledger`):
 
-## Verify a full run directory
+1. Loads the org's receipts ordered by `org_seq` ascending.
+2. For each receipt, recomputes `receipt_sha256 = sha256_hex(orjson.dumps(payload, OPT_SORT_KEYS))` and compares to the stored value.
+3. Checks `org_seq == index` (no sequence gaps).
+4. Checks `parent_hash` points at the prior receipt's `receipt_sha256` (genesis parent = sixty-four zeros).
 
-```bash
-defendablerouter receipt verify --run data/runs/DRR-20260524-XYZ
+Response shape:
+
+```json
+{
+  "ok": true,
+  "receipts_checked": 42,
+  "errors": []
+}
 ```
 
-This walks the run directory and checks:
+On tamper, `ok` flips to `false` and `errors[]` pinpoints the offending `org_seq`:
 
-- `canonical_receipt_sha256` reproduces from the volatile-stripped receipt body
-- `receipt_sha256` reproduces from the canonical-hash-injected body
-- `manifest_sha256` reproduces from the file list
-- `SHA256SUMS.txt` matches the manifest entries
-- Every file in the manifest hashes to its stored digest
-
-Output: PASS or FAIL with the exact mismatch surfaced.
-
-## Verify the ledger chain
-
-```bash
-defendablerouter ledger verify
-# walks defendable_ledger.jsonl
-# checks every record's parent_hash points at the prior record_sha256
-# checks every record_sha256 recomputes correctly
-# reports first chain break (if any) with ledger_seq
+```json
+{
+  "ok": false,
+  "receipts_checked": 42,
+  "errors": [
+    { "org_seq": 17, "error": "hash mismatch" }
+  ]
+}
 ```
 
-Any tamper to any record downstream of `ledger_seq N` breaks the chain at `N`. The verifier surfaces the exact line.
+Error kinds: `hash mismatch`, `sequence gap (expected N)`, `broken parent link`. (`errors[]` is capped at the first 20.)
 
-## The canonicalization rule
+## Verify a router receipt · `checksum_sha256`
 
-There is one canonicalization rule across the spine. Use it for any custom verification:
+DefendableRouter writes flat receipts to `data/receipts/YYYY-MM-DD.receipts.jsonl`, one per line. Each line carries a `checksum_sha256` over the canonical JSON of the receipt **excluding the checksum field itself**. These are **per-line checksummed, NOT hash-chained** — there is no `parent_hash`, no cross-line link.
 
-1. Take the JSON object.
-2. Strip volatile fields:
-   - For receipts: `created_at`, `hashes`
-   - For manifests: `manifest_id`, `created_at`, `manifest_sha256`
-   - For ledger records: `record_sha256` itself
-3. Sort keys alphabetically · all levels of nesting.
-4. Serialize as JSON with no whitespace · UTF-8.
-5. SHA-256 over the resulting bytes.
+The real canonicalizer (`defendable_router/core/receipts.py`):
 
-This rule lives in `defendablerouter/core/canonicalize.py`. The `/verify` page on defendableledger.com applies the same rule in WebCrypto.
+```python
+def canonical_json(payload):
+    # _normalize: Decimal -> "{:.2f}" string, datetime -> isoformat()
+    return json.dumps(_normalize(payload), sort_keys=True,
+                      separators=(",", ":"), ensure_ascii=True)
 
-## Verify the publication itself
+def checksum_receipt(payload_without_checksum):
+    return hashlib.sha256(canonical_json(payload_without_checksum).encode()).hexdigest()
+```
 
-Each entry on `/records` at defendableledger.com carries:
+To verify a router receipt by hand:
 
-- The full record JSON
-- Its `record_sha256` and `parent_hash`
-- A link to the `payload_ref` artifact (also published)
+1. Take the receipt line, drop the `checksum_sha256` field.
+2. Re-derive any `Decimal` as `"{:.2f}"` and any timestamp as ISO 8601.
+3. Serialize with `sort_keys=True`, `separators=(",", ":")`, `ensure_ascii=True`.
+4. `sha256` the UTF-8 bytes.
+5. Compare to the stored `checksum_sha256`.
 
-Verify by:
-1. Compute SHA-256 of the published record body → must equal stored `record_sha256`.
-2. Compute SHA-256 of the payload artifact → must equal stored `payload_hash`.
-3. Check `parent_hash` against the prior record on the public site.
+Note this is a **different canonicalizer** from the cloud's orjson `OPT_SORT_KEYS`. Do not assume one tool verifies both.
 
-Three checks. Three SHA-256s. Provenance proven.
+## Roadmap items
+
+:::note[Roadmap / not built]
+A router CLI verb (e.g. `defendablerouter ledger verify`), a shared `canonicalize.py` verifier path, and the public **defendableledger.com** `/records` + `/verify` WebCrypto pages are **design intent**, not shipped. The non-existent `defendablerouter receipt verify --run`, `canonical_receipt_sha256`, `manifest_sha256`, and `SHA256SUMS.txt` flows are not part of the real codebase. The authoritative verifier today is the cloud's `GET /ledger/verify`.
+:::
 
 ***
 
-🐝 *Verify anything · trust no one · books and records · to the shed.*
+🐝 *Recompute the hash · check the chain · books and records · to the shed.*

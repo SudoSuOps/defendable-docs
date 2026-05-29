@@ -5,6 +5,15 @@ description: The five mandatory diagrams of the DefendableOS ecosystem. Full sys
 
 The five diagrams every operator · board member · and developer needs to understand DefendableOS.
 
+:::note[Roadmap — full ecosystem vision]
+These five diagrams depict the **full ecosystem vision**, not what is wired today. As of now, two pieces are actually built:
+
+- **DefendableCloud — the Defendable Run** is LIVE at [api.defendablecloud.com](https://api.defendablecloud.com) (healthz reports db + storage + email all true). The Inputs → Evidence → Execution → Checks → Verdict → Approval → Receipt primitive, the deterministic referee, and the per-org hash-chained receipts are real and verifiable.
+- **DefendableRouter v0.1** is a real spine — FastAPI + SQLite + Typer CLI + local JSONL receipt ledger, committed to main and CI-verified — but it is **local, not publicly deployed**.
+
+StreetChat, the Communicator, Tribunal-as-a-rail, DDEED anchoring, SwarmFixer, and the ENS read-mirrors shown below are **roadmap surfaces**. Read the diagrams as the target architecture; check each box against the status notes that follow.
+:::
+
 ## 1. Full DefendableOS ecosystem
 
 Every AI work-product in the system flows through one chain:
@@ -51,7 +60,9 @@ Human / Client / Board / Agent
              ▼
 ┌──────────────────────────┐
 │  StreetLedger             │  ← public proof layer
-│  (Hedera-anchored)        │
+│  (in-house per-org        │
+│   hash chain · no external│
+│   chain anchor)           │
 └────────────┬─────────────┘
              │
              ▼
@@ -64,6 +75,10 @@ Human / Client / Board / Agent
 Every step writes a record. Every record gets hashed. Every hash is verifiable. **No step skips · no record is silent.**
 
 ## 2. StreetChat flow
+
+:::note[Roadmap — StreetChat is not yet deployed]
+StreetChat (the live-capture rail) is a **vision surface**, not a built product. The flow below is the target design. None of these stages are running in production today; the only live receipt path is the DefendableCloud Defendable Run (diagram 1's right-hand chain).
+:::
 
 How live human speech becomes a deeded books-and-records artifact:
 
@@ -106,7 +121,8 @@ Audio / Spaces / Calls / Mic
           │
           ▼
  ┌─────────────────┐
- │ DDEED-CHAT       │   ← 5 Proofs · Hedera anchor · StreetLedger pub
+ │ DDEED-CHAT       │   ← 5 Proofs · in-house per-org hash chain ·
+ │                  │     StreetLedger pub (no external chain anchor)
  └─────────────────┘
 ```
 
@@ -114,40 +130,45 @@ See [StreetChat Overview](/streetchat/overview/) for the per-stage detail.
 
 ## 3. DefendableRouter flow
 
-How agent or system events become receipt-bearing chains:
+:::note[Status — Router v0.1 is real but local, and the object-storage / ledger tail is roadmap]
+The DefendableRouter spine is **built and CI-verified** (FastAPI + SQLite + Typer CLI + a local JSONL receipt ledger) but it is **not publicly deployed**. What ships today: org / member / dataset / compute / job endpoints, a worker contract, and **local JSONL receipts at `data/receipts/YYYY-MM-DD.receipts.jsonl`, each line carrying a `checksum_sha256` over canonical JSON** — checksummed, but **not hash-chained** (unlike the Cloud's per-org chain). The object-storage path layout, the ENS-prefixed identifiers, and the live Router → Tribunal → StreetLedger publish chain are the **target architecture** — label them roadmap.
+:::
+
+How agent or system events become receipt-bearing chains (target architecture — see status note):
 
 ```
- ENS / App ID / Agent ID
+ Org ID / Member ID / Agent ID
           │
           ▼
  ┌───────────────────────┐
- │ DefendableRouter       │  ← write-only · <5ms POST overhead
- │ (intake · ID resolver) │
+ │ DefendableRouter       │  ← write-only intake · ID resolver
+ │ (v0.1 · local only)    │
  └──────────┬────────────┘
             │
             ▼
  ┌───────────────────────┐
- │ Object Storage         │  ← streetledger.eth path layout
- │ (receipt persistence)  │
+ │ Local JSONL ledger     │  ← data/receipts/YYYY-MM-DD.receipts.jsonl
+ │ (TODAY)                │     one receipt per line · checksum_sha256
+ └──────────┬────────────┘
+            │
+            ▼  ········ roadmap below this line ········
+ ┌───────────────────────┐
+ │ Object Storage         │  ← durable receipt persistence (planned)
+ │ (ROADMAP)              │
  └──────────┬────────────┘
             │
             ▼
  ┌───────────────────────┐
- │ Receipt                │  ← RCPT-* · canonical JSON · SHA-256
+ │ Tribunal-as-a-rail     │  ← scores the artifact (ROADMAP · not wired)
  └──────────┬────────────┘
             │
             ▼
  ┌───────────────────────┐
- │ Tribunal               │  ← scores the artifact in the receipt
- └──────────┬────────────┘
-            │
-            ▼
- ┌───────────────────────┐
- │ StreetLedger           │  ← publicly visible deed + verify path
+ │ StreetLedger           │  ← publicly visible deed + verify (ROADMAP)
  └───────────────────────┘
 ```
 
-The Router is intentionally minimal — its only job is to **capture cheaply at the edge** and **route durably** into the rest of the rails.
+The Router is intentionally minimal — its only job is to **capture cheaply at the edge** and **route durably** into the rest of the rails. Today it does the capture half locally; the durable-publish tail is on the roadmap.
 
 ## 4. DDEED proof stack
 

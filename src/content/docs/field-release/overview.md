@@ -23,9 +23,13 @@ Current verdict for all four and the cross-module flow: **VERIFIED_AS_REPAIRED_W
 
 ## The synthetic customer-support field scenario
 
-A live, controlled, **synthetic** demonstration runs on DefendableCloud:
+A controlled, **synthetic** demonstration is described by the audited public modules below:
 
-- Live demo: <https://defendablecloud.com/agent-operations-demo>
+:::note[Demo surface — roadmap]
+The synthetic agent-operations walkthrough is described by the audited module repos below; a
+dedicated hosted demo page on DefendableCloud is not yet fielded as a standalone route.
+:::
+
 - Starter `support-01.acme.defendable.eth` is `INJURED_RESERVE`.
 - Backup `support-02.acme.defendable.eth` is `ACTIVE_BACKUP_RESTRICTED_DUTY`; coverage is `COVERED_BY_BACKUP_RESTRICTED_DUTY`.
 - The backup may run **classify_ticket, draft_customer_response, route_escalation, update_case_notes**.

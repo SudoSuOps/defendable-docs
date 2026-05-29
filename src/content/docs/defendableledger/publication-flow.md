@@ -1,87 +1,69 @@
 ---
 title: DefendableLedger · Publication Flow
-description: Router writes local records fast. The batch publisher commits to the defendable-ledger repo. CF Pages rebuilds. The public proof at defendableledger.com updates.
+description: The intended local-fast → batched-public publication design. Roadmap. The real live, verifiable, hash-chained receipts are served today at api.defendablecloud.com.
 ---
 
-## The flow
+:::caution[Roadmap / design — none of the publication pipeline is built]
+This page describes **design intent**. The batch publisher, `defendable_ledger.jsonl`, the public `defendable-ledger` repo, the `/records` + `/verify` pages on defendableledger.com, `--redact`, and IPFS/ENS pinning are **NOT BUILT**. There is no `defendablerouter ledger publish` command. For real, live, hash-chained, verifiable receipts today, use **api.defendablecloud.com** `GET /ledger` and `GET /ledger/verify` (auth-gated). See [Verify a Receipt](/defendableledger/verify/).
+:::
+
+## What is real today
+
+- **Cloud (LIVE):** DefendableCloud serves the per-org hash chain at **api.defendablecloud.com** — `GET /ledger` (the chain in `org_seq` order) and `GET /ledger/verify` (server-side recompute, auth-gated). This is the surface to point anyone at when they want verifiable receipts.
+- **Router (local):** DefendableRouter v0.1 writes flat **checksummed-not-chained** receipts to `data/receipts/YYYY-MM-DD.receipts.jsonl`, one line each with a `checksum_sha256`. There is no publisher and no public render — it is a local artifact only.
+
+## The intended flow (roadmap)
 
 ```
-1. DefendableRouter receives intake
-       │
+1. Intake received
+       │  (roadmap)
        ▼
 2. Receipt + Verdict + Pair + Deed minted (4 rails)
-       │
+       │  (roadmap — only Rail 1 receipts exist today)
        ▼
-3. Records appended locally to smash:~/defendablerouter/data/ledger/defendable_ledger.jsonl
-   Pairs routed to smash:~/defendablerouter/data/swarmjelly/<tier>/*.json
-       │  (fast · sub-millisecond · sovereign disk)
-       │
+3. Records appended locally to a hash-chained ledger
+       │  (roadmap — no defendable_ledger.jsonl today)
        ▼
-4. Batch publisher (cron OR explicit CLI) copies new records into:
-   github.com/SudoSuOps/defendable-ledger/public/records/*.json
-       │
+4. Batch publisher copies new records into a public repo
+       │  (roadmap — no publisher, no defendable-ledger repo)
        ▼
-5. git push → CF Pages CI build → /dist updated
-       │
+5. git push → CF Pages build
+       │  (roadmap)
        ▼
-6. defendableledger.com renders the new records publicly
+6. defendableledger.com renders records publicly
+          (roadmap — no /records or /verify pages)
 ```
 
-## Why batched, not per-intake
+## Why batched, not per-intake (design rationale)
 
-Two reasons:
+The design favors batched publication over per-intake commits for two reasons, should it be built:
 
-1. **Intake stays fast.** Per-intake git commit + push + CF rebuild would block the HTTP response by minutes. Records are written to local disk in milliseconds.
-2. **Git history stays sane.** 88K intakes/year = 88K commits if per-intake. Batched (hourly / daily / on-demand) keeps the repo readable.
+1. **Intake stays fast.** Per-intake git commit + push + CF rebuild would block the response. Local writes are milliseconds.
+2. **Git history stays sane.** High intake volume would mean one commit per intake; batching keeps the repo readable.
 
-## Publisher CLI (planned)
+## Publisher CLI (planned, not implemented)
+
+:::note[Not implemented]
+No `defendablerouter ledger publish` command exists. The sketch below is planned design only.
+:::
 
 ```bash
-defendablerouter ledger publish \
-  --since "2026-05-24T00:00:00Z" \
-  --repo ~/Desktop/defendable-ledger \
-  --commit \
-  --push
+# PLANNED — does not exist
+defendablerouter ledger publish --since <iso> --repo <path> --commit --push
 ```
 
-What it does:
-1. Reads `data/ledger/defendable_ledger.jsonl` from `--since` cursor.
-2. Reads referenced payload files (receipts, verdicts, pairs).
-3. Copies them into the `defendable-ledger` repo under `public/records/<YYYY>/<MM>/`.
-4. Updates `public/records/index.json` with new entries.
-5. Commits with a deterministic message: `Publish records <N> · ledger_seq <a>–<b>`.
-6. Pushes to origin/main. CF Pages auto-rebuilds.
+## Privacy & redaction (planned)
 
-## What lives in the public repo vs the spine
+A `--redact` mode that strips classified fields before publication is **planned, not built**. Public-by-default with operator-grade discretion is the intended principle.
 
-| location | what lives there |
-|---|---|
-| `smash:~/defendablerouter/data/` | hot path · all receipts · all pairs · ledger JSONL · spine state of truth |
-| `SudoSuOps/defendable-ledger/public/records/` | published subset · normalized JSON · what the public site renders |
+## Verification — use the real surface
 
-The spine is the source of truth. The repo is the publication mirror.
+Until the publication pipeline exists, verification runs against the live cloud chain: `GET /ledger/verify` recomputes each `receipt_sha256` over the canonical (orjson sorted-keys) payload, checks sequential `org_seq`, and checks each `parent_hash` link — server-side and auth-gated. [Verify a Receipt →](/defendableledger/verify/)
 
-## Privacy & redaction (when needed)
+## ENS / IPFS sibling (planned)
 
-Not every record published. The publisher honors a `--redact` mode that strips fields flagged `classification != UNCLASSIFIED`. The hash chain still verifies because canonical hashes are computed before redaction.
-
-Public-by-default is the principle. Operator-grade discretion is the guardrail.
-
-## Verification still works after publication
-
-Each published record carries its `record_sha256`. The `/verify` page on defendableledger.com recomputes locally via WebCrypto. Anyone can:
-
-1. Open `/records/<id>`.
-2. Click "Verify".
-3. Browser computes SHA-256 of the canonical record.
-4. Match against the published `record_sha256`.
-
-Client-side. Zero trust required.
-
-## ENS / IPFS sibling
-
-For the legacy `streetledger.eth.limo` audience, the publisher can also pin the latest `/dist` to IPFS and update the ENS contenthash record. Optional · one cron away · not on the hot path.
+Pinning a published `/dist` to IPFS and updating an ENS contenthash for the legacy `streetledger.eth.limo` audience is **planned**, contingent on the publisher existing first.
 
 ***
 
-🐝 *Local fast · batched public · books and records · to the shed.*
+🐝 *Roadmap for the public render · the live chain is at api.defendablecloud.com · to the shed.*

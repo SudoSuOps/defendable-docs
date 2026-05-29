@@ -1,6 +1,6 @@
 ---
 title: DDEED · Overview
-description: The unifying deed structure across the ecosystem. 5 Proofs · multi-class · Hedera-anchored.
+description: The unifying deed structure across the ecosystem. 5 Proofs · multi-class · in-house SHA-256 hash chain · no external anchor.
 ---
 
 :::caution[Status — audited-prototype reality]
@@ -21,6 +21,3 @@ Distinct from [DefendableCloud receipts](/schemas/receipt/), which ride the per-
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

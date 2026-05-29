@@ -3,6 +3,10 @@ title: Why Now
 description: The market-timing argument. Why AI defense infrastructure is the trillion-dollar category emerging right now.
 ---
 
+:::note[Market thesis]
+This page is the **market-timing argument** for the DefendableOS / DefendableCloud category — positioning, not a product-capability claim. For what is shipped today, see [DefendableCloud · Overview](/defendablecloud/overview/).
+:::
+
 ## The market reality
 
 AI agents are moving from **assistant** to **operator** inside real businesses. Once an agent touches a real workflow · failure becomes business risk. Most businesses do not yet have a defense layer for that risk.
@@ -31,6 +35,3 @@ When cloud infrastructure exploded in the 2010s · everyone built features · fe
 ***
 
 🐝 *Operator-grade · books and records · to the shed.*
-
-
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.

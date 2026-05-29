@@ -1,98 +1,111 @@
 ---
 title: DefendableLedger · Hash-Chain Format
-description: Append-only hash-chained JSONL. Each record links to the prior. Tamper-evident · client-side verifiable · the in-house anchoring layer.
+description: The real per-org hash chain. Postgres-backed · org_seq + parent_hash + receipt_sha256 · recomputed server-side. Tamper-evident · in-house · no external anchor.
 ---
 
-## Format
+## The real chain — DefendableCloud, LIVE
 
-DefendableLedger is an **append-only hash-chained JSONL file**. One record per line. Each record carries `parent_hash` pointing at the prior record's `record_sha256`. Walking the chain from the genesis record verifies the entire ledger.
+The hash chain that exists today is the **DefendableCloud per-organization receipt chain**. It is backed by Postgres rows (table `receipts`), one row per minted receipt, and served at **api.defendablecloud.com**. There is no `/v1` prefix and no separate JSONL ledger file — the chain *is* the Postgres rows, ordered by `org_seq`.
 
-```
-data/ledger/defendable_ledger.jsonl
-```
+## Receipt fields
 
-## Record schema
+Each receipt row carries:
 
-```json
-{
-  "ledger_seq": 42,
-  "record_id": "DLR-20260524-01KSE...ABC",
-  "record_type": "RECEIPT | VERDICT | PAIR | DEED",
-  "created_at": "2026-05-24T22:33:26Z",
-  "parent_hash": "<prior record_sha256, or 64 zeros for genesis>",
-  "payload_ref": "data/runs/DRR-20260524-XYZ/router_receipt.json",
-  "payload_hash": "<sha256 of the payload file content>",
-  "issued_by": "DefendableRouter | Tribunal | SwarmJelly",
-  "host": "smash",
-  "record_sha256": "<sha256 of this record with record_sha256 nulled>"
-}
+```text
+org_seq         int     sequential index, per org, starting at 0
+parent_hash     str     prior receipt's receipt_sha256 (genesis parent = 64 zeros)
+receipt_sha256  str     sha256_hex(orjson.dumps(payload, OPT_SORT_KEYS))
+receipt_id      str     DCR-{org_seq:06d}-{hex8}
+payload         json    the canonical receipt body that gets hashed
 ```
 
-## How `record_sha256` is computed
+The `payload` is the canonical receipt body. It includes `org_seq` and `parent_hash` so the chain link is *inside* the hashed bytes — you cannot reorder or relink a receipt without changing its `receipt_sha256`.
 
-1. Take the record JSON.
-2. Set `record_sha256` to `null`.
-3. Canonicalize: sort keys · no whitespace · UTF-8.
-4. Compute SHA-256 over the canonical bytes.
-5. The result IS the record's `record_sha256`.
+## How `receipt_sha256` is computed
 
-This is the same canonicalization rule the spine uses for receipt hashes. One algorithm. One verifier path.
+The cloud canonicalizer is orjson with sorted keys:
+
+```python
+# app/hashing.py
+def canonical(obj):           # bytes
+    return orjson.dumps(obj, option=orjson.OPT_SORT_KEYS)
+
+def sha256_hex(data):         # hex digest
+    return hashlib.sha256(data).hexdigest()
+```
+
+When a receipt is minted (`app/ledger.py · mint_receipt`):
+
+1. Look up the org's last receipt to get `last.org_seq` and `last.receipt_sha256`.
+2. `org_seq = last.org_seq + 1` (or `0` for the first receipt).
+3. `parent_hash = last.receipt_sha256` (or `ZERO_HASH` = sixty-four zeros for genesis).
+4. `receipt_id = f"DCR-{org_seq:06d}-{new_id()[:8]}"`.
+5. Build the canonical `payload` (it embeds `org_seq` and `parent_hash`).
+6. `receipt_sha256 = sha256_hex(canonical(payload))`.
+7. Persist the row in Postgres.
+
+## Artifact upload is best-effort
+
+After the hash is computed, a JSON copy (`{...payload, receipt_sha256}`) and a rendered PDF are uploaded to Tigris (S3). That upload is wrapped in `try/except` and is **best-effort**:
+
+```python
+try:
+    put_object(json_key, json_bytes, content_type="application/json")
+    put_object(pdf_key,  pdf_bytes,  content_type="application/pdf")
+except Exception:
+    pass  # storage outage never blocks the receipt
+```
+
+The authoritative chain lives in Postgres. A storage outage degrades gracefully — the receipt and its chain link are already durable in the database.
 
 ## How the chain is verified
 
+`GET /ledger/verify` (authenticated, scoped to the caller's org) walks the rows in `org_seq` order and recomputes everything server-side:
+
 ```python
-expected_parent = "0" * 64  # genesis link
-for line in open("defendable_ledger.jsonl"):
-    rec = json.loads(line)
-    assert rec["parent_hash"] == expected_parent, "chain break"
-    assert rec["record_sha256"] == compute_record_sha256(rec), "tamper"
-    expected_parent = rec["record_sha256"]
+# app/routes/public.py · verify_ledger
+prev = ZERO_HASH
+for i, r in enumerate(rows):                       # rows ordered by org_seq asc
+    recomputed = sha256_hex(canonical(r.payload))
+    if recomputed != r.receipt_sha256:
+        errors.append({"org_seq": r.org_seq, "error": "hash mismatch"})
+    if r.org_seq != i:
+        errors.append({"org_seq": r.org_seq, "error": f"sequence gap (expected {i})"})
+    if r.payload.get("parent_hash") != prev:
+        errors.append({"org_seq": r.org_seq, "error": "broken parent link"})
+    prev = r.receipt_sha256
+return {"ok": len(errors) == 0, "receipts_checked": len(rows), "errors": errors[:20]}
 ```
 
-Any single record mutation breaks every link downstream. The verifier surfaces the exact `ledger_seq` of the break.
+Three checks per receipt: **hash recompute**, **sequential org_seq**, **parent link**. Tamper a stored payload and `ok` flips to `false`, pinpointing the offending `org_seq`. This recompute is server-side — not anonymous WebCrypto.
 
-## Why this beats external chain anchoring
+## Genesis link
 
-| dimension | external chain (Hedera / IPFS / OP_RETURN) | DefendableLedger (in-house) |
-|---|---|---|
-| **anchoring cost per record** | external API tokens · per-tx fees | sovereign disk · ~$0 |
-| **latency to anchor** | seconds–minutes (network round-trip) | sub-millisecond |
-| **dependency** | external chain availability + their priorities | the house · always-on |
-| **verification** | requires external node / explorer | client-side SHA-256 · WebCrypto |
-| **trust layer** | shared with everyone else on that chain | compounds *inside the house* |
-| **data sovereignty** | partial (metadata leaked) | full |
-| **publication** | separate step | git push → CF Pages → public proof |
+The first receipt for any org has `org_seq = 0` and `parent_hash = "0" * 64` (the canonical `ZERO_HASH`). Every subsequent receipt's `parent_hash` equals the prior receipt's `receipt_sha256`.
 
-The chain's job is **tamper-evidence**, not third-party validation. SHA-256 + append-only + parent_hash links give tamper-evidence at zero external cost.
+## The router is checksummed-not-chained — a separate algorithm
 
-For external broadcast of the ledger root (when needed), a **single periodic hash anchor** can be published to a public surface — that's a cron, not a per-record cost. The hot path stays sovereign.
+Do **not** conflate the two. DefendableRouter (v0.1, local) writes flat receipts to `data/receipts/YYYY-MM-DD.receipts.jsonl`, one per line. Each carries a `checksum_sha256` computed by a **different canonicalizer**:
 
-## Genesis record
+```python
+# defendable_router/core/receipts.py
+def canonical_json(payload):   # NOT orjson
+    return json.dumps(_normalize(payload), sort_keys=True,
+                      separators=(",", ":"), ensure_ascii=True)
+# _normalize: Decimal -> "{:.2f}" str, datetime -> isoformat()
 
-The first record in any new ledger:
-
-```json
-{
-  "ledger_seq": 0,
-  "record_id": "DLR-<date>-GENESIS",
-  "record_type": "GENESIS",
-  "created_at": "<iso>",
-  "parent_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-  "payload_ref": "",
-  "payload_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-  "issued_by": "DefendableLedger",
-  "host": "<host>",
-  "record_sha256": "<computed>"
-}
+def checksum_receipt(payload_without_checksum):
+    return hashlib.sha256(canonical_json(payload_without_checksum).encode()).hexdigest()
 ```
 
-## Append rules
+Router receipts are **per-line checksummed** (tamper-evident individually) but **not hash-chained** — there is no `parent_hash`, no `org_seq` link between lines. Two different rails, two different canonicalizers; this is not "one algorithm."
 
-- Records are written one per line, JSON, no trailing whitespace.
-- Each append is fsync'd before returning to the caller (durability).
-- `ledger_seq` is monotonic · the writer holds an exclusive lock for the write.
-- No edits. No deletes. The ledger only grows.
+## Roadmap: a separate public JSONL ledger
+
+:::note[Roadmap / not built]
+A separate public, hash-chained `defendable_ledger.jsonl` (with `DLR-` ids and a `ledger_seq`) is still envisioned for the four-rails Deed pipeline, but **it does not exist today**. Do not treat `DLR-`, `ledger_seq`, or `record_sha256` as real fields — the real chain field is `receipt_sha256` on the cloud's Postgres receipts.
+:::
 
 ***
 
-🐝 *Append-only · hash-chained · books and records · to the shed.*
+🐝 *Per-org chain · org_seq + parent_hash + receipt_sha256 · books and records · to the shed.*

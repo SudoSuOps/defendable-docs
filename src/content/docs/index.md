@@ -1,12 +1,12 @@
 ---
 title: DefendableDocs
-description: The operating manual for DefendableOS and DefendableCloud. The engine that verifies agentic work. The hosted vault that proves it. Books and records.
+description: Enterprise documentation for DefendableCloud and DefendableOS. The engine verifies. The vault proves. Receipts, datasets, model operations, and edge agent infrastructure.
 template: splash
 hero:
   tagline: |
     The operating manual for DefendableOS and DefendableCloud.
-    The engine that verifies. The vault that proves.
-    Ring ring · to the shed.
+    The engine verifies. The vault proves.
+    Proof of Execution. Receipts. Datasets. Agent operations.
   image:
     file: ../../assets/logo.svg
   actions:
@@ -14,89 +14,75 @@ hero:
       link: /getting-started/
       icon: right-arrow
       variant: primary
-    - text: View Architecture
-      link: /ecosystem/architecture/
+    - text: DefendableCloud
+      link: /defendablecloud/overview/
       icon: external
-    - text: Verify a Receipt
-      link: /defendablecloud/generate-a-receipt/
+    - text: CLI Guide
+      link: /defendablecloud/cli/
       icon: external
 ---
 
-:::tip[Field status — audited prototype]
-A controlled, **synthetic** customer-support agent-operations demo is fielded and
-independently audited (Codex audit, **VERIFIED_AS_REPAIRED_WITH_LIMITATIONS**).
-See **[Field Proof v0.1](/field-release/overview/)**. The DefendableCloud Vault
-(`api.defendablecloud.com` · `app.defendablecloud.com`) is live as a hosted
-proof vault. SHA-256 establishes per-org hash-chained content integrity in-house —
-no external chain anchoring on the spine.
+:::tip[Current product truth]
+**DefendableCloud** is the live proof vault: `Inputs -> Evidence -> Execution -> Checks -> Verdict -> Approval -> Receipt`.
+Start with [DefendableCloud Overview](/defendablecloud/overview/), [The Defendable Run](/defendablecloud/the-defendable-run/), and the [CLI Guide](/defendablecloud/cli/).
+Older ecosystem pages remain useful context, but the cloud docs now describe the production-facing platform.
 :::
 
-## DefendableOS is the engine. DefendableCloud is the proof vault.
+## DefendableOS is the engine. DefendableCloud is the vault.
 
-> **DefendableOS** runs the rulebook. **DefendableCloud** runs the receipts.
+DefendableOS runs the rulebook. DefendableCloud stores and shares the proof.
 
-Every piece of agentic work that flows through the platform follows **one primitive — the Defendable Run**:
+Every piece of agentic work that flows through the platform follows one primitive:
 
-```
-Inputs → Evidence → Execution → Checks → Verdict → Approval → Receipt
-```
-
-A client uploads work or sends an agent submission. The Cloud loads the **Flight Sheet** — the declared rulebook for that lane. The OS's referee engine runs the rules deterministically and throws **flags** when a rule is violated. A human approves. The Cloud mints a hash-chained **Receipt**.
-
-That's the whole loop. No hidden judge model. No "seems good." No quality vibes. The referee is a rulebook.
-
-## The two surfaces of this manual
-
-- **[DefendableOS](/defendableos/overview/)** — the engine · verifies work against a declared rulebook · the [referee](/tribunal/overview/) is a rulebook engine, not a judge model · throws flags, not opinions.
-- **[DefendableCloud](/defendablecloud/overview/)** — the hosted vault · runs Defendable Runs across three lanes (Agent Work · Dataset · Compute Receipts) · stores receipts on a per-org hash chain · serves the [Vault portal](https://app.defendablecloud.com).
-
-Around the two surfaces:
-
-- **The Language** — [Defend-A-Pedia](/defend-a-pedia/overview/) · the vocabulary canon · [Glossary](/ecosystem/glossary/) · operator terms in plain English.
-- **The Voice** — [Mr. Defendable](/mr-defendable/overview/) · principal voice · CRE-broker discipline · receipts before claims.
-- **The Books** — [DefendableLedger](/defendableledger/overview/) · in-house hash-chained books and records · NOT external chain anchoring.
-
-## The Defendable Run, end to end
-
-```
-Client / Operator / Agent
-        ↓
-Flight Sheet            ← the declared rulebook for the lane
-        ↓
-Assignment + Evidence   ← what the work is, what's on the table
-        ↓
-Submission              ← the agent's structured output (JSON, re-derivable)
-        ↓
-Referee (rulebook engine)
-        ↓
-Checks: pass / flag / open · per-rule severity · per-flag tier (low/mid/high)
-        ↓
-Verdict (score = % of declared rules satisfied)
-   honey = no flags + approved · jelly = noncritical flags · propolis = critical flag
-        ↓
-Human Approval          ← always · receipts only mint on approval
-        ↓
-Receipt                 ← per-org hash chain · JSON + PDF · public shareable link
+```text
+Inputs -> Evidence -> Execution -> Checks -> Verdict -> Approval -> Receipt
 ```
 
-Every receipt links to its predecessor. Verification is client-side WebCrypto, no server round-trip. *(Status: the chain is live for Eval, Cook, and Incident receipts on `api.defendablecloud.com`. SHA-256 establishes content-integrity linkage. Public external anchoring is intentionally NOT in scope — see the [Kill Hedera doctrine](/defendableledger/kill-hedera/).)*
+A client uploads work or sends an agent submission. The Cloud loads the Flight Sheet, the declared rulebook for the lane. The referee engine runs deterministic checks and throws flags when a rule is violated. A human approves. The Cloud mints a hash-chained receipt.
 
-## The doctrine
+No hidden judge model. No "seems good." No quality vibes. The referee is a rulebook.
 
-> *"The referee is a rulebook, not a judge."*
-> *"Agents earn their lanes."*
-> *"A human holds final authority."*
-> *"The trust layer compounds inside the house."*
+## What The Docs Now Cover
 
-> *"To the shed."* — Mr. Defendable
+- DefendableCloud overview, Run lifecycle, three lanes, CLI, API, datasets/models, enterprise security, and operations
+- DefendableOS rulebook and verification language
+- DefendableDatasets and DefendableApps context
+- Receipts, ledgers, schemas, examples, and operating principles
 
-## Get oriented
+## Read In This Order
 
-- **Board / Principal** → [Getting Started](/getting-started/) → [DefendableOS · What It Is](/defendableos/what-it-is/) → [DefendableCloud · Overview](/defendablecloud/overview/)
-- **Operator / Builder** → [Architecture](/ecosystem/architecture/) → [The Defendable Run](/defendablecloud/the-defendable-run/) → [Rulebook Engine](/defendableos/rulebook-engine/)
-- **Buyer / Customer** → [DefendableCloud · Three Lanes](/defendablecloud/three-lanes/) → [Generate a Receipt](/defendablecloud/generate-a-receipt/) → [Buyer Profile](/defendableos/buyer-profile/)
-- **Developer** → [Schemas](/schemas/overview/) → [Examples](/examples/overview/) → [API Overview](/api/overview/)
+1. [DefendableCloud Overview](/defendablecloud/overview/)
+2. [The Defendable Run](/defendablecloud/the-defendable-run/)
+3. [Three Lanes](/defendablecloud/three-lanes/)
+4. [Defendable CLI](/defendablecloud/cli/)
+5. [Current API Surface](/defendablecloud/api/)
+6. [Enterprise Security](/defendablecloud/enterprise-security/)
+7. [Operations Runbook](/defendablecloud/operations/)
 
-***
+## The Platform Map
 
-🐝 *Ring ring · Mr. Defendable speaking · to the shed.*
+| Product | Job |
+|---|---|
+| DefendableCloud | Hosted proof vault for Runs, receipts, datasets, models, incidents, and enterprise audit trails. |
+| DefendableOS | Verification doctrine and rulebook layer. |
+| DefendableDatasets | Dataset graph, registry, manifests, hashes, and fine-tuning pack exports. |
+| DefendableApps | Small edge agents for Jetson-class devices. |
+| DefendableRouter | Routing layer for agents, models, compute lanes, and receipts. |
+| DefendableLedger / DDEED | Longer-term public proof and deed language. |
+
+## Enterprise Position
+
+DefendableCloud is an enterprise-grade launch foundation. It has real controls for auth, RBAC, API keys, receipt chains, public redaction, dataset quotas, WAF guidance, backups, incidents, secrets rotation, and CI gates.
+
+It is not yet a full best-in-class hyperscale cloud provider. SSO/SAML/OIDC, SCIM, external penetration testing, formal SOC2 audit, and public SLA/status workflows remain roadmap until implemented and tested.
+
+## Doctrine
+
+> The referee is a rulebook, not a judge.
+
+> A receipt is only as defensible as the checks behind it.
+
+> No proof, no honey.
+
+> The docs are part of the control surface.
+

@@ -1,71 +1,77 @@
 ---
 title: DefendableCloud · Overview
-description: The hosted proof vault for agentic work. Build-A-Bility — plan the stack, prove the work against a rulebook, keep the receipts. The vault that runs the Defendable Run.
+description: The hosted proof vault for Defendable Runs, receipts, datasets, models, incidents, and enterprise audit trails.
 ---
 
-## What DefendableCloud is
+DefendableCloud is the hosted proof vault for agentic work.
 
-DefendableCloud is the **hosted proof vault** for agentic work. It runs the [Defendable Run](/defendablecloud/the-defendable-run/) end to end: take an agent submission, load the **Flight Sheet** (the declared rulebook for the lane), let the [DefendableOS referee](/defendableos/rulebook-engine/) apply the rules, collect the flags, get human approval, and mint a hash-chained **Receipt** — JSON + PDF + public share link.
+> **DefendableOS** is the engine. **DefendableCloud** is the vault. The engine runs the rulebook; the vault stores and shares the proof.
 
-> **DefendableOS** is the engine. **DefendableCloud** is the hosted proof vault. The engine runs the rulebook; the vault runs the receipts.
+The core primitive is the **Defendable Run**:
 
-## The hero positioning
-
-> **"Build-A-Bility for agentic work."**
->
-> Plan the stack, prove the work against a rulebook, keep the receipts —
-> so the AI agents you build can be trusted in production.
-
-## The one primitive — the Defendable Run
-
-```
-Inputs → Evidence → Execution → Checks → Verdict → Approval → Receipt
+```text
+Inputs -> Evidence -> Execution -> Checks -> Verdict -> Approval -> Receipt
 ```
 
-Every feature in DefendableCloud serves the Run. If it doesn't help create, verify, approve, store, or share a Defendable Run, it is not in v1. *(See [The Defendable Run](/defendablecloud/the-defendable-run/) for the stage-by-stage walkthrough.)*
+Every product surface exists to create, verify, approve, store, or share that Run. If a feature does not support that loop, it does not belong in v1.
 
-## The three lanes at launch
+## What Is Live
+
+| Surface | Status | Purpose |
+|---|---:|---|
+| Marketing site | Live | Explains the cloud product and trust model. |
+| Vault app | Live | User portal for projects, runs, evidence, checks, approvals, receipts, datasets, models, and account surfaces. |
+| API | Live foundation | FastAPI backend for auth, projects, runs, receipts, ledger, datasets, models, cooks, incidents, membership, org/RBAC, and admin operations. |
+| CLI | Launch foundation | Terminal workflow for the full Run lifecycle. |
+| Dataset library | Launch foundation | Members-only dataset catalog, download grants, receipts, and quota controls. |
+| Enterprise controls | Launch foundation | Runtime boot checks, RBAC, API keys, public receipt redaction, WAF guidance, backups, incident runbooks, and security docs. |
+
+## The Lanes
 
 | Lane | What it proves |
 |---|---|
-| **[Agent Work Receipts](/defendablecloud/three-lanes/#agent-work-receipts)** | An AI agent did the work it claimed (math re-derivable, evidence cited, declared rules satisfied). |
-| **[Dataset Receipts](/defendablecloud/three-lanes/#dataset-receipts)** | A dataset meets declared quality rules (schema, balance, dedup, provenance, no PII). |
-| **[Compute Receipts](/defendablecloud/three-lanes/#compute-receipts)** | A compute run hit declared performance/efficiency thresholds (real instrumentation, not LLM-generated numbers). |
+| Agent Work Receipts | An AI agent did the work it claimed, evidence was attached, checks ran, a verdict was minted, and a human approved or rejected it. |
+| Dataset Receipts | A dataset package or download grant was tied to a member, quota, object, hash, provenance boundary, and public/private receipt boundary. |
+| Compute Receipts | A cook, runner, model pin, or incident produced execution evidence and a hash-chained record. |
 
-Additional receipt types ride the same per-org hash chain:
+Additional receipt kinds can ride the same per-org chain: cook receipts, model pin receipts, incident receipts, and restore-drill receipts.
 
-- **Cook Receipts** — fine-tune lift, before → after, minted only on a real measured improvement.
-- **Incident Receipts** — Agent Ops governance events (recurring-flag lane lock, dark/rogue alerts, spend-cap breach). Same chain. *Same proof shape.*
-
-## The one killer button
+## The Button
 
 > **Generate Receipt.**
 
-That's the action that closes the Run. Until a human approves, no receipt mints. Once approved, the receipt is hash-chained to the org's prior receipt and served three ways: JSON payload, PDF, and a public `/r/<token>` URL anyone can verify client-side.
+That is the action that closes the Run. Until a human approves, no run receipt should mint. Once approved, the receipt is hash-chained to the organization's prior receipt and served as JSON, PDF, and a public share URL.
 
-## Where it lives
+## Product Boundaries
 
-| Surface | URL | Role |
-|---|---|---|
-| Marketing site | [defendablecloud.com](https://defendablecloud.com) | Public site · positioning · contact form |
-| API | [api.defendablecloud.com](https://api.defendablecloud.com) | FastAPI · Postgres · Tigris · the hash chain |
-| Vault portal | [app.defendablecloud.com](https://app.defendablecloud.com) | React SPA · sign in (magic link) · Runs · receipts · share links |
+DefendableCloud is not a generic chatbot, LLM host, or project-management app. It is the audit and proof layer.
 
-Hosted on Fly.io (api), Cloudflare Pages (site + app). Per-org hash-chained receipts in Postgres; PDFs regenerated from the canonical JSON payload via `fpdf2`; public share links served without auth.
+It should answer:
 
-## The build law
+- What work was requested?
+- What evidence was attached?
+- What rulebook checked the work?
+- What passed, warned, or failed?
+- Who approved it?
+- What receipt was minted?
+- Can another party verify the public proof without seeing private storage keys?
 
-> If a feature does not help **create · verify · approve · store · share** a Defendable Run, it is not in v1.
+## Where It Lives
 
-That rule has held through every Phase. It is the discipline that keeps the vault on the one primitive.
+| Surface | URL |
+|---|---|
+| Marketing | `https://defendablecloud.com` |
+| Vault app | `https://app.defendablecloud.com` or current Cloudflare Pages app host |
+| API | `https://api.defendablecloud.com` |
+| Docs | `https://defendabledocs.com` |
 
-## What you read next
+## Read Next
 
-- [The Defendable Run](/defendablecloud/the-defendable-run/) — the one primitive, stage by stage.
-- [Three Lanes](/defendablecloud/three-lanes/) — Agent / Dataset / Compute · what each lane proves.
-- [Eval Lane · The Referee](/defendablecloud/eval-lane/) — Flight Sheet → Submission → Audit → Findings → Receipt.
-- [Generate a Receipt](/defendablecloud/generate-a-receipt/) — the killer-button walkthrough.
+- [The Defendable Run](/defendablecloud/the-defendable-run/)
+- [Three Lanes](/defendablecloud/three-lanes/)
+- [How It Works](/defendablecloud/how-it-works/)
+- [Defendable CLI](/defendablecloud/cli/)
+- [Current API Surface](/defendablecloud/api/)
+- [Enterprise Security](/defendablecloud/enterprise-security/)
+- [Operations Runbook](/defendablecloud/operations/)
 
-***
-
-🐝 *Build the agent. Prove the work. Keep the receipts. To the shed.*

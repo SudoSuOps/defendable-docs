@@ -1,13 +1,27 @@
 ---
 title: Operations · Overview
-description: Deploying · monitoring · backing up DefendableOS components.
+description: Deploying, monitoring, backing up, and operating DefendableCloud and DefendableOS components.
 ---
 
-Operations runbook for the full DefendableOS stack. Per-component deployment guides · environment variables · CI/CD · monitoring · backup and recovery.
+Operations runbook for DefendableCloud and the broader DefendableOS stack.
 
-***
+For the current production-facing cloud product, use:
 
-🐝 *Operator-grade · books and records · to the shed.*
+- [DefendableCloud Operations](/defendablecloud/operations/)
+- [Enterprise Security](/defendablecloud/enterprise-security/)
+- [API Surface](/defendablecloud/api/)
+- [CLI Guide](/defendablecloud/cli/)
 
+## Cloud Operating Baseline
 
-> This is a foundational page in the DefendableDocs ecosystem map. The structure is committed · the deep content extends as the platform matures. Cross-references are live below.
+| Area | Required Practice |
+|---|---|
+| Deployment | Cloudflare Pages for static site/app, container host for API. |
+| API runtime | Production boot checks for CORS, HTTPS, JWT secret, email, and quotas. |
+| WAF | Cloudflare managed rules, OWASP, bot posture, and route limits. |
+| CI | API tests, CLI tests, app build, site build, OpenAPI contract tests. |
+| Logs | Auth, API keys, org roles, dataset grants, receipts, storage, webhooks. |
+| Backups | Postgres daily backups, monthly restore drill, object storage hash samples. |
+| Incidents | SEV classification, containment checklist, incident receipt. |
+| Secrets | Rotate by protocol, never document live values. |
+

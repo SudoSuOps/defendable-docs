@@ -4,6 +4,10 @@
   "private": true,
   "description": "defendabledocs.com — the operating manual for the entire DefendableOS ecosystem. Mr. Defendable · books and records · class A 5-cap STNL docs.",
   "type": "module",
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=9.6.5"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -13,8 +17,8 @@
     "check": "astro check"
   },
   "dependencies": {
-    "astro": "^5.0.0",
-    "@astrojs/starlight": "^0.30.0",
+    "@astrojs/starlight": "^0.39.2",
+    "astro": "^6.4.2",
     "sharp": "^0.33.5"
   }
 }

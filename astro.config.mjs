@@ -12,9 +12,13 @@ export default defineConfig({
       logo: { src: './src/assets/logo.svg', replacesTitle: false },
       favicon: '/favicon.svg',
       customCss: ['./src/styles/custom.css'],
-      social: {
-        github: 'https://github.com/SudoSuOps/defendable-docs',
-      },
+      social: [
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/SudoSuOps/defendable-docs',
+        },
+      ],
       editLink: {
         baseUrl: 'https://github.com/SudoSuOps/defendable-docs/edit/main/',
       },
@@ -82,6 +86,11 @@ export default defineConfig({
             { label: 'Integrate · dev quickstart', link: '/defendablecloud/integrate/' },
             { label: 'Defendable CLI', link: '/defendablecloud/cli/' },
             { label: 'API Reference', link: '/defendablecloud/api-reference/' },
+            { label: 'Current API Surface', link: '/defendablecloud/api/' },
+            { label: 'Datasets and Models', link: '/defendablecloud/datasets-models/' },
+            { label: 'Enterprise Security', link: '/defendablecloud/enterprise-security/' },
+            { label: 'Operations Runbook', link: '/defendablecloud/operations/' },
+            { label: 'Docs Audit', link: '/defendablecloud/audit/' },
           ],
         },
         {

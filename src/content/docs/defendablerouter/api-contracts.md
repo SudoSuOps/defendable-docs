@@ -11,15 +11,24 @@ exposed publicly**. There is **no `/v1` prefix** anywhere — routes are mounted
 group paths.
 :::
 
-Eight real route groups are mounted in `main.py`: members, datasets, compute, jobs, workers,
-admin, health (plus the worker sub-routes under jobs/lease). All paths are exactly as written —
-no version prefix.
+Nine real route groups are mounted in `main.py`: members, datasets, compute, jobs, workers,
+admin, receipts, health (plus the worker sub-routes under jobs/lease). All paths are exactly as
+written — no version prefix.
 
 ## Health
 
 | Method | Path | Notes |
 | --- | --- | --- |
 | `GET` | `/health` | Liveness. |
+
+## Receipts — `/receipts`
+
+The house receipt **hash chain** — `seq` + `parent_hash`, genesis = 64 zeros (mirrors the Cloud).
+
+| Method | Path | Notes |
+| --- | --- | --- |
+| `GET` | `/receipts` | The chain in `seq` order (coordinates only; `?limit=`). |
+| `GET` | `/receipts/verify` | Recompute every checksum, validate `seq` + `parent_hash` links. Returns `{ ok, receipts_checked, errors }`. |
 
 ## Members — `/members`
 

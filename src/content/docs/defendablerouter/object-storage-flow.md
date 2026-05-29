@@ -32,7 +32,7 @@ Every billable/lifecycle event appends a checksummed receipt line to a daily fil
 ```
 
 See [Receipt Capture](/defendablerouter/receipt-capture/) for the receipt fields, the canonical
-checksum algorithm, and the honest note that these receipts are **checksummed, not hash-chained**.
+checksum algorithm, and the **hash chain** (`seq` + `parent_hash`) with its `GET /receipts/verify`.
 
 :::note[Roadmap — not built]
 **Postgres**, **Alembic** migrations, and **object storage** are roadmap for the router and are

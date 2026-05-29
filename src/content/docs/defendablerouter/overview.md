@@ -42,11 +42,12 @@ Alembic, Stripe, and object-storage are **roadmap, not built**.
    move a job through its lifecycle, including the v0.2 worker lease flow. See
    [Routing Model](/defendablerouter/routing-model/).
 
-5. **Local JSONL checksummed receipts.** Every billable/lifecycle event writes a receipt line to
-   `data/receipts/YYYY-MM-DD.receipts.jsonl` with a `checksum_sha256` over canonical JSON. These
-   receipts are **checksummed but NOT hash-chained** — unlike the DefendableCloud per-org hash
-   chain, router receipt lines are independently verifiable but are not linked parent→child. See
-   [Receipt Capture](/defendablerouter/receipt-capture/).
+5. **Local JSONL hash-chained receipts.** Every billable/lifecycle event writes a receipt line to
+   `data/receipts/YYYY-MM-DD.receipts.jsonl` with a `checksum_sha256` over canonical JSON. Receipts
+   are **hash-chained** — each carries a `seq` and a `parent_hash` linking it to the prior receipt
+   (genesis = 64 zeros), mirroring the DefendableCloud chain (the router keeps one house-wide chain).
+   `GET /receipts/verify` (or `defendable-router verify-ledger`) recomputes and validates the whole
+   chain. See [Receipt Capture](/defendablerouter/receipt-capture/).
 
 ## Where to go next
 

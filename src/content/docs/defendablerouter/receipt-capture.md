@@ -1,6 +1,6 @@
 ---
 title: Receipt Capture
-description: DefendableRouter v0.1 local receipt ledger — checksummed JSONL receipts written for every billable/lifecycle event. Checksummed, not hash-chained.
+description: DefendableRouter v0.1 local receipt ledger — hash-chained JSONL receipts written for every billable/lifecycle event. Tamper-evident, like the Cloud.
 ---
 
 :::note[Status — receipt capture (v0.1, CI-verified)]
@@ -31,8 +31,10 @@ One receipt per line (newline-delimited JSON). The directory is `core/config.py`
 | `dataset_ids` | List of dataset ids (may be empty). |
 | `amount_usd` | Decimal serialized to a 2-dp string. |
 | `metadata` | Free-form event context. |
+| `seq` | Monotonic chain index, starting at `0` (the house chain). |
+| `parent_hash` | The `checksum_sha256` of the prior receipt; genesis is 64 zeros. |
 | `created_at` | ISO-8601 timestamp. |
-| `checksum_sha256` | sha256 over the canonical JSON of all other fields. |
+| `checksum_sha256` | sha256 over the canonical JSON of all other fields (incl. `seq` + `parent_hash`). |
 
 ## Checksum algorithm
 
@@ -46,13 +48,24 @@ normalizes the payload and serializes deterministically:
 
 To verify a line: parse the JSON, drop `checksum_sha256`, recompute, and compare.
 
-:::caution[Checksummed, NOT hash-chained]
-Router receipts are **checksummed but NOT hash-chained**. Each line is **independently
-verifiable** (its own sha256 over its own fields), but receipts are **not linked parent→child**.
-This is different from the **DefendableCloud per-org hash chain**, where each receipt carries a
-`parent_hash` linking it to the prior receipt and `/ledger/verify` validates the whole chain.
-The router does not (yet) chain its receipts — say so honestly.
-:::
+## Hash chain
+
+Router receipts are **hash-chained**, mirroring the DefendableCloud per-org chain. Each receipt
+carries a `seq` (monotonic from `0`) and a `parent_hash` equal to the prior receipt's
+`checksum_sha256` — and because those two fields are inside the hashed body, the link is itself
+tamper-evident. The genesis receipt's `parent_hash` is 64 zeros (`0000…0000`). The router keeps
+**one house-wide chain** (single-tenant spine), where the Cloud keeps one chain per org.
+
+Verify the whole chain:
+
+- `GET /receipts` — the chain in `seq` order (coordinates only).
+- `GET /receipts/verify` — recomputes every `checksum_sha256`, confirms `seq` runs `0,1,2,…` with
+  no gaps, and confirms each `parent_hash` links to the prior receipt. Returns
+  `{ ok, receipts_checked, errors }`.
+- CLI: `defendable-router verify-ledger` (exit `0` if `ok`, `1` otherwise).
+
+Tamper with any stored receipt and `/receipts/verify` flips `ok: false` and pinpoints the offending
+`seq` — the same guarantee the Cloud's `/ledger/verify` gives.
 
 ## The twelve receipt types
 
